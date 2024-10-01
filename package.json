@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://estatein--app.vercel.app",
+  "homepage": "http://estatein-preview.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
