@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Property } from "@prisma/client";
-import { formatPrice, getBaseUrl } from "@/lib/utils";
+import { formatPrice, getBaseUrl, upperFirst } from "@/lib/utils";
 
 type PageMetadataOptions = {
   title: string;
@@ -51,11 +51,11 @@ export function generatePropertyPageMetadata(
   property: Property,
   metadata?: Partial<Metadata>,
 ) {
-  const title = `Stunning ${property.bedrooms}-Bedroom ${property.propertyType} in ${property.location} - ${property.bathrooms} Bathrooms | ${property.area} ft² | Priced at ${formatPrice(property.listingPrice)}`;
-  const description = `${property.description} This stunning ${property.propertyType} features ${property.bedrooms} bedrooms and ${property.bathrooms} bathrooms, perfect for families and entertaining guests. Located in the heart of ${property.location}, this property offers a generous area of ${property.area} ft², and is priced at ${formatPrice(property.listingPrice)}.`;
+  const title = `Stunning ${property.bedrooms}-Bedroom ${upperFirst(property.propertyType)} in ${property.location} - ${property.bathrooms} Bathrooms | ${property.area} ft² | Priced at ${formatPrice(property.listingPrice)}`;
+  const description = `${property.description} This stunning ${upperFirst(property.propertyType)} features ${property.bedrooms} bedrooms and ${property.bathrooms} bathrooms, perfect for families and entertaining guests. Located in the heart of ${property.location}, this property offers a generous area of ${property.area} ft², and is priced at ${formatPrice(property.listingPrice)}.`;
 
   const keywords = [
-    property.propertyType,
+    upperFirst(property.propertyType),
     `${property.bedrooms} bedrooms`,
     `${property.bathrooms} bathrooms`,
     property.location,
