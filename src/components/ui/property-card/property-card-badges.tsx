@@ -27,7 +27,7 @@ export const PropertyBadges = ({
       <span aria-label={propertyType}>
         <BuildingSVG aria-hidden="true" /> <span>{propertyType}</span>
       </span>
-      <span aria-label={propertyType}>
+      <span aria-label={`${area} ft²`}>
         <AreaSVG aria-hidden="true" className="[&_*]:!fill-white" />{" "}
         <span>{area} ft²</span>
       </span>
