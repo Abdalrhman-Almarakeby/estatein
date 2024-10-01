@@ -1,0 +1,21 @@
+model PropertyInquiry {
+  id                     String        @id @default(cuid())
+  firstName              String
+  lastName               String
+  email                  String        @unique @db.VarChar(255)
+  phone                  String        @unique @db.VarChar(20)
+  preferredLocation      String
+  propertyType           PropertyType
+  numOfBathrooms         Int
+  numOfRooms             Int
+  budget                 String
+  propertySize           String
+  preferredContactMethod ContactMethod
+  message                String
+  createdAt              DateTime      @default(now())
+}
+
+enum ContactMethod {
+  EMAIL
+  PHONE
+}

@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-purple-base: #703bf7;
+    --color-purple-medium: #8254f8;
+    --color-purple-light: #a685fa;
+    --color-gray-darkest: #141414;
+    --color-gray-darker: #1a1a1a;
+    --color-gray-dark: #262626;
+    --color-gray-medium: #4d4d4d;
+    --color-gray-light: #999999;
+  }
+
+  html,
+  * {
+    @apply motion-safe:scroll-smooth;
+  }
+
+  img {
+    @apply h-auto w-full select-none bg-cover bg-no-repeat align-middle italic;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply max-w-[75ch];
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-balance;
+  }
+
+  p,
+  li,
+  figcaption {
+    @apply text-pretty;
+  }
+
+  hr {
+    @apply bg-gray-dark;
+  }
+
+  a {
+    @apply hover:underline;
+  }
+
+  /* prevent the changing in the background color and 
+  the text color in inputs when auto fill in chrome*/
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    @apply shadow-[inset_0_0_20px_20px_#23232329];
+  }
+}
+
+@layer components {
+  /* buttons */
+  .btn {
+    @apply whitespace-nowrap rounded-lg !no-underline disabled:opacity-50;
+  }
+
+  .btn-sm {
+    @apply px-5 py-3.5 text-sm;
+  }
+
+  .btn-md {
+    @apply px-5 py-3.5 text-base;
+  }
+
+  .btn-lg {
+    @apply px-6 py-4.5 text-lg;
+  }
+
+  .btn-primary {
+    @apply btn bg-purple-base;
+  }
+
+  .btn-secondary {
+    @apply btn border bg-gray-darkest;
+  }
+
+  .btn-tertiary {
+    @apply btn rounded-md border bg-gray-darker;
+  }
+
+  /* text */
+  .text {
+    @apply text-sm leading-normal lg:text-base 2xl:text-lg;
+  }
+  .text-primary {
+    @apply text font-medium text-gray-light;
+  }
+
+  .text-secondary {
+    @apply text text-white;
+  }
+
+  /* headers */
+  .h-primary {
+    @apply text-[1.75rem] font-semibold leading-tight text-white lg:text-[2.375rem] 2xl:text-[3rem];
+  }
+
+  /* style toast in react hoot toast */
+  .toast {
+    @apply rounded-md border-2 border-solid border-white bg-gray-dark text-white transition-all;
+  }
+
+  /* badges */
+  .badges-container {
+    @apply text-secondary flex flex-wrap gap-1.5 3xl:text-base;
+  }
+
+  .badge {
+    @apply flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem] text-xs 3xl:gap-1.5 3xl:px-4 3xl:py-2.5 3xl:text-sm;
+  }
+
+  .badge > svg {
+    @apply 3xl:size-6;
+  }
+
+  .page-spacing {
+    @apply container space-y-20 lg:space-y-30;
+  }
+}

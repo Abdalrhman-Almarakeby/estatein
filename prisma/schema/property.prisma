@@ -1,0 +1,24 @@
+model Property {
+  id                       String                    @id @default(cuid())
+  title                    String                    @unique
+  description              String
+  location                 String
+  propertyType             PropertyType
+  bedrooms                 Int
+  bathrooms                Int
+  area                     Int
+  images                   String[]
+  features                 String[]
+  listingPrice             Int
+  transferTax              Int
+  legalFees                Int
+  homeInspection           Int
+  insurance                Int
+  taxes                    Int
+  homeownersAssociationFee Int
+  additionalFees           Int
+  downPayment              Int
+  mortgage                 Int
+  inquiries                SpecificPropertyInquiry[]
+  createdAt                DateTime                  @default(now())
+}

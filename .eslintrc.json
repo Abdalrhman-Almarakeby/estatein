@@ -1,0 +1,39 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
+  "plugins": ["check-file", "n"],
+  "rules": {
+    "prefer-template": ["error"],
+    "semi": ["error"],
+    "quotes": ["error", "double"],
+    "no-console": ["error"],
+    "no-unused-vars": "off",
+    "n/no-process-env": ["error"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "none",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "react/no-unescaped-entities": 0,
+    "prefer-arrow-callback": ["error"],
+    "check-file/filename-naming-convention": [
+      "error",
+      {
+        "**/*.{ts,tsx}": "KEBAB_CASE"
+      },
+      {
+        "ignoreMiddleExtensions": true
+      }
+    ],
+    "check-file/folder-naming-convention": [
+      "error",
+      {
+        "src/**": "NEXT_JS_APP_ROUTER_CASE"
+      }
+    ]
+  }
+}

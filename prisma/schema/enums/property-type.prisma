@@ -1,0 +1,5 @@
+enum PropertyType {
+  APARTMENT
+  HOUSE
+  VILLA
+}
