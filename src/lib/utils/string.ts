@@ -1,5 +1,7 @@
 export function upperFirst(input: string): string {
-  return input.replace(/_/g, " ").charAt(0).toUpperCase() + input.slice(1);
+  const formattedInput = input.toLowerCase().replace(/[_-]/g, " ");
+
+  return formattedInput.charAt(0).toUpperCase() + formattedInput.slice(1);
 }
 
 export function toKebabCase(input: string): string {
