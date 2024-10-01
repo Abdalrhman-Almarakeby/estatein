@@ -1,13 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { forwardRef, HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 import { useCarousel } from "./carousel-context";
 
 export const CarouselItem = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
->(({ className,children, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
   const { orientation } = useCarousel();
 
   return (

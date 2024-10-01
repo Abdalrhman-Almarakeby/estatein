@@ -1,8 +1,8 @@
+import { upperFirst } from "@/lib/utils";
 import AreaSVG from "@/assets/icons/area.svg";
 import BathSVG from "@/assets/icons/bath.svg";
 import BedSVG from "@/assets/icons/bed.svg";
 import BuildingSVG from "@/assets/icons/building.svg";
-import { upperFirst } from "@/lib/utils";
 
 type PropertyBadgesProps = {
   bedrooms: number;
@@ -26,7 +26,8 @@ export const PropertyBadges = ({
         <BathSVG aria-hidden="true" /> <span>{bathrooms}-Bathroom</span>
       </span>
       <span aria-label={upperFirst(propertyType)}>
-        <BuildingSVG aria-hidden="true" /> <span>{upperFirst(propertyType)}</span>
+        <BuildingSVG aria-hidden="true" />{" "}
+        <span>{upperFirst(propertyType)}</span>
       </span>
       <span aria-label={`${area} ft²`}>
         <AreaSVG aria-hidden="true" className="[&_*]:!fill-white" />{" "}

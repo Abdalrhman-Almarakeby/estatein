@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { INQUIRY_TYPES } from "@/constant";
 import { REFERRAL_SOURCE_VALUES } from "@/constant/referral-source";
-import { z } from "zod";
 
 const inquiryZodSchema = z.object({
   firstName: z
