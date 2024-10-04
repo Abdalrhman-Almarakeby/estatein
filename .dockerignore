@@ -1,0 +1,39 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Next.js build output
+.next
+out
+build
+
+# Prisma
+prisma/migrations
+
+# Logs
+logs
+*.log
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+
+# Editor directories and files
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+README.md
+*.md
+
+# OS-related files
+.DS_Store
+Thumbs.db
+
+# Test and coverage output
+coverage
+tests
