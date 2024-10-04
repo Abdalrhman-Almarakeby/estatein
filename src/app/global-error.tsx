@@ -17,7 +17,7 @@ export default function GlobalError() {
         <main className="grid h-svh place-items-center">
           <section className="mx-auto flex h-full flex-col items-center justify-center px-4 py-8 text-center lg:px-6 lg:py-16">
             <h1 className="grid justify-items-center gap-12 text-4xl font-extrabold tracking-tight text-purple-base lg:text-5xl">
-              <AlertTriangle className="h-12 w-12" aria-hidden="true" />
+              <AlertTriangle className="size-12" aria-hidden="true" />
               Oops! Something went wrong.
             </h1>
             <p className="mt-3 text-lg font-light">
@@ -27,7 +27,7 @@ export default function GlobalError() {
               className="btn-primary btn-sm mt-12 flex items-center justify-center gap-1"
               onClick={refresh}
             >
-              <RefreshCw className="mr-2 h-4 w-4" aria-hidden="true" />
+              <RefreshCw className="mr-2 size-4" aria-hidden="true" />
               Refresh
             </button>
           </section>
