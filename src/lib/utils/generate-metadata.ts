@@ -48,18 +48,40 @@ export function generateMetadata({
 }
 
 export function generatePropertyPageMetadata(
-  property: Property,
+  {
+    bedrooms,
+    propertyType,
+    bathrooms,
+    area,
+    listingPrice,
+    images,
+    location,
+    ...property
+  }: Property,
   metadata?: Partial<Metadata>,
 ) {
-  const title = `Stunning ${property.bedrooms}-Bedroom ${upperFirst(property.propertyType)} in ${property.location} - ${property.bathrooms} Bathrooms | ${property.area} ft² | Priced at ${formatPrice(property.listingPrice)}`;
-  const description = `${property.description} This stunning ${upperFirst(property.propertyType)} features ${property.bedrooms} bedrooms and ${property.bathrooms} bathrooms, perfect for families and entertaining guests. Located in the heart of ${property.location}, this property offers a generous area of ${property.area} ft², and is priced at ${formatPrice(property.listingPrice)}.`;
+  const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(
+    propertyType,
+  )} in ${location} - ${bathrooms} Bathrooms | ${
+    area
+  } ft² | Priced at ${formatPrice(listingPrice)}`;
+
+  const description = `${property.description} This stunning ${upperFirst(
+    propertyType,
+  )} features ${bedrooms} bedrooms and ${
+    bathrooms
+  } bathrooms, perfect for families and entertaining guests. Located in the heart of ${
+    location
+  }, this property offers a generous area of ${
+    area
+  } ft², and is priced at ${formatPrice(listingPrice)}.`;
 
   const keywords = [
-    upperFirst(property.propertyType),
-    `${property.bedrooms} bedrooms`,
-    `${property.bathrooms} bathrooms`,
-    property.location,
-    ...property.location.split(", "),
+    upperFirst(propertyType),
+    `${bedrooms} bedrooms`,
+    `${bathrooms} bathrooms`,
+    location,
+    ...location.split(", "),
     "real estate",
     "property for sale",
     "house",
@@ -79,7 +101,7 @@ export function generatePropertyPageMetadata(
     keywords,
     metadata: {
       openGraph: {
-        images: property.images,
+        images: images,
       },
       ...metadata,
     },

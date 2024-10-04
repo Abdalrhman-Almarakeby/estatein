@@ -25,7 +25,7 @@ export function CTACard({
         className,
       )}
     >
-      <WavesSVG className="absolute inset-0 h-full w-full" />
+      <WavesSVG className="absolute inset-0 size-full" />
       <div
         className={cn(
           "flex flex-col gap-5",

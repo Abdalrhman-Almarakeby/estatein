@@ -48,13 +48,13 @@ function ImagesCarouselSkeleton() {
         ))}
       </div>
       <div className="flex items-center justify-between rounded-full bg-gray-darkest p-2 md:gap-4 md:justify-self-center">
-        <div className="h-8 w-8 animate-pulse rounded-full bg-gray-dark" />
+        <div className="size-8 animate-pulse rounded-full bg-gray-dark" />
         <div className="flex gap-1">
           {Array.from({ length: 10 }).map((_, i) => (
             <span key={i} className="h-[3px] w-3 rounded-full bg-gray-medium" />
           ))}
         </div>
-        <div className="h-8 w-8 animate-pulse rounded-full bg-gray-dark" />
+        <div className="size-8 animate-pulse rounded-full bg-gray-dark" />
       </div>
     </div>
   );

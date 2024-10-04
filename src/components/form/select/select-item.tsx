@@ -1,4 +1,4 @@
-import { forwardRef, ComponentPropsWithoutRef, ElementRef } from "react";
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { Item, ItemIndicator, ItemText } from "@radix-ui/react-select";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ export const SelectItem = forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <ItemIndicator>
         <Check />
       </ItemIndicator>
