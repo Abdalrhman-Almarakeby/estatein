@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, LockIcon, UserIcon } from "lucide-react";
+import { Loader2, UserIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
+import { PasswordInput } from "@/components/form/password-input";
 import { useLoginForm } from "./use-login-form";
 
 type LoginFormProps = {
@@ -25,7 +26,7 @@ export function LoginForm({ callbackUrl }: LoginFormProps) {
     <>
       {isLoading ? (
         <div className="p-5">
-          <Loader2 className="animate-spin mx-auto size-14" />
+          <Loader2 className="mx-auto size-14 animate-spin" />
         </div>
       ) : (
         <>
@@ -63,18 +64,12 @@ export function LoginForm({ callbackUrl }: LoginFormProps) {
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <div className="relative">
-                <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
-                  size={18}
-                />
-                <Input
-                  id="password"
-                  className="pl-10"
-                  placeholder="Password"
-                  {...register("password")}
-                />
-              </div>
+              <PasswordInput
+                id="password"
+                className="pl-10"
+                placeholder="Password"
+                {...register("password")}
+              />
               {errors.password?.message && (
                 <FieldError>{errors.password?.message}</FieldError>
               )}

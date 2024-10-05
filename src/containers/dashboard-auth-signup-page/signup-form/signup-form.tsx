@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, LockIcon, UserIcon } from "lucide-react";
+import { Loader2, UserIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
+import { PasswordInput } from "@/components/form/password-input";
 import { useSignupForm } from "./use-signup-form";
 
 type SignupFormProps = {
@@ -83,38 +84,26 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <div className="relative">
-                <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
-                  size={18}
-                />
-                <Input
-                  id="password"
-                  className="pl-10"
-                  placeholder="Password"
-                  {...register("password")}
-                />
-              </div>
+              <PasswordInput
+                id="password"
+                className="pl-10"
+                placeholder="Password"
+                {...register("password")}
+              />
               {errors.password?.message && (
                 <FieldError>{errors.password?.message}</FieldError>
               )}
             </fieldset>
             <fieldset className="space-y-2">
               <label htmlFor="confirmPassword" className="sr-only">
-                ConfirmPassword
+                Confirm Password
               </label>
-              <div className="relative">
-                <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
-                  size={18}
-                />
-                <Input
-                  id="confirmPassword"
-                  className="pl-10"
-                  placeholder="ConfirmPassword"
-                  {...register("confirmPassword")}
-                />
-              </div>
+              <PasswordInput
+                id="confirmPassword"
+                className="pl-10"
+                placeholder="Confirm Password"
+                {...register("confirmPassword")}
+              />
               {errors.confirmPassword?.message && (
                 <FieldError>{errors.confirmPassword?.message}</FieldError>
               )}
