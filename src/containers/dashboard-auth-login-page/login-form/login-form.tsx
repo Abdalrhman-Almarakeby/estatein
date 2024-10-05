@@ -45,7 +45,7 @@ export function LoginForm({ callbackUrl }: LoginFormProps) {
               </label>
               <div className="relative">
                 <UserIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input
@@ -65,7 +65,7 @@ export function LoginForm({ callbackUrl }: LoginFormProps) {
               </label>
               <div className="relative">
                 <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input

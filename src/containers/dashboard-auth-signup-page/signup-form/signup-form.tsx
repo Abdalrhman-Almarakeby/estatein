@@ -25,7 +25,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
     <>
       {isLoading ? (
         <div className="p-5">
-          <Loader2 className="animate-spin mx-auto size-14" />
+          <Loader2 className="mx-auto size-14 animate-spin" />
         </div>
       ) : (
         <>
@@ -45,7 +45,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
               </label>
               <div className="relative">
                 <UserIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input
@@ -65,7 +65,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
               </label>
               <div className="relative">
                 <UserIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input
@@ -85,7 +85,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
               </label>
               <div className="relative">
                 <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input
@@ -105,7 +105,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
               </label>
               <div className="relative">
                 <LockIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-[#4d4d4d]"
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
                   size={18}
                 />
                 <Input
