@@ -18,7 +18,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.20.0",
     "@radix-ui/react-dialog": "^1.1.2",
-    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-select": "^2.1.2",
     "@react-email/components": "^0.0.25",
     "@react-email/render": "^1.0.1",
     "@svgr/webpack": "^8.1.0",
@@ -40,7 +40,7 @@
     "react-hot-toast": "^2.4.1",
     "sharp": "^0.33.5",
     "tailwind-container-break-out": "^2.0.9",
-    "tailwind-merge": "^2.5.2",
+    "tailwind-merge": "^2.5.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
