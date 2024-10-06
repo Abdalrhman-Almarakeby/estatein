@@ -20,6 +20,10 @@ export const env = createEnv({
     POSTGRES_DATABASE: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
     NEXTAUTH_URL: z.string().min(1).url(),
+    KV_URL: z.string().min(1).url(),
+    KV_REST_API_URL: z.string().min(1).url(),
+    KV_REST_API_TOKEN: z.string().min(1),
+    KV_REST_API_READ_ONLY_TOKEN: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
@@ -52,5 +56,9 @@ export const env = createEnv({
     POSTGRES_HOST: process.env.POSTGRES_HOST,
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
+    KV_URL: process.env.KV_URL,
+    KV_REST_API_URL: process.env.KV_REST_API_URL,
+    KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
+    KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
   },
 });
