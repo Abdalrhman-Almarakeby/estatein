@@ -10,5 +10,10 @@ export function getUserIpAddress() {
     return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS;
   }
 
-  return headersList.get("x-real-ip") ?? FALLBACK_IP_ADDRESS;
+  return (
+    headersList.get("x-real-ip") ??
+    headersList.get("cf-connecting-ip") ??
+    headersList.get("client-ip") ??
+    FALLBACK_IP_ADDRESS
+  );
 }
