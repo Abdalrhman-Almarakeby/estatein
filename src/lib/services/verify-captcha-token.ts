@@ -10,19 +10,19 @@ export async function verifyCaptchaToken(captchaToken: string) {
 
     if (!captchaData.success) {
       return {
-        message: "Verification failed. Please try again.",
         success: false,
+        message: "Captcha verification failed. Please try again.",
       };
     }
 
     return {
       success: true,
-      message: "reCAPTCHA verification successful.",
+      message: "Captcha verified successfully.",
     };
   } catch (err) {
     return {
-      message: "Verification failed. Please try again.",
       success: false,
+      message: "Captcha verification failed. Please try again.",
     };
   }
 }
