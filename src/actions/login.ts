@@ -7,19 +7,19 @@ import { Login, loginZodSchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 
 export async function login(data: WithCaptcha<Login>) {
-  const { message: captchaMessage, success: captchaIsSuccess } =
+  const { success: captchaIsSuccess, message: captchaMessage } =
     await verifyCaptchaToken(data.captchaToken);
 
   if (!captchaIsSuccess) {
-    return { message: captchaMessage, success: false };
+    return { success: false, message: captchaMessage };
   }
 
   const { success: isDataValid } = loginZodSchema.safeParse(data);
 
   if (!isDataValid) {
     return {
-      message: "Credentials are not valid, Please try again",
       success: false,
+      message: "Invalid credentials, Please try again.",
     };
   }
 
@@ -33,22 +33,24 @@ export async function login(data: WithCaptcha<Login>) {
     if (!user) {
       return {
         success: false,
-        message:
-          "A user with this email doesn't exist. If you don't have an account, please sign up.",
+        message: "Invalid email or password, Please try again.",
       };
     }
 
     if (!user.isVerified) {
       return {
         success: false,
-        message: "Please verify your email before logging in.",
+        message:
+          "Your account is not verified. Please check your email for the verification link.",
       };
     }
 
-    if (!(await compare(data.password, user.password))) {
+    const isPasswordValid = await compare(data.password, user.password);
+
+    if (!isPasswordValid) {
       return {
         success: false,
-        message: "Incorrect password, Please try again",
+        message: "Invalid email or password, Please try again.",
       };
     }
 
@@ -59,7 +61,7 @@ export async function login(data: WithCaptcha<Login>) {
   } catch (error) {
     return {
       success: false,
-      message: "Something went wrong, Please try again later",
+      message: "Something went wrong, Please try again later.",
     };
   }
 }
