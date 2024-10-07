@@ -10,8 +10,7 @@ import { getBaseUrl } from "@/lib/utils";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { Signup, signupZodSchema } from "@/lib/schemas";
-import { verifyCaptchaToken } from "@/lib/services";
-import { sendEmail } from "@/actions";
+import { sendEmail, verifyCaptchaToken } from "@/lib/services";
 
 const FIVE_MINUTES = 5 * 60;
 
