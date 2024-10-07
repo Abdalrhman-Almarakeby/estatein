@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 import { getServerSession } from "next-auth";
 import { Header } from "@/containers/dashboard-layout/header";
 import { Sidebar } from "@/containers/dashboard-layout/sidebar";
+import { DashboardSidebarContextProvider } from "@/contexts/dashboard-sidebar";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { DashboardSidebarContextProvider } from "@/contexts/dashboard-sidebar";
 import "@/styles/global.css";
 
 type LayoutProps = {

@@ -8,8 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/form/select";
-import { FILTERING_DATA } from "@/constant";
 import { usePropertiesFilters } from "@/contexts/properties-filters";
+import { FILTERING_DATA } from "@/constant";
 
 export function FiltersForm() {
   const { control } = usePropertiesFilters();
