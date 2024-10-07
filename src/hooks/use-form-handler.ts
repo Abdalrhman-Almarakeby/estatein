@@ -48,12 +48,12 @@ export function useFormHandler<T extends Record<string, unknown>>({
 
       if (success) {
         toastNotification.showSuccess(message);
-        captchaRef.current?.reset();
         reset();
       } else {
         toastNotification.showError(message);
       }
 
+      captchaRef.current?.reset();
       setIsPending(false);
     },
     [isPending, serverAction, reset, toastNotification],
