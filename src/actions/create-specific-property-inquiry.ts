@@ -2,16 +2,37 @@
 
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
+import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
 import {
   SpecificPropertyInquiry,
   specificPropertyInquiryZodSchema,
 } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
+import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+
+const RATE_LIMIT_MAX_ATTEMPTS = 1;
+const RATE_LIMIT_WINDOW_DURATION = "1h";
 
 export async function createSpecificPropertyInquiry(
   data: WithCaptcha<SpecificPropertyInquiry>,
 ) {
+  const ip = getUserIpAddress();
+  const rateLimit = createRateLimiter(
+    RATE_LIMIT_MAX_ATTEMPTS,
+    RATE_LIMIT_WINDOW_DURATION,
+  );
+
+  const rateLimitKey = `ratelimit_${data.propertyId}_${ip}`;
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(rateLimitKey);
+
+  if (!rateLimitIsSuccess) {
+    return {
+      success: false,
+      message: "Too many inquiries, please try again later.",
+    };
+  }
+
   const { message: captchaMessage, success: captchaIsSuccess } =
     await verifyCaptchaToken(data.captchaToken);
 

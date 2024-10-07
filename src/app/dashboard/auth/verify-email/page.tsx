@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { verifyEmail } from "@/actions/verify-email";
+import { verifyEmail } from "@/lib/services";
 
 type PageParams = {
   searchParams: {
@@ -39,7 +39,7 @@ export default async function Page({ searchParams: { token } }: PageParams) {
       </div>
       <Link
         href="/dashboard/auth/signup"
-        className="btn-primary btn-sm px-6 py-2 w-fit mx-auto text-base"
+        className="btn-primary btn-sm mx-auto w-fit px-6 py-2 text-base"
       >
         Try Signing up again
       </Link>

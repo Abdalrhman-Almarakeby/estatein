@@ -23,6 +23,8 @@
     "@react-email/render": "^1.0.1",
     "@svgr/webpack": "^8.1.0",
     "@t3-oss/env-nextjs": "^0.11.1",
+    "@upstash/ratelimit": "^2.0.3",
+    "@vercel/kv": "^3.0.0",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
