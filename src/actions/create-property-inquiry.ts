@@ -2,13 +2,34 @@
 
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
+import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { PropertyInquiry, propertyInquiryZodSchema } from "@/lib/schemas";
+import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
+import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+
+const RATE_LIMIT_MAX_ATTEMPTS = 3;
+const RATE_LIMIT_WINDOW_DURATION = "1h";
 
 export async function createPropertyInquiry(
   data: WithCaptcha<PropertyInquiry>,
 ) {
+  const ip = getUserIpAddress();
+  const rateLimit = createRateLimiter(
+    RATE_LIMIT_MAX_ATTEMPTS,
+    RATE_LIMIT_WINDOW_DURATION,
+  );
+
+  const rateLimitKey = `ratelimit_${ip}`;
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(rateLimitKey);
+
+  if (!rateLimitIsSuccess) {
+    return {
+      success: false,
+      message: "Too many inquiries, please try again later.",
+    };
+  }
+
   const { message: captchaMessage, success: captchaIsSuccess } =
     await verifyCaptchaToken(data.captchaToken);
 
@@ -16,8 +37,7 @@ export async function createPropertyInquiry(
     return { message: captchaMessage, success: false };
   }
 
-  const { success: isDataValid, error } =
-    propertyInquiryZodSchema.safeParse(data);
+  const { success: isDataValid, error } = propertyInquirySchema.safeParse(data);
 
   if (!isDataValid) {
     return { message: error.message, success: false };

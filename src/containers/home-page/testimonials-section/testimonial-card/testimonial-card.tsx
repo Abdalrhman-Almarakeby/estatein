@@ -1,9 +1,14 @@
 import Image from "next/image";
-import { Stars } from "@/components/ui/stars";
-import { Testimonial } from "@/types";
 import { toKebabCase } from "@/lib/utils";
+import { Stars } from "./stars";
 
-type TestimonialCardProps = Testimonial;
+type TestimonialCardProps = {
+  rating: number;
+  title: string;
+  body: string;
+  name: string;
+  location: string;
+};
 
 export function TestimonialCard({
   rating,

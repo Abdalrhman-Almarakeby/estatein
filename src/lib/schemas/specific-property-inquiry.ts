@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const specificPropertyInquiryZodSchema = z.object({
+export const specificPropertyInquirySchema = z.object({
   firstName: z
     .string({
       required_error: "First Name is required",
@@ -51,6 +51,6 @@ const specificPropertyInquiryZodSchema = z.object({
   }),
 });
 
-type SpecificPropertyInquiry = z.infer<typeof specificPropertyInquiryZodSchema>;
-
-export { specificPropertyInquiryZodSchema, type SpecificPropertyInquiry };
+export type SpecificPropertyInquiry = z.infer<
+  typeof specificPropertyInquirySchema
+>;

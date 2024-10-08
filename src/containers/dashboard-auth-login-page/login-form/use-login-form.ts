@@ -4,8 +4,8 @@ import { signIn } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
-import { Login, loginZodSchema } from "@/lib/schemas";
-import { captchaZodSchema } from "@/lib/schemas/captcha";
+import { Login, loginSchema } from "@/lib/schemas";
+import { captchaSchema } from "@/lib/schemas/captcha";
 import { login } from "@/actions";
 
 export function useLoginForm(callbackUrl?: string) {
@@ -13,7 +13,7 @@ export function useLoginForm(callbackUrl?: string) {
   const { handleSubmit, setError, setValue, ...rest } = useForm<
     WithCaptcha<Login>
   >({
-    resolver: zodResolver(loginZodSchema.merge(captchaZodSchema)),
+    resolver: zodResolver(loginSchema.merge(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const captchaZodSchema = z.object({
+export const captchaSchema = z.object({
   captchaToken: z
     .string({
       message: "Please complete the CAPTCHA",
@@ -8,4 +8,4 @@ export const captchaZodSchema = z.object({
     .min(1, "Please complete the CAPTCHA"),
 });
 
-export type Captcha = z.infer<typeof captchaZodSchema>;
+export type Captcha = z.infer<typeof captchaSchema>;

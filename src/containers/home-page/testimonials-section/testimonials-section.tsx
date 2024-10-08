@@ -1,6 +1,6 @@
 import {
-  CarouselSection,
   CarouselItem,
+  CarouselSection,
 } from "@/components/ui/carousel-section";
 import { TESTIMONIALS } from "@/constant";
 import { TestimonialCard } from "./testimonial-card";

@@ -1,5 +1,3 @@
-"use server";
-
 import { ReactElement } from "react";
 import { render } from "@react-email/render";
 import nodemailer from "nodemailer";

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { useToastContext } from "@/contexts/toast";
 import { ScrollDirection } from "@/types";
 import { useWindowSize } from "@/hooks";
-import { useToastContext } from "@/contexts/toast";
 import { getScrollDirection } from "./get-scroll-direction";
 
 const MAX_TOP_POSITION = 100;

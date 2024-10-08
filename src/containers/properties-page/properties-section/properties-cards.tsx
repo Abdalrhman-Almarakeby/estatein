@@ -6,8 +6,8 @@ import {
   CarouselSection,
 } from "@/components/ui/carousel-section";
 import { PropertyCard } from "@/components/ui/property-card";
-import { PropertiesFilters } from "@/lib/schemas";
 import { usePropertiesFilters } from "@/contexts/properties-filters";
+import { PropertiesFilters } from "@/lib/schemas";
 
 type PropertiesCardsProps = {
   properties: Pick<

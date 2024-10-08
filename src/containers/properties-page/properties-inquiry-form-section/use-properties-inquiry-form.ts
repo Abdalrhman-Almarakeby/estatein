@@ -1,10 +1,10 @@
 import { useFormHandler } from "@/hooks";
-import { PropertyInquiry, propertyInquiryZodSchema } from "@/lib/schemas";
+import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
 import { createPropertyInquiry } from "@/actions";
 
 export function usePropertyInquiryForm() {
   return useFormHandler<PropertyInquiry>({
-    schema: propertyInquiryZodSchema,
+    schema: propertyInquirySchema,
     serverAction: createPropertyInquiry,
   });
 }

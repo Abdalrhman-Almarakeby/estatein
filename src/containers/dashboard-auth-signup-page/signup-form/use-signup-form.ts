@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
-import { Signup, signupZodSchema } from "@/lib/schemas";
-import { captchaZodSchema } from "@/lib/schemas/captcha";
+import { Signup, signupSchema } from "@/lib/schemas";
+import { captchaSchema } from "@/lib/schemas/captcha";
 import { signup } from "@/actions";
 
 export function useSignupForm(callbackUrl?: string) {
@@ -15,8 +15,8 @@ export function useSignupForm(callbackUrl?: string) {
     WithCaptcha<Signup>
   >({
     resolver: zodResolver(
-      signupZodSchema
-        .merge(captchaZodSchema)
+      signupSchema
+        .merge(captchaSchema)
         .refine((data) => data.password === data.confirmPassword, {
           message: "Passwords must match",
           path: ["confirmPassword"],

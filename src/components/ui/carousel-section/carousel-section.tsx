@@ -1,6 +1,3 @@
-import { Route } from "next";
-import Link from "next/link";
-import { forwardRef, ReactNode } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +5,13 @@ import {
 } from "@/components/ui/carousel";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { cn } from "@/lib/utils";
+import { Route } from "next";
+import Link from "next/link";
+import { forwardRef, ReactNode } from "react";
 import { CarouselControls } from "./carousel-controls";
+
+
+export { CarouselItem };
 
 type CarouselSectionProps = {
   id: string;
@@ -22,7 +25,7 @@ type CarouselSectionProps = {
   className?: string;
 };
 
-const CarouselSection = forwardRef<HTMLDivElement, CarouselSectionProps>(
+export const CarouselSection = forwardRef<HTMLDivElement, CarouselSectionProps>(
   (
     {
       sectionName,
@@ -80,4 +83,3 @@ const CarouselSection = forwardRef<HTMLDivElement, CarouselSectionProps>(
 
 CarouselSection.displayName = "CarouselSection";
 
-export { CarouselItem, CarouselSection };

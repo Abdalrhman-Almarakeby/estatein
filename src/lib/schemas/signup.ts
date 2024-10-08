@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const signupZodSchema = z.object({
+export const signupSchema = z.object({
   username: z
     .string()
     .min(3, { message: "Username must be at least 3 characters long." })
@@ -20,7 +20,6 @@ const signupZodSchema = z.object({
   // you could check this out:
   // https://www.npmjs.com/package/@zxcvbn-ts/core
   password: z
-
     .string({
       required_error: "Password is required",
       invalid_type_error: "Invalid Password",
@@ -47,6 +46,4 @@ const signupZodSchema = z.object({
     .min(1, "Confirm Password is required"),
 });
 
-type Signup = z.infer<typeof signupZodSchema>;
-
-export { signupZodSchema, type Signup };
+export type Signup = z.infer<typeof signupSchema>;

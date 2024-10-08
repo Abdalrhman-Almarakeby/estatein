@@ -3,8 +3,8 @@ import { HeaderSection } from "@/components/ui/header-section";
 import { FiltersForm } from "@/containers/properties-page/filters-form";
 import { PropertiesInquiryFormSection } from "@/containers/properties-page/properties-inquiry-form-section";
 import { PropertiesSection } from "@/containers/properties-page/properties-section";
-import { PROPERTIES_PAGE_METADATA } from "@/constant";
 import { PropertiesFiltersProvider } from "@/contexts/properties-filters";
+import { PROPERTIES_PAGE_METADATA } from "@/constant";
 
 export const metadata = PROPERTIES_PAGE_METADATA;
 

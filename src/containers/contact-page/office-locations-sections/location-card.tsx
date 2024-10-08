@@ -1,9 +1,20 @@
-import { Location } from "@/types";
 import LocationSVG from "@/assets/icons/location.svg";
 import MailSVG from "@/assets/icons/mail.svg";
 import PhoneSVG from "@/assets/icons/phone.svg";
 
-type LocationCardProps = Location;
+type LocationCardProps = {
+  label: string;
+  location: string;
+  description: string;
+  contact: {
+    email: string;
+    phone: string;
+    location: {
+      name: string;
+      link: string;
+    };
+  };
+};
 
 export function LocationCard({
   label,

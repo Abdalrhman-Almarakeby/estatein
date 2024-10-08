@@ -16,6 +16,7 @@
     "^@/components/(.*)$",
     "^@/containers$",
     "^@/containers/(.*)$",
+    "^@/contexts/(.*)$",
     "^@/types$",
     "^@/types/(.*)$",
     "^@/constants$",

@@ -6,7 +6,7 @@ import {
 } from "@/constant";
 import { PROPERTIES_TYPES } from "@/constant/filters-data/properties-types";
 
-const propertyInquiryZodSchema = z.object({
+export const propertyInquirySchema = z.object({
   firstName: z
     .string({
       required_error: "First Name is required",
@@ -91,6 +91,4 @@ const propertyInquiryZodSchema = z.object({
   }),
 });
 
-type PropertyInquiry = z.infer<typeof propertyInquiryZodSchema>;
-
-export { propertyInquiryZodSchema, type PropertyInquiry };
+export type PropertyInquiry = z.infer<typeof propertyInquirySchema>;

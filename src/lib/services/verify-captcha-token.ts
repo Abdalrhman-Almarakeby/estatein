@@ -1,28 +1,30 @@
-import axios from "axios";
 import { env } from "@/lib/env";
 
 export async function verifyCaptchaToken(captchaToken: string) {
   const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${env.RECAPTCHA_SECRET_KEY}&response=${captchaToken}`;
 
   try {
-    const captchaResponse = await axios.post<{ success: boolean }>(verifyUrl);
-    const captchaData = captchaResponse.data;
+    const response = await fetch(verifyUrl, {
+      method: "POST",
+    });
+
+    const captchaData = await response.json();
 
     if (!captchaData.success) {
       return {
-        message: "Verification failed. Please try again.",
         success: false,
+        message: "Captcha verification failed. Please try again.",
       };
     }
 
     return {
       success: true,
-      message: "reCAPTCHA verification successful.",
+      message: "Captcha verified successfully.",
     };
   } catch (err) {
     return {
-      message: "Verification failed. Please try again.",
       success: false,
+      message: "Captcha verification failed. Please try again.",
     };
   }
 }

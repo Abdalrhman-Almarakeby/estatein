@@ -2,24 +2,55 @@
 
 import { compare } from "bcryptjs";
 import { WithCaptcha } from "@/types";
+import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { Login, loginZodSchema } from "@/lib/schemas";
+import { Login, loginSchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
+import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_ATTEMPTS_WINDOW = "30m";
 
 export async function login(data: WithCaptcha<Login>) {
-  const { message: captchaMessage, success: captchaIsSuccess } =
-    await verifyCaptchaToken(data.captchaToken);
+  const ip = getUserIpAddress();
+  const rateLimit = createRateLimiter(
+    MAX_LOGIN_ATTEMPTS,
+    LOGIN_ATTEMPTS_WINDOW,
+  );
 
-  if (!captchaIsSuccess) {
-    return { message: captchaMessage, success: false };
+  const rateLimitKey = `ratelimit_${ip}`;
+  const {
+    success: rateLimitIsSuccess,
+    reset,
+    remaining,
+  } = await rateLimit.limit(rateLimitKey);
+
+  if (!rateLimitIsSuccess) {
+    const remainingMinutes = Math.ceil((reset - Date.now()) / (1000 * 60));
+
+    return {
+      success: false,
+      message: `Too many login attempts, please try again in ${remainingMinutes} ${remainingMinutes === 1 ? "minute" : "minutes"}.`,
+    };
   }
 
-  const { success: isDataValid } = loginZodSchema.safeParse(data);
+  const { success: captchaIsSuccess } = await verifyCaptchaToken(
+    data.captchaToken,
+  );
+
+  if (!captchaIsSuccess) {
+    return {
+      success: false,
+      message: "Invalid login credentials, Please try again.",
+    };
+  }
+
+  const { success: isDataValid } = loginSchema.safeParse(data);
 
   if (!isDataValid) {
     return {
-      message: "Credentials are not valid, Please try again",
       success: false,
+      message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
     };
   }
 
@@ -33,24 +64,28 @@ export async function login(data: WithCaptcha<Login>) {
     if (!user) {
       return {
         success: false,
-        message:
-          "A user with this email doesn't exist. If you don't have an account, please sign up.",
+        message: "Invalid email or password, Please try again.",
       };
     }
 
     if (!user.isVerified) {
       return {
         success: false,
-        message: "Please verify your email before logging in.",
+        message:
+          "Your account is not verified. Please check your email for the verification link.",
       };
     }
 
-    if (!(await compare(data.password, user.password))) {
+    const isPasswordValid = await compare(data.password, user.password);
+
+    if (!isPasswordValid) {
       return {
         success: false,
-        message: "Incorrect password, Please try again",
+        message: "Invalid email or password, Please try again.",
       };
     }
+
+    await rateLimit.resetUsedTokens(rateLimitKey);
 
     return {
       success: true,
@@ -59,7 +94,7 @@ export async function login(data: WithCaptcha<Login>) {
   } catch (error) {
     return {
       success: false,
-      message: "Something went wrong, Please try again later",
+      message: "Something went wrong, Please try again later.",
     };
   }
 }

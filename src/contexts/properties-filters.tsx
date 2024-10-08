@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Control, UseFormWatch, useForm } from "react-hook-form";
-import { PropertiesFilters, propertiesFiltersZodSchema } from "@/lib/schemas";
+import { PropertiesFilters, propertiesFiltersSchema } from "@/lib/schemas";
 
 type PropertiesFiltersContext = {
   watch: UseFormWatch<PropertiesFilters>;
@@ -34,7 +34,7 @@ export function PropertiesFiltersProvider({
   children,
 }: PropertiesFiltersProviderProps) {
   const { control, watch } = useForm<PropertiesFilters>({
-    resolver: zodResolver(propertiesFiltersZodSchema),
+    resolver: zodResolver(propertiesFiltersSchema),
   });
 
   return (
