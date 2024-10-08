@@ -6,7 +6,7 @@ import {
   PROPERTY_TYPE_OPTIONS,
 } from "@/constant";
 
-const propertiesFiltersSchema = z.object({
+export const propertiesFiltersSchema = z.object({
   location: z
     .enum(LOCATION_OPTIONS, {
       invalid_type_error: "Invalid location",
@@ -29,6 +29,4 @@ const propertiesFiltersSchema = z.object({
     .optional(),
 });
 
-type PropertiesFilters = z.infer<typeof propertiesFiltersSchema>;
-
-export { propertiesFiltersSchema, type PropertiesFilters };
+export type PropertiesFilters = z.infer<typeof propertiesFiltersSchema>;

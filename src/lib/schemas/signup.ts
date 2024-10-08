@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const signupSchema = z.object({
+export const signupSchema = z.object({
   username: z
     .string()
     .min(3, { message: "Username must be at least 3 characters long." })
@@ -46,6 +46,4 @@ const signupSchema = z.object({
     .min(1, "Confirm Password is required"),
 });
 
-type Signup = z.infer<typeof signupSchema>;
-
-export { signupSchema, type Signup };
+export type Signup = z.infer<typeof signupSchema>;

@@ -1,5 +1,6 @@
-const LOCATIONS_TYPE = ["all", "regional", "international"] as const;
-const LOCATIONS = [
+export const LOCATIONS_TYPE = ["all", "regional", "international"] as const;
+
+export const LOCATIONS = [
   {
     type: "regional",
     label: "Main Headquarters",
@@ -31,5 +32,3 @@ const LOCATIONS = [
     },
   },
 ] as const;
-
-export { LOCATIONS, LOCATIONS_TYPE };
