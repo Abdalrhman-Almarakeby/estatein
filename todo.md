@@ -3,3 +3,5 @@
 - Limit the prisma queries and add some sort of system to not load all of the data at the same time (maybe pagination?).
 
 - Write some simple documentation about the code and how to use it, edit, and deploy it.
+
+- Create a page for reeding verification email
