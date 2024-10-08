@@ -10,7 +10,7 @@ import { getBaseUrl } from "@/lib/utils";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
-import { Signup, signupZodSchema } from "@/lib/schemas";
+import { Signup, signupSchema } from "@/lib/schemas";
 import { sendEmail, verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
@@ -46,7 +46,7 @@ export async function signup(
     return { success: false, message: captchaMessage };
   }
 
-  const { success: isDataValid } = signupZodSchema.safeParse(data);
+  const { success: isDataValid } = signupSchema.safeParse(data);
 
   if (!isDataValid) {
     return {

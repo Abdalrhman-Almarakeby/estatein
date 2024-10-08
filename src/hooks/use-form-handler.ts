@@ -4,7 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { ZodObject, ZodRawShape } from "zod";
 import { WithCaptcha } from "@/types";
-import { Captcha, captchaZodSchema } from "@/lib/schemas/captcha";
+import { Captcha, captchaSchema } from "@/lib/schemas/captcha";
 import { useToastNotification } from "./use-toast-notification";
 
 type UseFormHandlerOptions<T> = {
@@ -28,7 +28,7 @@ export function useFormHandler<T extends Record<string, unknown>>({
     reset,
     ...rest
   } = useForm<T & Captcha>({
-    resolver: zodResolver(schema.merge(captchaZodSchema)),
+    resolver: zodResolver(schema.merge(captchaSchema)),
   });
   const toastNotification = useToastNotification({
     successMessage,

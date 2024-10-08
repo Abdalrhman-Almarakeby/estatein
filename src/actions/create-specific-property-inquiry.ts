@@ -6,7 +6,7 @@ import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
 import {
   SpecificPropertyInquiry,
-  specificPropertyInquiryZodSchema,
+  specificPropertyInquirySchema,
 } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
@@ -41,7 +41,7 @@ export async function createSpecificPropertyInquiry(
   }
 
   const { success: isDataValid, error } =
-    specificPropertyInquiryZodSchema.safeParse(data);
+    specificPropertyInquirySchema.safeParse(data);
 
   if (!isDataValid) {
     return { message: error.message, success: false };

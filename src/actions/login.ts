@@ -4,7 +4,7 @@ import { compare } from "bcryptjs";
 import { WithCaptcha } from "@/types";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { Login, loginZodSchema } from "@/lib/schemas";
+import { Login, loginSchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
@@ -45,7 +45,7 @@ export async function login(data: WithCaptcha<Login>) {
     };
   }
 
-  const { success: isDataValid } = loginZodSchema.safeParse(data);
+  const { success: isDataValid } = loginSchema.safeParse(data);
 
   if (!isDataValid) {
     return {

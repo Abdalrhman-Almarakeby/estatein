@@ -2,7 +2,7 @@ import { z } from "zod";
 import { INQUIRY_TYPES } from "@/constant";
 import { REFERRAL_SOURCE_VALUES } from "@/constant/referral-source";
 
-const inquiryZodSchema = z.object({
+const inquirySchema = z.object({
   firstName: z
     .string({
       required_error: "First Name is required",
@@ -57,6 +57,6 @@ const inquiryZodSchema = z.object({
   }),
 });
 
-type Inquiry = z.infer<typeof inquiryZodSchema>;
+type Inquiry = z.infer<typeof inquirySchema>;
 
-export { inquiryZodSchema, type Inquiry };
+export { inquirySchema, type Inquiry };

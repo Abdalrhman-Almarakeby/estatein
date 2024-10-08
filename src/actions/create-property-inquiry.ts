@@ -4,7 +4,7 @@ import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { PropertyInquiry, propertyInquiryZodSchema } from "@/lib/schemas";
+import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
@@ -37,8 +37,7 @@ export async function createPropertyInquiry(
     return { message: captchaMessage, success: false };
   }
 
-  const { success: isDataValid, error } =
-    propertyInquiryZodSchema.safeParse(data);
+  const { success: isDataValid, error } = propertyInquirySchema.safeParse(data);
 
   if (!isDataValid) {
     return { message: error.message, success: false };

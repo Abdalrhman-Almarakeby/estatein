@@ -4,7 +4,7 @@ import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { Inquiry, inquiryZodSchema } from "@/lib/schemas";
+import { Inquiry, inquirySchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
@@ -35,7 +35,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
     return { message: captchaMessage, success: false };
   }
 
-  const { success: isDataValid, error } = inquiryZodSchema.safeParse(data);
+  const { success: isDataValid, error } = inquirySchema.safeParse(data);
 
   if (!isDataValid) {
     return { message: error.message, success: false };

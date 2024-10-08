@@ -3,7 +3,7 @@
 import { WithCaptcha } from "@/types";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
-import { Email, emailZodSchema } from "@/lib/schemas";
+import { Email, emailSchema } from "@/lib/schemas";
 import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
@@ -34,7 +34,7 @@ export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
     return { message: captchaMessage, success: false };
   }
 
-  const { success: isDataValid, error } = emailZodSchema.safeParse(data);
+  const { success: isDataValid, error } = emailSchema.safeParse(data);
 
   if (!isDataValid) {
     return { message: error.message, success: false };
