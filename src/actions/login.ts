@@ -41,7 +41,7 @@ export async function login(data: WithCaptcha<Login>) {
   if (!captchaIsSuccess) {
     return {
       success: false,
-      message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
+      message: "Invalid login credentials, Please try again.",
     };
   }
 
@@ -64,14 +64,15 @@ export async function login(data: WithCaptcha<Login>) {
     if (!user) {
       return {
         success: false,
-        message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
+        message: "Invalid email or password, Please try again.",
       };
     }
 
     if (!user.isVerified) {
       return {
         success: false,
-        message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
+        message:
+          "Your account is not verified. Please check your email for the verification link.",
       };
     }
 
@@ -80,7 +81,7 @@ export async function login(data: WithCaptcha<Login>) {
     if (!isPasswordValid) {
       return {
         success: false,
-        message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
+        message: "Invalid email or password, Please try again.",
       };
     }
 
@@ -93,7 +94,7 @@ export async function login(data: WithCaptcha<Login>) {
   } catch (error) {
     return {
       success: false,
-      message: "An error occurred. Please try again later.",
+      message: "Something went wrong, Please try again later.",
     };
   }
 }
