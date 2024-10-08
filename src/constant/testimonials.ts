@@ -1,6 +1,4 @@
-import { Testimonial } from "@/types";
-
-export const TESTIMONIALS: Testimonial[] = [
+export const TESTIMONIALS = [
   {
     rating: 5,
     title: "Exceptional Service!",
