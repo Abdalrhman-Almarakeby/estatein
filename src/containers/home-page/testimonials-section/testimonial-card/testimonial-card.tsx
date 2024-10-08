@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Stars } from "@/components/ui/stars";
 import { Testimonial } from "@/types";
 import { toKebabCase } from "@/lib/utils";
+import { Stars } from "./stars";
 
 type TestimonialCardProps = Testimonial;
 
