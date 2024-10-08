@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { createElement } from "react";
-import { compare, hash } from "bcryptjs";
+import { hash } from "bcryptjs";
 import { randomBytes } from "crypto";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { WithCaptcha } from "@/types";
@@ -35,23 +35,23 @@ export async function signup(
   if (!rateLimitIsSuccess) {
     return {
       success: false,
-      message: "Too many inquiries, please try again later.",
+      message: "Too many signup attempts, please try again later.",
     };
   }
 
-  const { message: captchaMessage, success: captchaIsSuccess } =
+  const { success: captchaIsSuccess, message: captchaMessage } =
     await verifyCaptchaToken(data.captchaToken);
 
   if (!captchaIsSuccess) {
-    return { message: captchaMessage, success: false };
+    return { success: false, message: captchaMessage };
   }
 
   const { success: isDataValid } = signupZodSchema.safeParse(data);
 
   if (!isDataValid) {
     return {
-      message: "Credentials are not valid. Please try again.",
       success: false,
+      message: "Credentials are not valid. Please try again.",
     };
   }
 
@@ -87,84 +87,9 @@ export async function signup(
     });
 
     if (existingUser) {
-      const currentTime = new Date();
-
-      const isTokenExpired =
-        existingUser.emailVerificationExpires &&
-        currentTime > existingUser.emailVerificationExpires;
-
-      if (isTokenExpired) {
-        const newToken = randomBytes(32).toString("hex");
-        const newExpiryDate = new Date();
-        newExpiryDate.setHours(newExpiryDate.getHours() + 1);
-
-        await prisma.user.update({
-          where: { email: data.email },
-          data: {
-            emailVerificationToken: newToken,
-            emailVerificationExpires: newExpiryDate,
-          },
-        });
-
-        const verificationUrl = `${getBaseUrl()}/dashboard/auth/verify-email?token=${newToken}${callbackUrl ? `&callbackUrl=${callbackUrl}` : ""}`;
-
-        const template = createElement(DashboardVerificationEmail, {
-          username: existingUser.name,
-          verificationUrl,
-        });
-
-        await sendEmail({
-          to: data.email,
-          subject: "Verify your email (New Token)",
-          template,
-        });
-
-        return {
-          success: true,
-          message:
-            "Your verification token expired. A new verification email has been sent. Please check your email.",
-        };
-      }
-
-      if (existingUser.emailVerificationToken) {
-        const passwordMatches = await compare(
-          data.password,
-          existingUser.password,
-        );
-
-        if (!passwordMatches) {
-          const newPassword = await hash(data.password, 10);
-
-          await prisma.user.update({
-            where: { email: data.email },
-            data: { password: newPassword },
-          });
-        }
-
-        const verificationUrl = `${getBaseUrl()}/dashboard/auth/verify-email?token=${existingUser.emailVerificationToken}${callbackUrl ? `&callbackUrl=${callbackUrl}` : ""}`;
-
-        const template = createElement(DashboardVerificationEmail, {
-          username: existingUser.name,
-          verificationUrl,
-        });
-
-        await sendEmail({
-          to: data.email,
-          subject: "Verify your email",
-          template,
-        });
-
-        return {
-          success: true,
-          message:
-            "A new verification email has been sent. Please check your email.",
-        };
-      }
-
       return {
         success: false,
-        message:
-          "User with this email already exists. Please check your email for verification link or try logging in.",
+        message: "User with this email already exists, please try logging in.",
       };
     }
 
@@ -221,12 +146,12 @@ export async function signup(
     return {
       success: true,
       message:
-        "Signup successful! Please check your email to verify your account.",
+        "Signup successful! Please check your email to verify your email.",
     };
   } catch (error) {
     return {
       success: false,
-      message: "Something went wrong during signup, please try again later.",
+      message: "Something went wrong, please try again later.",
     };
   }
 }
