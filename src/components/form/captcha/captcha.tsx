@@ -2,7 +2,7 @@ import { RefObject } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { FieldError } from "@/components/form/field-error";
-import { useWindowSize } from "@/hooks";
+import { useWindowWidth } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { env } from "@/lib/env";
 
@@ -21,7 +21,7 @@ export function Captcha<T extends { captchaToken: string }>({
   size,
   className,
 }: CaptchaProps<T>) {
-  const { width } = useWindowSize();
+  const windowWidth = useWindowWidth();
 
   return (
     <div className={cn("grid size-full gap-2", className)}>
@@ -33,7 +33,9 @@ export function Captcha<T extends { captchaToken: string }>({
         name={"captchaToken" as Path<T>}
         render={({ field: { onChange } }) => (
           <ReCAPTCHA
-            size={size ?? (width > 400 ? "normal" : "compact")}
+            size={
+              size ?? (windowWidth && windowWidth > 400 ? "normal" : "compact")
+            }
             sitekey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
             ref={captchaRef}
             onChange={onChange}

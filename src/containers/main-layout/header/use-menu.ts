@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebounce, useWindowSize } from "@/hooks";
+import { useDebounce, useWindowWidth } from "@/hooks";
 
 const MIN_SCROLL_AMOUNT = 50;
 
 export function useMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const debouncedIsOpen = useDebounce(isOpen);
-  const windowSize = useWindowSize();
+  const windowWidth = useWindowWidth();
 
   const isMenuHidden = useMemo(() => {
-    return windowSize.width < 768 && !isOpen;
-  }, [isOpen, windowSize.width]);
+    return windowWidth && windowWidth < 768 && !isOpen;
+  }, [isOpen, windowWidth]);
 
   const toggle = useCallback(() => {
     return setIsOpen(!debouncedIsOpen);
@@ -38,7 +38,7 @@ export function useMenu() {
   }, [isOpen, setIsOpen]);
 
   return {
-    isMenuHidden,
+    isMenuHidden: !!isMenuHidden,
     isOpen,
     toggle,
   };

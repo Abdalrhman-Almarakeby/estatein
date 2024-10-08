@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
-import { useWindowSize } from "@/hooks";
+import { useWindowWidth } from "@/hooks";
 
 export function useImagesCarousel() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -8,7 +8,7 @@ export function useImagesCarousel() {
   const [emblaThumbsApi, setEmblaThumbsApi] = useState<CarouselApi | null>(
     null,
   );
-  const { width } = useWindowSize();
+  const windowWidth = useWindowWidth();
 
   const onThumbClick = useCallback(
     (index: number) => {
@@ -41,7 +41,7 @@ export function useImagesCarousel() {
       const isNext = index === selectedIndex + 1;
       const isPrev = index === selectedIndex - 1;
 
-      const isTwoSlidesInView = width > 767;
+      const isTwoSlidesInView = windowWidth && windowWidth > 767;
 
       if (isTwoSlidesInView) {
         const isLastSlide =
@@ -52,7 +52,7 @@ export function useImagesCarousel() {
 
       return isSelected;
     },
-    [emblaMainApi, selectedIndex, width],
+    [emblaMainApi, selectedIndex, windowWidth],
   );
 
   return {
