@@ -20,7 +20,7 @@ export function HeroSection() {
         paragraph="Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary. Over the years, we've expanded our reach, forged valuable partnerships, and gained the trust of countless clients."
         className="md:place-self-center"
       />
-      <section className="grid grid-cols-2 gap-3 text-center sm:grid-cols-3 md:order-3 md:col-span-2 lg:order-4 xl:col-span-1 xl:place-self-start 2xl:items-center">
+      <section className="grid gap-3 text-center xs:grid-cols-2 sm:grid-cols-3 md:order-3 md:col-span-2 lg:order-4 xl:col-span-1 xl:place-self-start 2xl:items-center">
         <Achievement
           achievement="200+"
           label="Happy Customer"
@@ -34,7 +34,7 @@ export function HeroSection() {
         <Achievement
           achievement="16+"
           label="Years Of Experience"
-          className="3xl:whitespace-nowrap 3xl:px-6"
+          className="xs:col-span-2 3xl:whitespace-nowrap 3xl:px-6"
         />
       </section>
     </section>
