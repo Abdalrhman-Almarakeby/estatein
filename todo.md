@@ -4,4 +4,6 @@
 
 - Write some simple documentation about the code and how to use it, edit, and deploy it.
 
+- Add a "Forget you password?" functionality
+
 - Create a page for reeding verification email
