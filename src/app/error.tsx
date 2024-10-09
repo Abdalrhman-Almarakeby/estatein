@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
 import { ERROR_PAGE_METADATA } from "@/constant";
-import "@/styles/global.css";
 
 type ErrorProps = {
   error: Error & { digest?: string };
