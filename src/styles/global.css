@@ -140,3 +140,12 @@
     @apply container space-y-20 lg:space-y-30;
   }
 }
+
+/* Styles applied when backdrop-filter is NOT supported in the broweser (eg. FireFox)*/
+@supports not (
+  (-webkit-backdrop-filter: blur(0px)) or (backdrop-filter: blur(0px))
+) {
+  #main-menu {
+    @apply bg-gray-darkest md:bg-transparent;
+  }
+}
