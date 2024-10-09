@@ -6,9 +6,9 @@ type NavbarProps = {
 
 export function Navbar({ links }: NavbarProps) {
   return (
-    <nav className="mb-14 space-y-2 text-purple-medium">
+    <nav className="grid place-content-start gap-2 text-purple-light">
       {links.map((link) => (
-        <a key={link} href={`#${toKebabCase(link)}`}>
+        <a key={link} href={`#${toKebabCase(link)}`} className="py-1 pe-2">
           {link}
         </a>
       ))}

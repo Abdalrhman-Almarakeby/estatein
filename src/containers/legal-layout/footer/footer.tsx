@@ -10,7 +10,7 @@ export function Footer() {
         <div className="mb-4 md:mb-0">
           <Link
             href="/#"
-            className="text-lg font-semibold text-purple-medium md:text-xl"
+            className="text-lg font-semibold text-purple-light md:text-xl"
           >
             Estatein
           </Link>
@@ -24,6 +24,7 @@ export function Footer() {
       <hr />
       <div className="text-center md:flex md:flex-col md:items-center">
         <p>@{year} Estatein. All Rights Reserved.</p>
+        {/* // TODO: */}
         <p>Last updated: May 15, 2024</p>
       </div>
     </footer>
