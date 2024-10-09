@@ -27,7 +27,7 @@ export function NavBar({ isOpen, isMenuHidden, toggle }: NavBarProps) {
         aria-label="Main menu"
         aria-hidden={isMenuHidden}
         className={cn(
-          "absolute top-0 z-50 flex h-svh w-svw flex-col items-center gap-5 self-stretch pt-20 text-3xl backdrop-blur-md md:static md:flex md:size-auto md:flex-row md:gap-1 md:pt-0 md:text-base md:backdrop-blur-none 2xl:gap-1.5",
+          "absolute top-0 z-50 flex h-dvh w-svw flex-col items-center gap-5 self-stretch pt-20 text-3xl backdrop-blur-md md:static md:flex md:size-auto md:flex-row md:gap-1 md:pt-0 md:text-base md:backdrop-blur-none 2xl:gap-1.5",
           isOpen
             ? "right-0 flex animate-menu-open"
             : "-right-[110%] hidden animate-menu-close",
