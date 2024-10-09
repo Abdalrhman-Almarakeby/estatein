@@ -118,8 +118,9 @@
   }
 
   /* style toast in react hoot toast */
+  /* added important to all of the classes to overide the library styles */
   .toast {
-    @apply rounded-md border-2 border-solid border-white bg-gray-dark text-white transition-all;
+    @apply !rounded-md !border-2 !border-solid !border-white !bg-gray-dark !text-white !transition-all;
   }
 
   /* badges */
