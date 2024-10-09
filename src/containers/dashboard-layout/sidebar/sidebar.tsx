@@ -3,7 +3,6 @@
 import { FileText, Home, Mail, Users } from "lucide-react";
 import { useDashboardSidebar } from "@/contexts/dashboard-sidebar";
 import { cn } from "@/lib/utils";
-import "@/styles/global.css";
 import { LogoutButton } from "./logout-button";
 import { SidebarItem } from "./sidebar-item";
 

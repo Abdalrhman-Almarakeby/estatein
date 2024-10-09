@@ -12,7 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import "@/styles/global.css";
 
 export function LogoutButton() {
   const [open, setOpen] = useState(false);

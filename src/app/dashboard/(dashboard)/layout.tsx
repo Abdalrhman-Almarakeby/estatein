@@ -6,7 +6,6 @@ import { Sidebar } from "@/containers/dashboard-layout/sidebar";
 import { DashboardSidebarContextProvider } from "@/contexts/dashboard-sidebar";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import "@/styles/global.css";
 
 type LayoutProps = {
   children: ReactNode;

@@ -7,11 +7,12 @@ export const metadata = TERMS_OF_SERVICE_PAGE_METADATA;
 
 export default function Page() {
   return (
-    <div className="container grid gap-8 pt-12">
-      <h1 className="text-4xl font-bold text-white">Terms of Service</h1>
-      <Navbar links={TERMS_OF_SERVICE.map(({ title }) => title)} />
-
-      <main className="grid gap-8">
+    <div className="container space-y-16 px-6 pt-12 sm:!container">
+      <header className="space-y-8">
+        <h1 className="text-4xl font-bold text-white">Terms of Service</h1>
+        <Navbar links={TERMS_OF_SERVICE.map(({ title }) => title)} />
+      </header>
+      <main>
         {TERMS_OF_SERVICE.map((sectionData) => (
           <Section key={sectionData.title} {...sectionData} />
         ))}

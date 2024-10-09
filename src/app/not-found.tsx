@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { NOT_FOUND_PAGE_METADATA } from "@/constant";
-import "@/styles/global.css";
 
 export const metadata = NOT_FOUND_PAGE_METADATA;
 
