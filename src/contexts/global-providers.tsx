@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { SessionProvider } from "next-auth/react";
 import { ToastContextProvider } from "./toast";
 
 type ProvidersProps = {
@@ -9,9 +8,5 @@ type ProvidersProps = {
 };
 
 export function GlobalProviders({ children }: ProvidersProps) {
-  return (
-    <SessionProvider>
-      <ToastContextProvider>{children}</ToastContextProvider>;
-    </SessionProvider>
-  );
+  return <ToastContextProvider>{children}</ToastContextProvider>;
 }
