@@ -24,8 +24,9 @@ export function Footer() {
       <hr />
       <div className="text-center md:flex md:flex-col md:items-center">
         <p>@{year} Estatein. All Rights Reserved.</p>
-        {/* // TODO: */}
-        <p>Last updated: May 15, 2024</p>
+        <p aria-label="This content was last updated on May 15, 2024">
+          Last updated: <time dateTime="2024-05-15">May 15, 2024</time>
+        </p>
       </div>
     </footer>
   );
