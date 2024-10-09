@@ -8,10 +8,10 @@ type ProvidersProps = {
   children: ReactNode;
 };
 
-export function Providers({ children }: ProvidersProps) {
+export function GlobalProviders({ children }: ProvidersProps) {
   return (
     <SessionProvider>
-      <ToastContextProvider>{children}</ToastContextProvider>
+      <ToastContextProvider>{children}</ToastContextProvider>;
     </SessionProvider>
   );
 }
