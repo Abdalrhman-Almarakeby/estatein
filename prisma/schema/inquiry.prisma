@@ -16,7 +16,6 @@ enum InquiryType {
   GENERAL
   PROPERTIES
   AGENT
-  INQUIRY
   OTHER
 }
 
@@ -25,6 +24,6 @@ enum ReferralSource {
   ADS
   SEARCH
   BUSINESS_PARTNER
-  FRIEND_FAMILY_MEMBER
+  FRIEND_OR_FAMILY_MEMBER
   OTHER
 }

@@ -146,9 +146,9 @@ export function ContactForm() {
                 <SelectValue placeholder="How did you hear about us?" />
               </SelectTrigger>
               <SelectContent>
-                {REFERRAL_SOURCE.map(({ label, value }) => (
-                  <SelectItem value={value} key={value}>
-                    {label}
+                {REFERRAL_SOURCE.map((source) => (
+                  <SelectItem value={source} key={source}>
+                    {source}
                   </SelectItem>
                 ))}
               </SelectContent>

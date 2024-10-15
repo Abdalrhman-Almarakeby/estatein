@@ -187,20 +187,20 @@ export function PropertiesInquiryForm() {
         )}
       </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
-        <label className="lg:text-lg 3xl:text-xl" htmlFor="num-of-rooms">
-          No. of Rooms
+        <label className="lg:text-lg 3xl:text-xl" htmlFor="num-of-bedrooms">
+          No. of Bedrooms
         </label>
         <Controller
-          name="numOfRooms"
+          name="bedrooms"
           control={control}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
-                id="num-of-rooms"
+                id="num-of-bedrooms"
                 ref={field.ref}
-                aria-label="Select No. of Rooms"
+                aria-label="Select No. of Bedrooms"
               >
-                <SelectValue placeholder="Select No. of Rooms" />
+                <SelectValue placeholder="Select No. of bedrooms" />
               </SelectTrigger>
               <SelectContent>
                 {Array.from({ length: 10 }).map((_, i) => (
@@ -213,9 +213,9 @@ export function PropertiesInquiryForm() {
           )}
         />
 
-        {errors.numOfRooms?.message && (
+        {errors.bedrooms?.message && (
           <FieldError className="!mt-1 2xl:text-base">
-            {errors.numOfRooms.message}
+            {errors.bedrooms.message}
           </FieldError>
         )}
       </fieldset>
@@ -224,7 +224,7 @@ export function PropertiesInquiryForm() {
           No. of Bathrooms
         </label>
         <Controller
-          name="numOfBathrooms"
+          name="bathrooms"
           control={control}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
@@ -245,9 +245,9 @@ export function PropertiesInquiryForm() {
             </Select>
           )}
         />
-        {errors.numOfBathrooms?.message && (
+        {errors.bathrooms?.message && (
           <FieldError className="!mt-1 2xl:text-base">
-            {errors.numOfBathrooms.message}
+            {errors.bathrooms.message}
           </FieldError>
         )}
       </fieldset>

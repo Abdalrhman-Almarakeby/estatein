@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INQUIRY_TYPES } from "@/constant";
-import { REFERRAL_SOURCE_VALUES } from "@/constant/referral-source";
+import { REFERRAL_SOURCE } from "@/constant/referral-source";
 
 export const inquirySchema = z.object({
   firstName: z
@@ -39,7 +39,7 @@ export const inquirySchema = z.object({
     required_error: "Inquiry Type is required",
     invalid_type_error: "Invalid Inquiry Type",
   }),
-  referralSource: z.enum(REFERRAL_SOURCE_VALUES, {
+  referralSource: z.enum(REFERRAL_SOURCE, {
     required_error: "An Option for How You Heard About Us is required",
     invalid_type_error: "Invalid option for how you heard about us",
   }),
