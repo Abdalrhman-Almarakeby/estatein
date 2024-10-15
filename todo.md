@@ -6,4 +6,6 @@
 
 - Add a "Forget you password?" functionality
 
-- Create a page for reeding verification email
+- Create a page for resending verification email
+
+- Use OTP for verifying email instead of links
