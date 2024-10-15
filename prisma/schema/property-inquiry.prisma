@@ -7,7 +7,7 @@ model PropertyInquiry {
   preferredLocation      String
   propertyType           PropertyType
   numOfBathrooms         Int
-  numOfRooms             Int
+  numOfBedrooms          Int
   budget                 String
   propertySize           String
   preferredContactMethod ContactMethod
