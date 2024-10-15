@@ -41,7 +41,7 @@ export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
   }
 
   try {
-    const existingSubscription = await prisma.newsletter.findUnique({
+    const existingSubscription = await prisma.newsletterSubscriber.findUnique({
       where: { email: data.email },
     });
 
@@ -49,7 +49,7 @@ export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
       return { message: "Email is already subscribed.", success: false };
     }
 
-    await prisma.newsletter.create({
+    await prisma.newsletterSubscriber.create({
       data: { email: data.email },
     });
 
