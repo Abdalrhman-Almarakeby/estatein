@@ -47,7 +47,7 @@ export const propertyInquirySchema = z.object({
     required_error: "Property type is required",
     invalid_type_error: "Invalid property type",
   }),
-  numOfBathrooms: z.string().refine(
+  bathrooms: z.string().refine(
     (value) => {
       const numberValue = Number(value);
       return !isNaN(numberValue) && numberValue >= 1 && numberValue <= 5;
@@ -56,7 +56,7 @@ export const propertyInquirySchema = z.object({
       message: "No. Of Bathrooms must be a number  between 1 and 5",
     },
   ),
-  numOfRooms: z.string().refine(
+  bedrooms: z.string().refine(
     (value) => {
       const numberValue = Number(value);
       return !isNaN(numberValue) && numberValue >= 1 && numberValue <= 10;

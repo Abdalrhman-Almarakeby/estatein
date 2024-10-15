@@ -69,8 +69,8 @@ export async function createPropertyInquiry(
     await prisma.propertyInquiry.create({
       data: {
         ...omit(data, "agreeOnTerms", "captchaToken"),
-        numOfBathrooms: +data.numOfBathrooms,
-        numOfRooms: +data.numOfRooms,
+        bathrooms: +data.bathrooms,
+        bedrooms: +data.bedrooms,
       },
     });
 

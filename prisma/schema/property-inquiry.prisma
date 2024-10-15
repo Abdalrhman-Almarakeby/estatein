@@ -6,8 +6,8 @@ model PropertyInquiry {
   phone                  String        @unique @db.VarChar(20)
   preferredLocation      String
   propertyType           PropertyType
-  numOfBathrooms         Int
-  numOfBedrooms          Int
+  bathrooms              Int
+  bedrooms               Int
   budget                 String
   propertySize           String
   preferredContactMethod ContactMethod

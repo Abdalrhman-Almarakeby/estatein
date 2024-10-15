@@ -191,7 +191,7 @@ export function PropertiesInquiryForm() {
           No. of Bedrooms
         </label>
         <Controller
-          name="numOfRooms"
+          name="bedrooms"
           control={control}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
@@ -213,9 +213,9 @@ export function PropertiesInquiryForm() {
           )}
         />
 
-        {errors.numOfRooms?.message && (
+        {errors.bedrooms?.message && (
           <FieldError className="!mt-1 2xl:text-base">
-            {errors.numOfRooms.message}
+            {errors.bedrooms.message}
           </FieldError>
         )}
       </fieldset>
@@ -224,7 +224,7 @@ export function PropertiesInquiryForm() {
           No. of Bathrooms
         </label>
         <Controller
-          name="numOfBathrooms"
+          name="bathrooms"
           control={control}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
@@ -245,9 +245,9 @@ export function PropertiesInquiryForm() {
             </Select>
           )}
         />
-        {errors.numOfBathrooms?.message && (
+        {errors.bathrooms?.message && (
           <FieldError className="!mt-1 2xl:text-base">
-            {errors.numOfBathrooms.message}
+            {errors.bathrooms.message}
           </FieldError>
         )}
       </fieldset>
