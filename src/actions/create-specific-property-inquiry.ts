@@ -21,10 +21,12 @@ export async function createSpecificPropertyInquiry(
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
+    {
+      prefix: `specific_property_inquiry_${data.propertyId}_ratelimit_`,
+    },
   );
 
-  const rateLimitKey = `ratelimit_${data.propertyId}_${ip}`;
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(rateLimitKey);
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
 
   if (!rateLimitIsSuccess) {
     return {
