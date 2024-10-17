@@ -4,6 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "http://estatein-preview.vercel.app",
+  "engineStrict": true,
+  "engines": {
+    "node": "22.x",
+    "npm": "10.x",
+    "yarn": "Please use npm with this project.",
+    "pnpm": "Please use npm with this project.",
+    "bun": "Please use npm with this project."
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
