@@ -9,7 +9,7 @@ import { PasswordInput } from "@/components/form/password-input";
 import { useLoginForm } from "./use-login-form";
 
 type LoginFormProps = {
-  callbackUrl?: string;
+  callbackUrl?: string | undefined;
 };
 
 export function LoginForm({ callbackUrl }: LoginFormProps) {

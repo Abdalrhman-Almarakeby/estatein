@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { LoginForm } from "@/containers/dashboard-auth-login-page/login-form";
+import { SearchParams } from "@/types";
 import { authOptions } from "@/lib/auth";
 
 type PageParams = {
-  searchParams: Record<"callbackUrl", string | undefined>;
+  searchParams: SearchParams;
 };
 
 export default async function Page({
@@ -18,7 +19,9 @@ export default async function Page({
 
   return (
     <>
-      <LoginForm callbackUrl={callbackUrl} />
+      <LoginForm
+        callbackUrl={typeof callbackUrl === "string" ? callbackUrl : undefined}
+      />
     </>
   );
 }
