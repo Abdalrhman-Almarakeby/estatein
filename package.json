@@ -6,7 +6,7 @@
   "homepage": "http://estatein-preview.vercel.app",
   "engineStrict": true,
   "engines": {
-    "node": "22.x",
+    "node": "20.x",
     "npm": "10.x",
     "yarn": "Please use npm with this project.",
     "pnpm": "Please use npm with this project.",
