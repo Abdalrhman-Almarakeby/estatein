@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { LogoutButton } from "./logout-button";
 import { SidebarItem } from "./sidebar-item";
 
-export function Sidebar({ isAdmin }: { isAdmin: boolean }) {
+export function Sidebar() {
   const { isSidebarOpen, setIsSidebarOpen } = useDashboardSidebar();
 
   return (
@@ -42,13 +42,6 @@ export function Sidebar({ isAdmin }: { isAdmin: boolean }) {
               icon={<Users className="size-5" />}
               label="Newsletters"
             />
-            {isAdmin && (
-              <SidebarItem
-                href="/dashboard/admin"
-                icon={<Users className="size-5" />}
-                label="Admin"
-              />
-            )}
           </nav>
           <LogoutButton />
         </div>

@@ -1,17 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { getServerSession } from "next-auth";
 import { cn } from "@/lib/utils";
-import { authOptions } from "@/lib/auth";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
-
-  if (session?.user) {
-    redirect("/dashboard");
-  }
-
   const cookieStore = cookies();
 
   const justSignedUp = cookieStore.get("just-signed-up");

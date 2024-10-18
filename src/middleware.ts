@@ -1,7 +1,20 @@
-import { MiddlewareConfig } from "next/server";
+import { createMiddleware, MiddlewareConfig } from "@rescale/nemo";
+import {
+  authMiddleware,
+  authMiddlewareMatcher,
+  blockedPageMiddleware,
+  blockedPageMiddlewareMatcher,
+  rateLimitMiddleware,
+  rateLimitMiddlewareMatcher,
+  unauthenticatedMiddleware,
+  unauthenticatedMiddlewareMatcher,
+} from "./middlewares";
 
-export { default } from "next-auth/middleware";
-
-export const config: MiddlewareConfig = {
-  matcher: ["/dashboard"],
+const middlewares: MiddlewareConfig = {
+  [authMiddlewareMatcher]: authMiddleware,
+  [rateLimitMiddlewareMatcher]: rateLimitMiddleware,
+  [blockedPageMiddlewareMatcher]: blockedPageMiddleware,
+  [unauthenticatedMiddlewareMatcher]: unauthenticatedMiddleware,
 };
+
+export default createMiddleware(middlewares);

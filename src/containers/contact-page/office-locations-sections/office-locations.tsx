@@ -6,13 +6,15 @@ import { cn } from "@/lib/utils";
 import { LOCATIONS, LOCATIONS_TYPE } from "@/constant";
 import { LocationCard } from "./location-card";
 
-type LocationsType = (typeof LOCATIONS_TYPE)[number];
-
 export function OfficeLocations() {
   const searchParams = useSearchParams();
 
+  const foo = searchParams.get("locationsType");
+
   const currentLocationsType =
-    (searchParams.get("locationsType") as LocationsType) || "all";
+    foo && (LOCATIONS_TYPE as ReadonlyArray<string>).includes(foo)
+      ? foo
+      : "all";
 
   const filteredLocations =
     currentLocationsType === "all"

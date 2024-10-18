@@ -15,10 +15,12 @@ export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
+    {
+      prefix: "newsletter_ratelimit_",
+    },
   );
 
-  const rateLimitKey = `ratelimit_${ip}`;
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(rateLimitKey);
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
 
   if (!rateLimitIsSuccess) {
     return {
