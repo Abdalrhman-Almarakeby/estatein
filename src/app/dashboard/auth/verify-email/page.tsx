@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import { SearchParams } from "@/types";
-import { authOptions } from "@/lib/auth";
 import { verifyEmail } from "@/lib/services";
 
 type PageParams = {
@@ -10,12 +8,6 @@ type PageParams = {
 };
 
 export default async function Page({ searchParams: { token } }: PageParams) {
-  const session = await getServerSession(authOptions);
-
-  if (session?.user) {
-    redirect("/dashboard");
-  }
-
   const { success, message } =
     token && !!token && typeof token === "string"
       ? await verifyEmail(token)

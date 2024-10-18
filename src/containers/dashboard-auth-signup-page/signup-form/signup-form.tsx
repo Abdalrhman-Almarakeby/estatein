@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Loader2, UserIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
@@ -8,11 +9,10 @@ import { Input } from "@/components/form/input";
 import { PasswordInput } from "@/components/form/password-input";
 import { useSignupForm } from "./use-signup-form";
 
-type SignupFormProps = {
-  callbackUrl?: string | undefined;
-};
+export function SignupForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
-export function SignupForm({ callbackUrl }: SignupFormProps) {
   const {
     onSubmit,
     formState: { errors },
@@ -20,7 +20,7 @@ export function SignupForm({ callbackUrl }: SignupFormProps) {
     register,
     captchaRef,
     isLoading,
-  } = useSignupForm(callbackUrl);
+  } = useSignupForm(callbackUrl ?? undefined);
 
   return (
     <>
