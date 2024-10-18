@@ -1,9 +1,19 @@
 import { NextResponse } from "next/server";
-import { withAuth } from "next-auth/middleware";
+import { MiddlewareFunctionProps } from "@rescale/nemo";
+import { getToken } from "next-auth/jwt";
 
-export function authMiddleware() {
-  // Type casting to satisfy the MiddlewareConfig type from @rescale/nemo
-  return withAuth() as NextResponse;
+export async function authMiddleware({ request }: MiddlewareFunctionProps) {
+  const token = await getToken({ req: request });
+  const isAuth = !!token;
+
+  if (!isAuth) {
+    const url = new URL("/dashboard/auth/login", request.url);
+
+    url.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
 }
 
-export const authMiddlewareMatcher = "/dashboard";
+export const authMiddlewareMatcher = "/dashboard/:path";
