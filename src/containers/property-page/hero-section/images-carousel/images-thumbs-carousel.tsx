@@ -51,6 +51,7 @@ export function ImagesThumbsCarousel({
               )}
               quality={90}
               onClick={() => onThumbClick(i)}
+              loading="eager"
             />
           </CarouselItem>
         ))}
