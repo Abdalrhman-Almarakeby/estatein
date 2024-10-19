@@ -38,6 +38,7 @@ export function ImagesCarousel({ images }: ImageCarouselProps) {
               height={420}
               quality={100}
               className="w-full rounded-lg object-cover"
+              loading="eager"
             />
           </CarouselItem>
         ))}
