@@ -1,11 +1,11 @@
 import { Property } from "@prisma/client";
 import { Section, SectionTitle } from "@/components/ui/section";
+import { DisclaimerBox } from "./disclaimer-box";
 import {
   getMonthlyCostsData,
   getPropertyAdditionalFees,
   getTotalInitialCostsData,
-} from "@/lib/utils";
-import { DisclaimerBox } from "./disclaimer-box";
+} from "./get-property-additional-fees";
 import { ListingPrice } from "./listing-price";
 import { PriceDetails } from "./price-details";
 
