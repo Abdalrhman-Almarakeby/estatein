@@ -1,11 +1,10 @@
 "use client";
 
+import { Mail, Send } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { cn } from "@/lib/utils";
-import MailPlusIconSVG from "@/assets/icons/email-plus.svg";
-import MailSendingIconSVG from "@/assets/icons/mail-sending.svg";
 import { useNewsletter } from "./use-newsletter-form";
 
 type NewsletterFormProps = {
@@ -23,8 +22,8 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
     >
       <p className="px-1 text-lg">Subscribe to our newsletter!</p>
       <div className="relative">
-        <MailPlusIconSVG
-          className="absolute left-5 top-1/2 -translate-y-1/2"
+        <Mail
+          className="absolute left-5 top-1/2 size-4 -translate-y-1/2 stroke-gray-light"
           aria-hidden="true"
         />
         <Input
@@ -38,7 +37,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
           type="submit"
           className="absolute right-5 top-1/2 -translate-y-1/2"
         >
-          <MailSendingIconSVG aria-hidden="true" />
+          <Send aria-hidden="true" />
           <span className="sr-only">Subscribe To Our News Letter</span>
         </button>
       </div>

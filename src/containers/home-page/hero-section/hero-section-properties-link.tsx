@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import DiagonalArrowIconSVG from "@/assets/icons/diagonal-arrow.svg";
 
 export function HeroSectionPropertiesLink() {
   const size = 95;
@@ -47,7 +47,7 @@ export function HeroSectionPropertiesLink() {
         aria-hidden="true"
         className="absolute right-1/2 top-1/2 grid size-14 -translate-y-1/2 translate-x-1/2 place-items-center rounded-full border bg-gray-darker"
       >
-        <DiagonalArrowIconSVG className="size-5 stroke-white" />
+        <ArrowUpRight className="size-5 stroke-white" />
       </span>
       <span className="sr-only">Browse Properties</span>
     </Link>

@@ -1,8 +1,10 @@
 import { ElementType } from "react";
-import FacebookLogoSVG from "@/assets/socialmedia/facebook.svg";
-import LinkedinLogoSVG from "@/assets/socialmedia/linkedin.svg";
-import XLogoSVG from "@/assets/socialmedia/x-twitter.svg";
-import YoutubeLogoSVG from "@/assets/socialmedia/youtube.svg";
+import {
+  SiFacebook,
+  SiLinkedin,
+  SiX,
+  SiYoutube,
+} from "@icons-pack/react-simple-icons";
 
 export const SOCIAL_LINKS: {
   href: string;
@@ -11,22 +13,22 @@ export const SOCIAL_LINKS: {
 }[] = [
   {
     href: "https://github.com/Abdalrhman-Almarakeby/estatein-frontend/",
-    Icon: FacebookLogoSVG,
+    Icon: SiFacebook,
     name: "Facebook",
   },
   {
     href: "https://github.com/Abdalrhman-Almarakeby/estatein-frontend/",
-    Icon: LinkedinLogoSVG,
+    Icon: SiLinkedin,
     name: "Linkedin",
   },
   {
     href: "https://github.com/Abdalrhman-Almarakeby/estatein-frontend/",
-    Icon: XLogoSVG,
+    Icon: SiX,
     name: "X",
   },
   {
     href: "https://github.com/Abdalrhman-Almarakeby/estatein-frontend/",
-    Icon: YoutubeLogoSVG,
+    Icon: SiYoutube,
     name: "Youtube",
   },
 ] as const;
