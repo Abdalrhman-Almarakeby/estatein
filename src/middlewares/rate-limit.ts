@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
+import { getUserIpAddress } from "@/lib/ip";
 import { createRateLimiter } from "@/lib/rate-limiter";
-import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 100;
 const RATE_LIMIT_WINDOW_DURATION = "300s";

@@ -2,10 +2,10 @@
 
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
+import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Inquiry, inquirySchema } from "@/lib/schemas";
-import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;

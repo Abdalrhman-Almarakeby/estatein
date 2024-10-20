@@ -8,10 +8,10 @@ import { DashboardVerificationEmail } from "@/components/emails/dashboard-verifi
 import { WithCaptcha } from "@/types";
 import { getBaseUrl } from "@/lib/utils";
 import { env } from "@/lib/env";
+import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
-import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 import { sendEmail, verifyCaptchaToken } from "@/services";
 
 const FIVE_MINUTES = 5 * 60;

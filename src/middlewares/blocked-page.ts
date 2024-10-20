@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+import { getUserIpAddress } from "@/lib/ip";
 import { globalRateLimit } from "@/middlewares/rate-limit";
 
 export async function blockedPageMiddleware() {

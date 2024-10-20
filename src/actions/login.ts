@@ -2,10 +2,10 @@
 
 import { compare } from "bcryptjs";
 import { WithCaptcha } from "@/types";
+import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
-import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 import { verifyCaptchaToken } from "@/services";
 
 const MAX_LOGIN_ATTEMPTS = 5;
