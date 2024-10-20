@@ -30,11 +30,8 @@ export function FiltersForm() {
               >
                 <SelectValue
                   placeholder={
-                    <span className="flex gap-2 text-gray-light">
-                      <Icon
-                        className="[&>*]:!fill-gray-light"
-                        aria-hidden="true"
-                      />
+                    <span className="flex items-center gap-2 text-gray-light">
+                      <Icon aria-hidden="true" className="size-4" />
                       {name}
                     </span>
                   }

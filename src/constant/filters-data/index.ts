@@ -1,8 +1,5 @@
+import { Banknote, Box, House, MapPin } from "lucide-react";
 import { formatWithComma, upperFirst } from "@/lib/utils";
-import CashIconSVG from "@/assets/icons/cash.svg";
-import CubeIconSVG from "@/assets/icons/cube.svg";
-import LocationIconSVG from "@/assets/icons/location.svg";
-import PropertyIconSVG from "@/assets/icons/property.svg";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTIES_TYPES } from "./properties-types";
@@ -12,7 +9,7 @@ export const FILTERING_DATA = [
   {
     name: "location",
     label: "Location",
-    Icon: LocationIconSVG,
+    Icon: MapPin,
     options: LOCATIONS.map((location) => ({
       label: upperFirst(location),
       value: location,
@@ -21,7 +18,7 @@ export const FILTERING_DATA = [
   {
     label: "Property Type",
     name: "propertyType",
-    Icon: PropertyIconSVG,
+    Icon: House,
     options: PROPERTIES_TYPES.map((type) => ({
       label: upperFirst(type),
       value: type,
@@ -30,7 +27,7 @@ export const FILTERING_DATA = [
   {
     label: "Pricing Range",
     name: "pricingRange",
-    Icon: CashIconSVG,
+    Icon: Banknote,
     options: PRICE_RANGES_BOUNDARIES.map(({ min, max }, i) => {
       const isLast = i === PRICE_RANGES_BOUNDARIES.length - 1;
 
@@ -45,7 +42,7 @@ export const FILTERING_DATA = [
   {
     label: "Property Size",
     name: "propertySize",
-    Icon: CubeIconSVG,
+    Icon: Box,
     options: PROPERTY_SIZES.map(({ min, max }, i) => {
       const isLast = i === PRICE_RANGES_BOUNDARIES.length - 1;
 

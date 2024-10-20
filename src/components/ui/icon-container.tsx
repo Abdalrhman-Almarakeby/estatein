@@ -1,6 +1,6 @@
 import { SVGcomponent } from "@/types";
 import { cn } from "@/lib/utils";
-import IconContainerSVG from "@/assets/icons/icon-container.svg";
+import IconContainerSVG from "@/assets/icon-container.svg";
 
 type IconContainerProps = {
   Icon: SVGcomponent;
@@ -15,7 +15,7 @@ export function IconContainer({
   return (
     <span className={cn("relative", className)} aria-hidden="true" {...props}>
       <IconContainerSVG className="size-12 animate-[spin_10s_linear]" />
-      <Icon className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 !fill-purple-light [&>*]:!fill-purple-light" />
+      <Icon className="absolute right-1/2 top-1/2 size-5 -translate-y-1/2 translate-x-1/2 stroke-purple-light" />
     </span>
   );
 }

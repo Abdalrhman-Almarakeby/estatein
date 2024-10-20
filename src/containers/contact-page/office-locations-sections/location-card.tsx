@@ -1,6 +1,4 @@
-import LocationSVG from "@/assets/icons/location.svg";
-import MailSVG from "@/assets/icons/mail.svg";
-import PhoneSVG from "@/assets/icons/phone.svg";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 type LocationCardProps = {
   label: string;
@@ -41,14 +39,16 @@ export function LocationCard({
           className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`Email ${contact.email}`}
         >
-          <MailSVG aria-hidden="true" /> {contact.email}
+          <Mail aria-hidden="true" className="size-4 text-purple-light" />{" "}
+          {contact.email}
         </a>
         <a
           href={`tel:${contact.phone}`}
           className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`Call ${contact.phone}`}
         >
-          <PhoneSVG aria-hidden="true" /> {contact.phone}
+          <Phone aria-hidden="true" className="size-4 text-purple-light" />{" "}
+          {contact.phone}
         </a>
         <a
           href={contact.location.link}
@@ -57,7 +57,8 @@ export function LocationCard({
           className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`View location of our office in ${contact.location.name}`}
         >
-          <LocationSVG aria-hidden="true" /> {contact.location.name}
+          <MapPin aria-hidden="true" className="size-4 text-purple-light" />{" "}
+          {contact.location.name}
         </a>
       </div>
       <a

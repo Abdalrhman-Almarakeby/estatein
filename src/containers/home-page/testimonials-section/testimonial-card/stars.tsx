@@ -1,5 +1,5 @@
+import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import StarSVG from "@/assets/icons/star.svg";
 
 type StarsProps = {
   num: number;
@@ -16,7 +16,7 @@ export function Stars({ num, className }: StarsProps) {
           role="img"
           aria-label="Star"
         >
-          <StarSVG />
+          <Star className="size-4 fill-yellow-400 stroke-yellow-400" />
         </span>
       ))}
       <div className="sr-only">{`${num} stars`}</div>

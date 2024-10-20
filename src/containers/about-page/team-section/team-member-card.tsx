@@ -1,7 +1,7 @@
 import { Route } from "next";
 import Image from "next/image";
+import { SiX } from "@icons-pack/react-simple-icons";
 import { toKebabCase } from "@/lib/utils";
-import TwitterIconSVG from "@/assets/socialmedia/x-twitter.svg";
 
 type TeamMemberCardProps = {
   twitterLink: Route;
@@ -34,7 +34,7 @@ export function TeamMemberCard({
           className="absolute bottom-0 left-1/2 grid h-10 w-15 -translate-x-1/2 translate-y-1/2 place-items-center rounded-full bg-purple-base"
           aria-label={`Follow ${name} on Twitter`}
         >
-          <TwitterIconSVG className="size-5 fill-white" />
+          <SiX className="size-5 fill-white" />
         </a>
       </div>
       <div className="space-y-2">

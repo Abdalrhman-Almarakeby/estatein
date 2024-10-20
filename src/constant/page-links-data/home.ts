@@ -1,27 +1,24 @@
-import BuildingsIconSVG from "@/assets/icons/buildings.svg";
-import CashIconSVG from "@/assets/icons/cash.svg";
-import HomeIconSVG from "@/assets/icons/home.svg";
-import SunIconSVG from "@/assets/icons/sun.svg";
+import { Banknote, Building2, House, Sun } from "lucide-react";
 
 export const HOME_PAGE_LINKS_DATA = [
   {
     to: "/properties",
-    Icon: HomeIconSVG,
+    Icon: House,
     label: "Find Your Dream Home",
   },
   {
     to: "/properties",
-    Icon: CashIconSVG,
+    Icon: Banknote,
     label: "Unlock Property Value",
   },
   {
     to: "/properties",
-    Icon: BuildingsIconSVG,
+    Icon: Building2,
     label: "Effortless Property Management",
   },
   {
     to: "/properties",
-    Icon: SunIconSVG,
+    Icon: Sun,
     label: "Smart Investments, Informed Decisions",
   },
 ] as const;

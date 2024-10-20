@@ -1,7 +1,5 @@
-import Image from "next/image";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import burgerIcon from "@/assets/icons/burger-menu.svg?url";
-import xIcon from "@/assets/icons/x-mark.svg?url";
 import { NavBar } from "./nav-bar";
 import { useMenu } from "./use-menu";
 
@@ -28,16 +26,17 @@ export function Header({ showHeader }: HeaderProps) {
           onClick={toggle}
           className="z-[99999] py-5 pl-5 md:hidden"
         >
-          <Image
-            src={isOpen ? xIcon : burgerIcon}
-            alt={
-              isOpen
-                ? "Close navigation menu."
-                : "Menu icon consisting of three horizontal white lines on a black background, which opens the navigation menu when clicked."
-            }
-            className="size-10"
-          />
-          <span className="sr-only">{isOpen ? "Close Menu" : "Open Menu"}</span>
+          {isOpen ? (
+            <>
+              <X className="size-8" />
+              <span className="sr-only">Close menu.</span>
+            </>
+          ) : (
+            <>
+              <Menu className="size-8" />
+              <span className="sr-only">Open menu.</span>
+            </>
+          )}
         </button>
       </div>
     </header>

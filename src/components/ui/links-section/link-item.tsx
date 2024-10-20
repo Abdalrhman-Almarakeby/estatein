@@ -1,9 +1,9 @@
+import { IconContainer } from "@/components/ui/icon-container";
+import { SVGcomponent } from "@/types";
+import { ArrowUpRight } from "lucide-react";
 import { Route } from "next";
 import Link from "next/link";
 import { HTMLAttributeAnchorTarget } from "react";
-import { IconContainer } from "@/components/ui/icon-container";
-import { SVGcomponent } from "@/types";
-import DiagonalArrowIconSVG from "@/assets/icons/diagonal-arrow.svg";
 
 type LinkItemProps = {
   to: Route;
@@ -29,7 +29,7 @@ export const LinkItem = ({
     >
       <IconContainer Icon={Icon} />
       <p className="text-center text-sm font-medium sm:text-base">{label}</p>
-      <DiagonalArrowIconSVG
+      <ArrowUpRight 
         className="absolute right-3 top-4 size-5 stroke-gray-medium lg:right-5 lg:top-6"
         role="img"
         aria-hidden="true"

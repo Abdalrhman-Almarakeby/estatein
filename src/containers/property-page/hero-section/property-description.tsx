@@ -1,7 +1,5 @@
+import { Bath, BedDouble, Grid2x2 } from "lucide-react";
 import { formatTwoDigits, formatWithComma } from "@/lib/utils";
-import AreaSVG from "@/assets/icons/area.svg";
-import BathSVG from "@/assets/icons/bath.svg";
-import BedSVG from "@/assets/icons/bed.svg";
 
 type PropertyDescriptionProps = {
   description: string;
@@ -28,7 +26,7 @@ export function PropertyDescription({
         <div className="grid grid-cols-2 gap-5 text-sm text-gray-light sm:col-span-2">
           <p className="grid gap-2 border-r">
             <span className="flex items-center gap-1">
-              <BedSVG className="[&_*]:!fill-gray-light" />
+              <BedDouble />
               Bedrooms
             </span>
             <span className="text-lg text-white">
@@ -38,7 +36,7 @@ export function PropertyDescription({
 
           <p className="grid gap-2 sm:border-r">
             <span className="flex items-center gap-1">
-              <BathSVG className="[&_*]:!fill-gray-light" />
+              <Bath />
               Bathrooms
             </span>
             <span className="text-lg text-white">
@@ -51,7 +49,7 @@ export function PropertyDescription({
 
         <p className="grid gap-2">
           <span className="flex items-center gap-1 text-sm text-gray-light">
-            <AreaSVG className="[&_*]:!fill-gray-light" />
+            <Grid2x2 />
             Area
           </span>
           <span className="text-lg text-white">

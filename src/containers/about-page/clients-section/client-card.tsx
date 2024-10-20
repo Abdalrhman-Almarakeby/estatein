@@ -1,5 +1,4 @@
-import BlocksIconSVG from "@/assets/icons/blocks.svg";
-import ThunderIconSVG from "@/assets/icons/thunder.svg";
+import { LayoutGrid, Zap } from "lucide-react";
 
 type ClientCardProps = {
   date: number;
@@ -41,14 +40,14 @@ export function ClientCard({
       <div className="grid grid-cols-2">
         <div className="space-y-1 border-r pr-4">
           <p className="text-primary flex items-center gap-0.5 text-xs">
-            <BlocksIconSVG aria-hidden="true" />
+            <LayoutGrid aria-hidden="true" className="size-4" />
             Domain
           </p>
           <p className="text-secondary">{domain}</p>
         </div>
         <div className="space-y-1 pl-4">
           <p className="text-primary flex items-center gap-0.5 text-xs">
-            <ThunderIconSVG aria-hidden="true" />
+            <Zap aria-hidden="true" className="size-4" />
             Category
           </p>
           <p className="text-secondary">{category}</p>
