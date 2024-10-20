@@ -1,5 +1,5 @@
 import { Banknote, Box, House, MapPin } from "lucide-react";
-import { formatWithComma, upperFirst } from "@/lib/utils";
+import { formatWithComma, normalize, upperFirst } from "@/lib/utils";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTIES_TYPES } from "./properties-types";
@@ -11,7 +11,7 @@ export const FILTERING_DATA = [
     label: "Location",
     Icon: MapPin,
     options: LOCATIONS.map((location) => ({
-      label: upperFirst(location),
+      label: upperFirst(normalize(location)),
       value: location,
     })),
   },
@@ -20,7 +20,7 @@ export const FILTERING_DATA = [
     name: "propertyType",
     Icon: House,
     options: PROPERTIES_TYPES.map((type) => ({
-      label: upperFirst(type),
+      label: upperFirst(normalize(type)),
       value: type,
     })),
   },

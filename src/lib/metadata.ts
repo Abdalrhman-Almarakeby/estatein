@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Property } from "@prisma/client";
-import { formatPrice, getBaseUrl, upperFirst } from "@/lib/utils";
+import { formatPrice, getBaseUrl, normalize, upperFirst } from "@/lib/utils";
 
 type PageMetadataOptions = {
   title: string;
@@ -60,15 +60,11 @@ export function generatePropertyPageMetadata(
   }: Property,
   metadata?: Partial<Metadata>,
 ) {
-  const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(
-    propertyType,
-  )} in ${location} - ${bathrooms} Bathrooms | ${
+  const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(normalize(propertyType))} in ${location} - ${bathrooms} Bathrooms | ${
     area
   } ft² | Priced at ${formatPrice(listingPrice)}`;
 
-  const description = `${property.description} This stunning ${upperFirst(
-    propertyType,
-  )} features ${bedrooms} bedrooms and ${
+  const description = `${property.description} This stunning ${upperFirst(normalize(propertyType))} features ${bedrooms} bedrooms and ${
     bathrooms
   } bathrooms, perfect for families and entertaining guests. Located in the heart of ${
     location
@@ -77,7 +73,7 @@ export function generatePropertyPageMetadata(
   } ft², and is priced at ${formatPrice(listingPrice)}.`;
 
   const keywords = [
-    upperFirst(propertyType),
+    upperFirst(normalize(propertyType)),
     `${bedrooms} bedrooms`,
     `${bathrooms} bathrooms`,
     location,

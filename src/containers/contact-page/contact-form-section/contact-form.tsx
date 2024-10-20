@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/form/select";
 import { Textarea } from "@/components/form/textarea";
-import { upperFirst } from "@/lib/utils";
+import { normalize, upperFirst } from "@/lib/utils";
 import { INQUIRY_TYPES, REFERRAL_SOURCE } from "@/constant";
 import { useContactForm } from "./use-contact-form";
 
@@ -112,7 +112,7 @@ export function ContactForm() {
               <SelectContent>
                 {INQUIRY_TYPES.map((element) => (
                   <SelectItem value={element} key={element}>
-                    {upperFirst(element)}
+                    {upperFirst(normalize(element))}
                   </SelectItem>
                 ))}
               </SelectContent>

@@ -16,6 +16,7 @@ import { Textarea } from "@/components/form/textarea";
 import {
   formatPricingRange,
   formatPropertySize,
+  normalize,
   upperFirst,
 } from "@/lib/utils";
 import {
@@ -270,7 +271,7 @@ export function PropertiesInquiryForm() {
               <SelectContent>
                 {["EMAIL", "PHONE"].map((element) => (
                   <SelectItem value={element} key={element}>
-                    {upperFirst(element)}
+                    {upperFirst(normalize(element))}
                   </SelectItem>
                 ))}
               </SelectContent>

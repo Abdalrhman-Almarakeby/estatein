@@ -1,5 +1,5 @@
 import { Bath, BedDouble, Building, Grid2x2 } from "lucide-react";
-import { upperFirst } from "@/lib/utils";
+import { normalize, upperFirst } from "@/lib/utils";
 
 type PropertyBadgesProps = {
   bedrooms: number;
@@ -24,9 +24,9 @@ export const PropertyBadges = ({
         <Bath aria-hidden="true" className="size-4" />{" "}
         <span>{bathrooms}-Bathroom</span>
       </span>
-      <span aria-label={upperFirst(propertyType)}>
+      <span aria-label={upperFirst(normalize(propertyType))}>
         <Building aria-hidden="true" className="size-4" />{" "}
-        <span>{upperFirst(propertyType)}</span>
+        <span>{upperFirst(normalize(propertyType))}</span>
       </span>
       <span aria-label={`${area} ft²`}>
         <Grid2x2 aria-hidden="true" className="size-4" />{" "}
