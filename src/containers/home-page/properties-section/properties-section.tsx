@@ -1,12 +1,12 @@
 import {
-  CarouselSection,
   CarouselItem,
+  CarouselSection,
 } from "@/components/ui/carousel-section";
 import {
   PropertyCard,
   PropertyCardSkeleton,
 } from "@/components/ui/property-card";
-import { getProperties } from "@/lib/utils";
+import { getProperties } from "@/data/properties";
 
 export async function PropertiesSection() {
   const properties = await getProperties();

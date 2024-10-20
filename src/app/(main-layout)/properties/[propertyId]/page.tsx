@@ -3,7 +3,8 @@ import { FAQsSection } from "@/components/ui/faqs-section";
 import { HeroSection } from "@/containers/property-page/hero-section";
 import { PricingSection } from "@/containers/property-page/pricing-section";
 import { SpecificPropertyInquiryFormSection } from "@/containers/property-page/specific-property-inquiry-form-section";
-import { generatePropertyPageMetadata, getProperty } from "@/lib/utils";
+import { generatePropertyPageMetadata } from "@/lib/utils";
+import { getProperty } from "@/data/properties";
 
 type PageParams = {
   params: { propertyId: string };

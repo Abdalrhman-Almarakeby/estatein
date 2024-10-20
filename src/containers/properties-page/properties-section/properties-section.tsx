@@ -1,4 +1,4 @@
-import { getProperties } from "@/lib/utils";
+import { getProperties } from "@/data/properties";
 import { PropertiesCards } from "./properties-cards";
 
 export async function PropertiesSection() {
