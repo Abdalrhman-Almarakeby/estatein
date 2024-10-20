@@ -2,8 +2,8 @@
 
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
-import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
+import { createRateLimiter } from "@/lib/rate-limiter";
 import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
 import { verifyCaptchaToken } from "@/services";
