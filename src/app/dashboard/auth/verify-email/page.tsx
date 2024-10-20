@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SearchParams } from "@/types";
-import { verifyEmail } from "@/lib/services";
+import { verifyEmail } from "@/services";
 
 type PageParams = {
   searchParams: SearchParams;

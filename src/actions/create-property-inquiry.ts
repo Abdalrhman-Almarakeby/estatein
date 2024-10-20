@@ -5,8 +5,8 @@ import { omit } from "@/lib/utils";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
 import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
-import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
 const RATE_LIMIT_WINDOW_DURATION = "1h";

@@ -5,8 +5,8 @@ import { WithCaptcha } from "@/types";
 import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { prisma } from "@/lib/prisma";
 import { Login, loginSchema } from "@/lib/schemas";
-import { verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+import { verifyCaptchaToken } from "@/services";
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOGIN_ATTEMPTS_WINDOW = "30m";

@@ -11,8 +11,8 @@ import { createRateLimiter } from "@/lib/create-rate-limiter";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { Signup, signupSchema } from "@/lib/schemas";
-import { sendEmail, verifyCaptchaToken } from "@/lib/services";
 import { getUserIpAddress } from "@/lib/utils/get-user-ip-address";
+import { sendEmail, verifyCaptchaToken } from "@/services";
 
 const FIVE_MINUTES = 5 * 60;
 
