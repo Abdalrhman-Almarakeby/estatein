@@ -1,4 +1,4 @@
-import { generateMetadata } from "@/lib/utils";
+import { generateMetadata } from "@/lib/metadata";
 
 export const NOT_FOUND_PAGE_METADATA = generateMetadata({
   title: "404 Not Found - Estatein",

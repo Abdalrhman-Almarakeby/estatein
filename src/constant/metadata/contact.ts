@@ -1,4 +1,4 @@
-import { generateMetadata } from "@/lib/utils";
+import { generateMetadata } from "@/lib/metadata";
 
 export const CONTACT_PAGE_METADATA = generateMetadata({
   title: "Contact Estatein | Get in Touch for Real Estate Assistance",

@@ -1,4 +1,4 @@
-import { generateMetadata } from "@/lib/utils";
+import { generateMetadata } from "@/lib/metadata";
 
 export const ERROR_PAGE_METADATA = generateMetadata({
   title: "Error - Estatein",

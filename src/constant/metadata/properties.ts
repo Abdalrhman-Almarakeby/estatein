@@ -1,4 +1,4 @@
-import { generateMetadata } from "@/lib/utils";
+import { generateMetadata } from "@/lib/metadata";
 
 export const PROPERTIES_PAGE_METADATA = generateMetadata({
   title: "Properties - Estatein | Discover the Best Real Estate Listings",
