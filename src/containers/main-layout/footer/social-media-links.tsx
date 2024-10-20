@@ -1,22 +1,17 @@
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
 import { SOCIAL_LINKS } from "@/constant";
+import { cn } from "@/lib/utils";
 
 type SocialMediaLinksProps = {
   className?: string;
 };
 
-export const SocialMediaLinks = forwardRef<
-  HTMLDivElement,
-  SocialMediaLinksProps
->(({ className }, ref) => {
+export function SocialMediaLinks({ className }: SocialMediaLinksProps) {
   return (
     <div
       className={cn(
         "mb-5 flex justify-center gap-2 md:order-3 md:mb-0 md:ml-auto",
         className,
       )}
-      ref={ref}
     >
       {SOCIAL_LINKS.map(({ href, name, Icon }) => (
         <a
@@ -35,6 +30,4 @@ export const SocialMediaLinks = forwardRef<
       ))}
     </div>
   );
-});
-
-SocialMediaLinks.displayName = "SocialMediaLinks";
+}

@@ -2,10 +2,7 @@ import {
   CarouselItem,
   CarouselSection,
 } from "@/components/ui/carousel-section";
-import {
-  PropertyCard,
-  PropertyCardSkeleton,
-} from "@/components/ui/property-card";
+import { PropertyCard } from "@/components/ui/property-card";
 import { getProperties } from "@/data/properties";
 
 export async function PropertiesSection() {
@@ -19,23 +16,16 @@ export async function PropertiesSection() {
       link="/properties"
       sectionName="Properties"
     >
-      {properties &&
-        properties.map((propertyData) => {
-          return (
-            <CarouselItem
-              key={propertyData.id}
-              className="md:basis-1/2 md:pl-5 xl:basis-1/3"
-            >
-              <PropertyCard {...propertyData} />
-            </CarouselItem>
-          );
-        })}
-      {!properties &&
-        Array.from({ length: 10 }).map((_, i) => (
-          <CarouselItem key={i} className="md:basis-1/2 md:pl-5 xl:basis-1/3">
-            <PropertyCardSkeleton />
+      {properties.map((propertyData) => {
+        return (
+          <CarouselItem
+            key={propertyData.id}
+            className="md:basis-1/2 md:pl-5 xl:basis-1/3"
+          >
+            <PropertyCard {...propertyData} />
           </CarouselItem>
-        ))}
+        );
+      })}
     </CarouselSection>
   );
 }
