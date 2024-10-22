@@ -8,7 +8,7 @@ export async function unauthenticatedMiddleware({
   const token = await getToken({ req: request });
 
   if (token) {
-    return NextResponse.redirect("/dashboard");
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();

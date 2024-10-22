@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { MiddlewareFunctionProps } from "@rescale/nemo";
 import { getUserIpAddress } from "@/lib/ip";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserAgent } from "@/lib/user-agent";
@@ -11,7 +12,9 @@ export const globalRateLimit = createRateLimiter(
   RATE_LIMIT_WINDOW_DURATION,
 );
 
-export async function rateLimitMiddleware() {
+export async function rateLimitMiddleware({
+  request,
+}: MiddlewareFunctionProps) {
   const ip = getUserIpAddress();
   const { ua: userAgent } = getUserAgent();
 
@@ -19,7 +22,9 @@ export async function rateLimitMiddleware() {
 
   const { success } = await globalRateLimit.limit(limitKey);
 
-  return success ? NextResponse.next() : NextResponse.redirect("/blocked");
+  return success
+    ? NextResponse.next()
+    : NextResponse.redirect(new URL("/blocked", request.url));
 }
 
-export const rateLimitMiddlewareMatcher = "/";
+export const rateLimitMiddlewareMatcher = "*";
