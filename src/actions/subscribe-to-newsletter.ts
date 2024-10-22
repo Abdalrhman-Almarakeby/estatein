@@ -5,6 +5,7 @@ import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -12,15 +13,16 @@ const RATE_LIMIT_WINDOW_DURATION = "1h";
 
 export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: "newsletter_ratelimit_",
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const limitKey = `subscribe_to_newsletter_ratelimit_${ip}_${userAgent}`;
+
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {

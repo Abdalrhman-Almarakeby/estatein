@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getUserIpAddress } from "@/lib/ip";
 import { createRateLimiter } from "@/lib/rate-limiter";
+import { getUserAgent } from "@/lib/user-agent";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 100;
 const RATE_LIMIT_WINDOW_DURATION = "300s";
@@ -8,15 +9,15 @@ const RATE_LIMIT_WINDOW_DURATION = "300s";
 export const globalRateLimit = createRateLimiter(
   RATE_LIMIT_MAX_ATTEMPTS,
   RATE_LIMIT_WINDOW_DURATION,
-  {
-    prefix: "global_ratelimit_",
-  },
 );
 
 export async function rateLimitMiddleware() {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
 
-  const { success } = await globalRateLimit.limit(ip);
+  const limitKey = `global_ratelimit_${ip}_${userAgent}`;
+
+  const { success } = await globalRateLimit.limit(limitKey);
 
   return success ? NextResponse.next() : NextResponse.redirect("/blocked");
 }

@@ -6,6 +6,7 @@ import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -15,15 +16,16 @@ export async function createPropertyInquiry(
   data: WithCaptcha<PropertyInquiry>,
 ) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: "property_inquiry_ratelimit_",
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const limitKey = `property_inquiry_ratelimit_${ip}_${userAgent}`;
+
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {
