@@ -9,6 +9,7 @@ import {
   SpecificPropertyInquiry,
   specificPropertyInquirySchema,
 } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 1;
@@ -18,15 +19,15 @@ export async function createSpecificPropertyInquiry(
   data: WithCaptcha<SpecificPropertyInquiry>,
 ) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+  const limitKey = `specific_property_inquiry_${data.propertyId}_ratelimit_${ip}_${userAgent}`;
+
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: `specific_property_inquiry_${data.propertyId}_ratelimit_`,
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {
