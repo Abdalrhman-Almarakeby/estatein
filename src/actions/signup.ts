@@ -27,12 +27,11 @@ export async function signup(
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: "signup_ratelimit_",
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const limitKey = `signup_ratelimit_${ip}`;
+
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {

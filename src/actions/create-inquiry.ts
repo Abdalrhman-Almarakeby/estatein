@@ -16,12 +16,11 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: "inquiry_ratelimit_",
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const limitKey = `inquiry_ratelimit_${ip}`;
+
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {

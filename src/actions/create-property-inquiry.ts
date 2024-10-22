@@ -18,12 +18,11 @@ export async function createPropertyInquiry(
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
-    {
-      prefix: "property_inquiry_ratelimit_",
-    },
   );
 
-  const { success: rateLimitIsSuccess } = await rateLimit.limit(ip);
+  const limitKey = `property_inquiry_ratelimit_${ip}`;
+
+  const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     return {

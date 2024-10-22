@@ -16,16 +16,15 @@ export async function login(data: WithCaptcha<Login>) {
   const rateLimit = createRateLimiter(
     MAX_LOGIN_ATTEMPTS,
     LOGIN_ATTEMPTS_WINDOW,
-    {
-      prefix: "login_ratelimit_",
-    },
   );
+
+  const limitKey = `login_ratelimit_${ip}`;
 
   const {
     success: rateLimitIsSuccess,
     reset,
     remaining,
-  } = await rateLimit.limit(ip);
+  } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
     const remainingMinutes = Math.ceil((reset - Date.now()) / (1000 * 60));

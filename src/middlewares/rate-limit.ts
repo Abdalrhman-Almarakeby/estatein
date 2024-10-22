@@ -8,15 +8,14 @@ const RATE_LIMIT_WINDOW_DURATION = "300s";
 export const globalRateLimit = createRateLimiter(
   RATE_LIMIT_MAX_ATTEMPTS,
   RATE_LIMIT_WINDOW_DURATION,
-  {
-    prefix: "global_ratelimit_",
-  },
 );
 
 export async function rateLimitMiddleware() {
   const ip = getUserIpAddress();
 
-  const { success } = await globalRateLimit.limit(ip);
+  const limitKey = `global_ratelimit_${ip}`;
+
+  const { success } = await globalRateLimit.limit(limitKey);
 
   return success ? NextResponse.next() : NextResponse.redirect("/blocked");
 }
