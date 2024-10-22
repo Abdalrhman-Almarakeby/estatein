@@ -6,6 +6,7 @@ import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Inquiry, inquirySchema } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { verifyCaptchaToken } from "@/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -13,12 +14,14 @@ const RATE_LIMIT_WINDOW_DURATION = "1h";
 
 export async function createInquiry(data: WithCaptcha<Inquiry>) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
   );
 
-  const limitKey = `inquiry_ratelimit_${ip}`;
+  const limitKey = `inquiry_ratelimit_${ip}_${userAgent}`;
 
   const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 

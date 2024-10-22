@@ -6,6 +6,7 @@ import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { verifyCaptchaToken } from "@/services";
 
 const MAX_LOGIN_ATTEMPTS = 5;
@@ -13,12 +14,14 @@ const LOGIN_ATTEMPTS_WINDOW = "30m";
 
 export async function login(data: WithCaptcha<Login>) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+
   const rateLimit = createRateLimiter(
     MAX_LOGIN_ATTEMPTS,
     LOGIN_ATTEMPTS_WINDOW,
   );
 
-  const limitKey = `login_ratelimit_${ip}`;
+  const limitKey = `login_ratelimit_${ip}_${userAgent}`;
 
   const {
     success: rateLimitIsSuccess,

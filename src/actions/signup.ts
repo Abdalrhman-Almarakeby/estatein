@@ -12,6 +12,7 @@ import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
+import { getUserAgent } from "@/lib/user-agent";
 import { sendEmail, verifyCaptchaToken } from "@/services";
 
 const FIVE_MINUTES = 5 * 60;
@@ -24,12 +25,14 @@ export async function signup(
   callbackUrl?: string | undefined,
 ) {
   const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+
   const rateLimit = createRateLimiter(
     RATE_LIMIT_MAX_ATTEMPTS,
     RATE_LIMIT_WINDOW_DURATION,
   );
 
-  const limitKey = `signup_ratelimit_${ip}`;
+  const limitKey = `signup_ratelimit_${ip}_${userAgent}`;
 
   const { success: rateLimitIsSuccess } = await rateLimit.limit(limitKey);
 
