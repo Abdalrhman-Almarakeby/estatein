@@ -11,8 +11,8 @@ import {
 } from "./middlewares";
 
 const middlewares: MiddlewareConfig = {
-  [authMiddlewareMatcher]: authMiddleware,
   [rateLimitMiddlewareMatcher]: rateLimitMiddleware,
+  [authMiddlewareMatcher]: authMiddleware,
   [blockedPageMiddlewareMatcher]: blockedPageMiddleware,
   [unauthenticatedMiddlewareMatcher]: unauthenticatedMiddleware,
 };
