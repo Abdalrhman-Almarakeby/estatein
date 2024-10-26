@@ -27,4 +27,5 @@ export async function rateLimitMiddleware({
     : NextResponse.redirect(new URL("/blocked", request.url));
 }
 
-export const rateLimitMiddlewareMatcher = "*";
+export const rateLimitMiddlewareMatcher =
+  "/((?!api|_next/static|_next/image|favicon.ico).*)";

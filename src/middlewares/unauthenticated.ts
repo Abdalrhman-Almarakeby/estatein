@@ -14,4 +14,4 @@ export async function unauthenticatedMiddleware({
   return NextResponse.next();
 }
 
-export const unauthenticatedMiddlewareMatcher = "/dashboard/auth";
+export const unauthenticatedMiddlewareMatcher = "/dashboard/auth(.*)";
