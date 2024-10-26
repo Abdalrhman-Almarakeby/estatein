@@ -1,5 +1,5 @@
 import { Duration, Ratelimit, RatelimitConfig } from "@upstash/ratelimit";
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
 
 export function createRateLimiter(
   limit: number,
@@ -7,7 +7,7 @@ export function createRateLimiter(
   config?: Partial<Omit<RatelimitConfig, "redis" | "limiter">>,
 ) {
   return new Ratelimit({
-    redis: kv,
+    redis: Redis.fromEnv(),
     limiter: Ratelimit.slidingWindow(limit, window),
     enableProtection: true,
     ...config,
