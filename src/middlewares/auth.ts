@@ -16,4 +16,4 @@ export async function authMiddleware({ request }: MiddlewareFunctionProps) {
   return NextResponse.next();
 }
 
-export const authMiddlewareMatcher = "/dashboard/:path";
+export const authMiddlewareMatcher = "/dashboard((?!/auth).*)";
