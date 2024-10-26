@@ -25,15 +25,8 @@ export function LinksSection({ linksData, className }: LinksSectionProps) {
         className,
       )}
     >
-      {linksData.map(({ to, Icon, label, target, ariaLabel }) => (
-        <LinkItem
-          key={label}
-          to={to}
-          Icon={Icon}
-          label={label}
-          target={target}
-          ariaLabel={ariaLabel}
-        />
+      {linksData.map((linkData) => (
+        <LinkItem key={linkData.label} {...linkData} />
       ))}
     </section>
   );
