@@ -28,4 +28,4 @@ export async function rateLimitMiddleware({
 }
 
 export const rateLimitMiddlewareMatcher =
-  "/((?!api|_next/static|_next/image|favicon.ico).*)";
+  "/((?!api|blocked|_next/static|_next/image|favicon.ico).*)";
