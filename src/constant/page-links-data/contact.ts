@@ -24,6 +24,7 @@ export const CONTACT_PAGE_LINKS_DATA = [
   {
     to: "https://facebook.com",
     Icon: SiFacebook,
+    iconProps: { className: "fill-purple-light" },
     label: "Facebook",
     target: "_blank",
     ariaLabel: "Estatein Facebook Page",
