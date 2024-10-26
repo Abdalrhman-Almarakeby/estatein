@@ -12,13 +12,17 @@ export const globalRateLimit = createRateLimiter(
   RATE_LIMIT_WINDOW_DURATION,
 );
 
+export function getGlobalRateLimitKey(ip: string, userAgent: string) {
+  return `global_ratelimit_${ip}_${userAgent}`;
+}
+
 export async function rateLimitMiddleware({
   request,
 }: MiddlewareFunctionProps) {
   const ip = getUserIpAddress();
   const { ua: userAgent } = getUserAgent();
 
-  const limitKey = `global_ratelimit_${ip}_${userAgent}`;
+  const limitKey = getGlobalRateLimitKey(ip, userAgent);
 
   const { success } = await globalRateLimit.limit(limitKey);
 
