@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 
-export default async function Page() {
+export default function Page() {
   return (
     <main className="mx-auto flex h-svh flex-col place-items-center items-center px-4 py-8 text-center lg:px-6 lg:py-16">
       <div className="flex flex-1 flex-col items-center justify-center">

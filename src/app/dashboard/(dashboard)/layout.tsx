@@ -7,7 +7,7 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-export default async function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-svh flex-col overflow-x-hidden bg-gray-darkest text-white contain-paint lg:flex-row">
       <DashboardSidebarContextProvider>
