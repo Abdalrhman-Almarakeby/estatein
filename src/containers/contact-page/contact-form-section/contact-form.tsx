@@ -41,7 +41,7 @@ export function ContactForm() {
             {errors.firstName.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="last-name">
           Last Name
@@ -57,7 +57,7 @@ export function ContactForm() {
             {errors.lastName.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="email">
           Email
@@ -73,7 +73,7 @@ export function ContactForm() {
             {errors.email.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="phone">
           Phone
@@ -89,7 +89,7 @@ export function ContactForm() {
             {errors.phone.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="inquiry-type">
           Inquiry Type
@@ -125,7 +125,7 @@ export function ContactForm() {
             {errors.inquiryType.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="referralSource">
           How did you hear about us?
@@ -161,7 +161,7 @@ export function ContactForm() {
             {errors.referralSource.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <fieldset className="space-y-2.5 md:col-span-2 lg:space-y-4 xl:col-span-3">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="message">
           Message
@@ -177,13 +177,13 @@ export function ContactForm() {
             {errors.message.message}
           </FieldError>
         )}
-      </fieldset>{" "}
+      </fieldset>
       <Captcha
         className="md:col-span-2 xl:col-span-3"
         captchaRef={captchaRef}
         control={control}
         error={errors.captchaToken?.message}
-      />{" "}
+      />
       <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:justify-between xl:col-span-3">
         <AgreeOnTerms
           {...register("agreeOnTerms")}
