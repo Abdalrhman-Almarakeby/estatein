@@ -149,7 +149,7 @@ export function ContactForm() {
               <SelectContent>
                 {REFERRAL_SOURCE.map((source) => (
                   <SelectItem value={source} key={source}>
-                    {source}
+                    {upperFirst(normalize(source))}
                   </SelectItem>
                 ))}
               </SelectContent>
