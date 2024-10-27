@@ -29,8 +29,8 @@ export function NavBar({ isOpen, isMenuHidden, toggle }: NavBarProps) {
         className={cn(
           "absolute top-0 z-50 flex h-dvh w-svw flex-col items-center gap-5 self-stretch pt-20 text-3xl backdrop-blur-md md:static md:flex md:size-auto md:flex-row md:gap-1 md:pt-0 md:text-base md:backdrop-blur-none 2xl:gap-1.5",
           isOpen
-            ? "right-0 flex animate-menu-open"
-            : "-right-[110%] hidden animate-menu-close",
+            ? "right-0 flex motion-safe:animate-menu-open"
+            : "-right-[110%] hidden motion-safe:animate-menu-close",
         )}
       >
         <Link

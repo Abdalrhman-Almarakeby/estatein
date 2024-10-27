@@ -17,7 +17,7 @@ export function IconContainer({
 }: IconContainerProps) {
   return (
     <span className={cn("relative", className)} aria-hidden="true" {...props}>
-      <IconContainerSVG className="size-12 animate-[spin_10s_linear]" />
+      <IconContainerSVG className="size-12 motion-safe:animate-[spin_10s_linear]" />
       <Icon
         {...(iconProps ? { ...omit(iconProps, "className") } : {})}
         className={cn(
