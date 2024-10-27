@@ -83,6 +83,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwind-container-break-out")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-container-break-out"),
+  ],
 };
 export default config;
