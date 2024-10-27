@@ -140,7 +140,7 @@ export function PropertiesInquiryForm() {
               <SelectContent>
                 {PROPERTY_TYPE_OPTIONS.map((option) => (
                   <SelectItem value={option} key={option}>
-                    {option}
+                    {upperFirst(normalize(option))}
                   </SelectItem>
                 ))}
               </SelectContent>
