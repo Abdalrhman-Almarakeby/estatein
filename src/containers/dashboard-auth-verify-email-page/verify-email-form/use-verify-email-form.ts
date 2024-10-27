@@ -4,40 +4,34 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
-import { Signup, signupSchema } from "@/lib/schemas";
+import { Otp, otpSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { signup } from "@/actions";
+import { verifyEmail } from "@/actions";
 
-export function useSignupForm(callbackUrl?: string) {
-  const router = useRouter();
+export function useVerifyEmailForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
+
   const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Signup>
+    WithCaptcha<Otp>
   >({
-    resolver: zodResolver(
-      signupSchema
-        .merge(captchaSchema)
-        .refine((data) => data.password === data.confirmPassword, {
-          message: "Passwords must match",
-          path: ["confirmPassword"],
-        }),
-    ),
+    resolver: zodResolver(otpSchema.merge(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
+  const router = useRouter();
 
   const onSubmit = useCallback(
-    async (data: WithCaptcha<Signup>) => {
+    async (data: WithCaptcha<Otp>) => {
       setIsLoading(true);
       captchaRef.current?.reset();
       setValue("captchaToken", "", { shouldDirty: true });
 
-      const { success, message } = await signup(data);
+      const { success, message } = await verifyEmail(data);
 
       if (success) {
         const params = callbackUrl && new URLSearchParams({ callbackUrl });
 
         const url =
-          `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
+          `/dashboard/auth/login${params ? (`?${params.toString()}` as const) : ""}` as const;
 
         router.push(url);
       } else {
@@ -45,7 +39,7 @@ export function useSignupForm(callbackUrl?: string) {
         setIsLoading(false);
       }
     },
-    [callbackUrl, setValue, setError, router],
+    [setValue, callbackUrl, router, setError],
   );
 
   return {

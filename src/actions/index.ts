@@ -4,3 +4,4 @@ export * from "./create-specific-property-inquiry";
 export * from "./login";
 export * from "./signup";
 export * from "./subscribe-to-newsletter";
+export * from "./verify-email";

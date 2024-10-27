@@ -93,7 +93,7 @@ export function LoginForm() {
             <Link
               href={{
                 pathname: "/dashboard/auth/signup",
-                query: { callbackUrl: callbackUrl ?? undefined },
+                query: callbackUrl ? { callbackUrl: callbackUrl } : undefined,
               }}
             >
               Create an account
