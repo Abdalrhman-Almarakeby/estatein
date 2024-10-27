@@ -9,7 +9,6 @@ export const inquirySchema = z.object({
       invalid_type_error: "Invalid First Name",
     })
     .min(1, "First Name is required")
-    .min(3, "First name must be at least 3 characters long")
     .max(30, "First name must be at most 30 characters long"),
   lastName: z
     .string({
@@ -17,7 +16,6 @@ export const inquirySchema = z.object({
       invalid_type_error: "Invalid Last Name",
     })
     .min(1, "Last Name is required")
-    .min(3, "Last name must be at least 3 characters long")
     .max(30, "Last name must be at most 30 characters long"),
   email: z
     .string({
@@ -49,7 +47,7 @@ export const inquirySchema = z.object({
       invalid_type_error: "Invalid Message",
     })
     .min(1, "Message is required")
-    .max(500, "Message must be at most 500 characters long"),
+    .max(1000, "Message must be at most 1000 characters long"),
   agreeOnTerms: z.literal(true, {
     errorMap: () => ({
       message: "You have to agree to the terms and conditions",
