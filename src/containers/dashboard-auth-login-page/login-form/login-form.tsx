@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Loader2, UserIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { PasswordInput } from "@/components/form/password-input";
+import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
 import { useLoginForm } from "./use-login-form";
 
 export function LoginForm() {
@@ -25,9 +26,7 @@ export function LoginForm() {
   return (
     <>
       {isLoading ? (
-        <div className="p-5">
-          <Loader2 className="mx-auto size-14 animate-spin" />
-        </div>
+        <DashboardAuthLoading />
       ) : (
         <>
           <div className="space-y-2">

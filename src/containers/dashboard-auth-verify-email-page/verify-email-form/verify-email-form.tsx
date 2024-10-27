@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Loader2 } from "lucide-react";
 import { Controller } from "react-hook-form";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
@@ -11,6 +10,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
 import { useVerifyEmailForm } from "./use-verify-email-form";
 
 export function VerifyEmailForm() {
@@ -28,9 +28,7 @@ export function VerifyEmailForm() {
   return (
     <>
       {isLoading ? (
-        <div className="p-5">
-          <Loader2 className="mx-auto size-14 animate-spin" />
-        </div>
+        <DashboardAuthLoading />
       ) : (
         <>
           <h1 className="text-3xl font-bold text-white">Verify Your Email</h1>
