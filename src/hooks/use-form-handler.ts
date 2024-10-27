@@ -1,10 +1,10 @@
-import { useCallback, useRef, useState } from "react";
+import { Captcha, captchaSchema } from "@/lib/schemas/captcha";
+import { WithCaptcha } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { ZodObject, ZodRawShape } from "zod";
-import { WithCaptcha } from "@/types";
-import { Captcha, captchaSchema } from "@/lib/schemas/captcha";
 import { useToastNotification } from "./use-toast-notification";
 
 type UseFormHandlerOptions<T> = {
@@ -37,7 +37,7 @@ export function useFormHandler<T extends Record<string, unknown>>({
   const captchaRef = useRef<ReCAPTCHA>(null);
   const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = useCallback(
+  const onSubmit = useCallback(()=>handleSubmit(
     async (data: WithCaptcha<T>) => {
       if (isPending) return;
 
@@ -55,12 +55,12 @@ export function useFormHandler<T extends Record<string, unknown>>({
 
       captchaRef.current?.reset();
       setIsPending(false);
-    },
-    [isPending, serverAction, reset, toastNotification],
+    }),
+    [handleSubmit, isPending, toastNotification, serverAction, reset],
   );
 
   return {
-    onSubmit: handleSubmit(onSubmit),
+    onSubmit,
     errors,
     isPending,
     captchaRef,

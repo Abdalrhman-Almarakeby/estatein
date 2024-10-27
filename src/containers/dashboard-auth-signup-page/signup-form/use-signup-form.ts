@@ -26,30 +26,31 @@ export function useSignupForm(callbackUrl?: string) {
   const captchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = useCallback(
-    async (data: WithCaptcha<Signup>) => {
-      setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+    () =>
+      handleSubmit(async (data: WithCaptcha<Signup>) => {
+        setIsLoading(true);
+        captchaRef.current?.reset();
+        setValue("captchaToken", "", { shouldDirty: true });
 
-      const { success, message } = await signup(data);
+        const { success, message } = await signup(data);
 
-      if (success) {
-        const params = callbackUrl && new URLSearchParams({ callbackUrl });
+        if (success) {
+          const params = callbackUrl && new URLSearchParams({ callbackUrl });
 
-        const url =
-          `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
+          const url =
+            `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
 
-        router.push(url);
-      } else {
-        setError("root", { message });
-        setIsLoading(false);
-      }
-    },
-    [callbackUrl, setValue, setError, router],
+          router.push(url);
+        } else {
+          setError("root", { message });
+          setIsLoading(false);
+        }
+      }),
+    [handleSubmit, setValue, callbackUrl, router, setError],
   );
 
   return {
-    onSubmit: handleSubmit(onSubmit),
+    onSubmit,
     setValue,
     captchaRef,
     isLoading,
