@@ -73,7 +73,7 @@
 @layer components {
   /* buttons */
   .btn {
-    @apply whitespace-nowrap rounded-lg !no-underline disabled:opacity-50;
+    @apply whitespace-nowrap rounded-lg !no-underline disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-sm {
