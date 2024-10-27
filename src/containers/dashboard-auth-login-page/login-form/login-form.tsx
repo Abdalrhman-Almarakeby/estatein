@@ -18,7 +18,7 @@ export function LoginForm() {
     onSubmit,
     register,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     captchaRef,
     isLoading,
   } = useLoginForm(callbackUrl ?? undefined);
@@ -82,7 +82,7 @@ export function LoginForm() {
             <button
               type="submit"
               className="btn-sm btn-primary py-2 text-lg"
-              disabled={isSubmitting}
+              disabled={isLoading}
             >
               Log In
             </button>

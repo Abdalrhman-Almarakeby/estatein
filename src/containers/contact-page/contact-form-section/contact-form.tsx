@@ -18,7 +18,8 @@ import { INQUIRY_TYPES, REFERRAL_SOURCE } from "@/constant";
 import { useContactForm } from "./use-contact-form";
 
 export function ContactForm() {
-  const { register, errors, onSubmit, control, captchaRef } = useContactForm();
+  const { register, errors, onSubmit, control, captchaRef, isPending } =
+    useContactForm();
 
   return (
     <form
@@ -188,7 +189,11 @@ export function ContactForm() {
           {...register("agreeOnTerms")}
           error={errors.agreeOnTerms?.message}
         />
-        <button type="submit" className="btn-primary btn-sm 3xl:btn-lg">
+        <button
+          type="submit"
+          className="btn-primary btn-sm 3xl:btn-lg"
+          disabled={isPending}
+        >
           Send Your Message
         </button>
       </div>
