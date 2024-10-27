@@ -45,12 +45,17 @@ const config: Config = {
           from: { display: "flex", right: "0" },
           to: { display: "none", right: "-110%" },
         },
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "menu-open": "menu-open 0.3s ease-in-out",
         "menu-close": "menu-close 0.3s ease-in-out",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
       colors: {
         purple: {
