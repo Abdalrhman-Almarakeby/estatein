@@ -1,6 +1,5 @@
 import {
   Body,
-  Button,
   Container,
   Head,
   Heading,
@@ -14,13 +13,13 @@ import {
 
 type DashboardVerificationEmailProps = {
   username: string;
-  verificationUrl: string;
+  verificationCode: string;
 };
 
-export const DashboardVerificationEmail = ({
+export function DashboardVerificationEmail({
   username,
-  verificationUrl,
-}: DashboardVerificationEmailProps) => {
+  verificationCode,
+}: DashboardVerificationEmailProps) {
   const year = new Date().getFullYear();
 
   return (
@@ -39,17 +38,19 @@ export const DashboardVerificationEmail = ({
               </Text>
               <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
                 Thank you for signing up for the dashboard. To complete your
-                registration and gain access, please verify your email address
-                by clicking the button below:
+                registration and gain access, please use the verification code
+                below:
               </Text>
               <Section className="my-[40px] text-center">
-                <Button
-                  className="inline-block rounded-md bg-[#703bf7] px-[20px] py-[12px] text-center text-[16px] font-bold text-white no-underline"
-                  href={verificationUrl}
-                >
-                  Verify Email
-                </Button>
+                <Text className="inline-block text-[36px] font-bold text-[#703bf7] tracking-[0.2em] border-2 border-[#703bf7] px-[30px] py-[15px]">
+                  {verificationCode}
+                </Text>
               </Section>
+              <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
+                Enter this code on the verification page to confirm your email
+                address and activate your account. The code is case-sensitive
+                and should be entered exactly as shown above.
+              </Text>
               <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
                 If you didn't request this verification, please ignore this
                 email.
@@ -64,4 +65,4 @@ export const DashboardVerificationEmail = ({
       </Tailwind>
     </Html>
   );
-};
+}

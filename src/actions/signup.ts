@@ -3,27 +3,23 @@
 import { cookies } from "next/headers";
 import { createElement } from "react";
 import { hash } from "bcryptjs";
-import { randomBytes } from "crypto";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { WithCaptcha } from "@/types";
-import { getBaseUrl } from "@/lib/utils";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
+import { generateNumericOTP } from "@/lib/otp";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { sendEmail, verifyCaptchaToken } from "@/services";
 
-const FIVE_MINUTES = 5 * 60;
+const ONE_HOUR = 60 * 60;
 
 const RATE_LIMIT_MAX_ATTEMPTS = 5;
 const RATE_LIMIT_WINDOW_DURATION = "1h";
 
-export async function signup(
-  data: WithCaptcha<Signup>,
-  callbackUrl?: string | undefined,
-) {
+export async function signup(data: WithCaptcha<Signup>) {
   const ip = getUserIpAddress();
   const { ua: userAgent } = getUserAgent();
 
@@ -99,9 +95,12 @@ export async function signup(
 
     const hashedPassword = await hash(data.password, 10);
 
-    const emailVerificationToken = randomBytes(32).toString("hex");
-    const emailVerificationExpires = new Date();
-    emailVerificationExpires.setHours(emailVerificationExpires.getHours() + 1);
+    const verificationCode = generateNumericOTP();
+
+    const emailVerificationCodeExpiresAt = new Date();
+    emailVerificationCodeExpiresAt.setHours(
+      emailVerificationCodeExpiresAt.getHours() + 1,
+    );
 
     const isAdmin = data.email === env.ADMIN_EMAIL && !admin;
 
@@ -110,35 +109,31 @@ export async function signup(
         email: data.email,
         password: hashedPassword,
         name: data.username,
-        emailVerificationToken,
-        emailVerificationExpires,
+        emailVerificationCode: verificationCode,
+        emailVerificationCodeExpiresAt,
         role: isAdmin ? "ADMIN" : "MODERATOR",
       },
     });
 
-    const verificationUrl = `${getBaseUrl()}/dashboard/auth/verify-email?token=${emailVerificationToken}${
-      callbackUrl ? `&callbackUrl=${callbackUrl}` : ""
-    }`;
-
     const template = createElement(DashboardVerificationEmail, {
       username: data.username,
-      verificationUrl,
+      verificationCode,
     });
 
     const cookieStore = cookies();
 
     cookieStore.set({
-      name: "just-signed-up",
+      name: "verification-pending",
       value: "true",
-      maxAge: FIVE_MINUTES,
-      path: "/dashboard/auth/check-your-email",
+      maxAge: ONE_HOUR,
+      path: "/dashboard/auth/verify-email",
     });
 
     cookieStore.set({
-      name: "signing-up-email",
+      name: "signup-email",
       value: data.email,
-      maxAge: FIVE_MINUTES,
-      path: "/dashboard/auth/check-your-email",
+      maxAge: ONE_HOUR,
+      path: "/dashboard/auth/verify-email",
     });
 
     await sendEmail({
@@ -150,7 +145,7 @@ export async function signup(
     return {
       success: true,
       message:
-        "Signup successful! Please check your email to verify your email.",
+        "Signup successful! Please check your email for the verification code.",
     };
   } catch (error) {
     return {
