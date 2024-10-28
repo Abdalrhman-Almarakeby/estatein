@@ -18,30 +18,29 @@ export function useLoginForm(callbackUrl?: string) {
   const captchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = useCallback(
-    () =>
-      handleSubmit(async (data: WithCaptcha<Login>) => {
-        setIsLoading(true);
-        captchaRef.current?.reset();
-        setValue("captchaToken", "", { shouldDirty: true });
+    async (data: WithCaptcha<Login>) => {
+      setIsLoading(true);
+      captchaRef.current?.reset();
+      setValue("captchaToken", "", { shouldDirty: true });
 
-        const { success, message } = await login(data);
+      const { success, message } = await login(data);
 
-        if (success) {
-          await signIn("credentials", {
-            ...data,
-            redirect: true,
-            callbackUrl: callbackUrl || "/dashboard",
-          });
-        } else {
-          setError("root", { message });
-          setIsLoading(false);
-        }
-      }),
-    [handleSubmit, setValue, callbackUrl, setError],
+      if (success) {
+        await signIn("credentials", {
+          ...data,
+          redirect: true,
+          callbackUrl: callbackUrl || "/dashboard",
+        });
+      } else {
+        setError("root", { message });
+        setIsLoading(false);
+      }
+    },
+    [callbackUrl, setValue, setError],
   );
 
   return {
-    onSubmit,
+    onSubmit: handleSubmit(onSubmit),
     setValue,
     captchaRef,
     isLoading,
