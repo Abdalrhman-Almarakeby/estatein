@@ -16,7 +16,7 @@ export function SignupForm() {
 
   const {
     onSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     control,
     register,
     captchaRef,
@@ -113,7 +113,11 @@ export function SignupForm() {
               error={errors.captchaToken?.message}
               size="compact"
             />
-            <button type="submit" className="btn-sm btn-primary py-2 text-lg">
+            <button
+              type="submit"
+              className="btn-sm btn-primary py-2 text-lg"
+              disabled={isLoading || !isValid}
+            >
               Signup
             </button>
           </form>

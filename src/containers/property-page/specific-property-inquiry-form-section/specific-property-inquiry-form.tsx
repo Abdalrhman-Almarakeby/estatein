@@ -14,8 +14,15 @@ type SpecificPropertyInquiryFormProps = {
 export function SpecificPropertyInquiryForm({
   propertyId,
 }: SpecificPropertyInquiryFormProps) {
-  const { register, errors, onSubmit, control, captchaRef, isPending } =
-    useSpecificPropertyInquiryForm();
+  const {
+    register,
+    errors,
+    onSubmit,
+    control,
+    captchaRef,
+    isPending,
+    isValid,
+  } = useSpecificPropertyInquiryForm();
 
   return (
     <form
@@ -122,7 +129,7 @@ export function SpecificPropertyInquiryForm({
         <button
           type="submit"
           className="btn-primary btn-sm 3xl:btn-lg"
-          disabled={isPending}
+          disabled={isPending || !isValid}
         >
           Send Your Message
         </button>

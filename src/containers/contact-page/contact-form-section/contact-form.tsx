@@ -18,8 +18,15 @@ import { INQUIRY_TYPES, REFERRAL_SOURCE } from "@/constant";
 import { useContactForm } from "./use-contact-form";
 
 export function ContactForm() {
-  const { register, errors, onSubmit, control, captchaRef, isPending } =
-    useContactForm();
+  const {
+    register,
+    errors,
+    onSubmit,
+    control,
+    captchaRef,
+    isPending,
+    isValid,
+  } = useContactForm();
 
   return (
     <form
@@ -192,7 +199,7 @@ export function ContactForm() {
         <button
           type="submit"
           className="btn-primary btn-sm 3xl:btn-lg"
-          disabled={isPending}
+          disabled={isPending || !isValid}
         >
           Send Your Message
         </button>
