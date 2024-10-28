@@ -24,7 +24,7 @@ export function useFormHandler<T extends Record<string, unknown>>({
 }: UseFormHandlerOptions<T>) {
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, ...formStateRest },
     reset,
     ...rest
   } = useForm<T & Captcha>({
@@ -65,5 +65,6 @@ export function useFormHandler<T extends Record<string, unknown>>({
     isPending,
     captchaRef,
     ...rest,
+    ...formStateRest,
   };
 }
