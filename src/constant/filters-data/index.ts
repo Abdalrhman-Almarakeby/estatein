@@ -16,8 +16,8 @@ export const FILTERING_DATA = [
     })),
   },
   {
-    label: "Property Type",
     name: "propertyType",
+    label: "Property Type",
     Icon: House,
     options: PROPERTIES_TYPES.map((type) => ({
       label: upperFirst(normalize(type)),
@@ -25,34 +25,22 @@ export const FILTERING_DATA = [
     })),
   },
   {
-    label: "Pricing Range",
     name: "pricingRange",
+    label: "Pricing Range",
     Icon: Banknote,
-    options: PRICE_RANGES_BOUNDARIES.map(({ min, max }, i) => {
-      const isLast = i === PRICE_RANGES_BOUNDARIES.length - 1;
-
-      return {
-        label: isLast
-          ? `${formatWithComma(min)}$+`
-          : `${formatWithComma(min)}$ - ${formatWithComma(max)}$`,
-        value: isLast ? `${min}` : `${min}-${max}`,
-      };
-    }),
+    options: PRICE_RANGES_BOUNDARIES.map(({ min, max }) => ({
+      label: formatRangeLabel(min, max, "$"),
+      value: max ? `${min}-${max}` : `${min}`,
+    })),
   },
   {
-    label: "Property Size",
     name: "propertySize",
+    label: "Property Size",
     Icon: Box,
-    options: PROPERTY_SIZES.map(({ min, max }, i) => {
-      const isLast = i === PRICE_RANGES_BOUNDARIES.length - 1;
-
-      return {
-        label: isLast
-          ? `${formatWithComma(min)}m²+`
-          : `${formatWithComma(min)}m² - ${formatWithComma(max)}m²`,
-        value: isLast ? `${min}` : `${min}-${max}`,
-      };
-    }),
+    options: PROPERTY_SIZES.map(({ min, max }) => ({
+      label: formatRangeLabel(min, max, "m²"),
+      value: max ? `${min}-${max}` : `${min}`,
+    })),
   },
 ] as const;
 
@@ -65,7 +53,12 @@ function getOptionsAsTuple(filterName: string): [string, ...string[]] | null {
   const options = FILTERING_DATA.find(
     ({ name }) => name === filterName,
   )?.options.map(({ value }) => value);
-  return options && options.length > 0
-    ? [options[0], ...options.slice(1)]
-    : null;
+
+  return options && options.length ? [options[0], ...options.slice(1)] : null;
+}
+
+function formatRangeLabel(min: number, max: number | null, unit: string) {
+  return max
+    ? `${formatWithComma(min)}${unit} - ${formatWithComma(max)}${unit}`
+    : `${formatWithComma(min)}${unit}+`;
 }
