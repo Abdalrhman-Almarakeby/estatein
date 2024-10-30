@@ -20,7 +20,7 @@ export function VerifyEmailForm() {
   const {
     onSubmit,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
     captchaRef,
     isLoading,
   } = useVerifyEmailForm(callbackUrl ?? undefined);
@@ -87,7 +87,7 @@ export function VerifyEmailForm() {
             <button
               type="submit"
               className="btn-primary btn-md mx-auto w-fit px-8 py-2 text-base"
-              disabled={isLoading || !isValid}
+              disabled={isLoading}
             >
               Verify Email
             </button>

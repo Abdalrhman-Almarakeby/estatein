@@ -12,15 +12,8 @@ type NewsletterFormProps = {
 };
 
 export function NewsletterForm({ className }: NewsletterFormProps) {
-  const {
-    onSubmit,
-    register,
-    isPending,
-    errors,
-    control,
-    captchaRef,
-    isValid,
-  } = useNewsletter();
+  const { onSubmit, register, isPending, errors, control, captchaRef } =
+    useNewsletter();
 
   return (
     <form
@@ -40,7 +33,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
           className="w-full px-12 py-3.5"
         />
         <button
-          disabled={isPending || !isValid}
+          disabled={isPending}
           type="submit"
           className="absolute right-5 top-1/2 -translate-y-1/2 disabled:cursor-not-allowed disabled:opacity-50"
         >

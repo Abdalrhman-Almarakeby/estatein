@@ -28,15 +28,8 @@ import {
 import { usePropertyInquiryForm } from "./use-properties-inquiry-form";
 
 export function PropertiesInquiryForm() {
-  const {
-    register,
-    errors,
-    onSubmit,
-    control,
-    captchaRef,
-    isPending,
-    isValid,
-  } = usePropertyInquiryForm();
+  const { register, errors, onSubmit, control, captchaRef, isPending } =
+    usePropertyInquiryForm();
 
   return (
     <form
@@ -354,7 +347,7 @@ export function PropertiesInquiryForm() {
         <button
           type="submit"
           className="btn-primary btn-sm 3xl:btn-lg"
-          disabled={isPending || !isValid}
+          disabled={isPending}
         >
           Send Your Message
         </button>
