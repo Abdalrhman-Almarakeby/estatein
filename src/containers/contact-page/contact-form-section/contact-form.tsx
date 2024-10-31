@@ -95,6 +95,7 @@ export function ContactForm() {
           Inquiry Type
         </label>
         <Controller
+          key="inquiryType"
           name="inquiryType"
           control={control}
           render={({ field }) => (
@@ -131,6 +132,7 @@ export function ContactForm() {
           How did you hear about us?
         </label>
         <Controller
+          key="referralSource"
           name="referralSource"
           control={control}
           render={({ field }) => (
