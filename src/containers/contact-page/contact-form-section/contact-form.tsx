@@ -99,7 +99,7 @@ export function ContactForm() {
           name="inquiryType"
           control={control}
           // @ts-expect-error to show the place holder after resting the form
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select
               onValueChange={field.onChange}
@@ -138,7 +138,7 @@ export function ContactForm() {
           name="referralSource"
           control={control}
           // @ts-expect-error to show the place holder after resting the form
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select
               onValueChange={field.onChange}

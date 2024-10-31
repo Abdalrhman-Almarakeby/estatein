@@ -21,7 +21,7 @@ export function FiltersForm() {
           key={name}
           name={name}
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger

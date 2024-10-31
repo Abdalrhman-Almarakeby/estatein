@@ -96,7 +96,7 @@ export function PropertiesInquiryForm() {
           key="preferredLocation"
           name="preferredLocation"
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -132,7 +132,7 @@ export function PropertiesInquiryForm() {
           name="propertyType"
           control={control}
           // @ts-expect-error to show the place holder after resting the form
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -167,7 +167,7 @@ export function PropertiesInquiryForm() {
           key="propertySize"
           name="propertySize"
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -202,7 +202,7 @@ export function PropertiesInquiryForm() {
           key="bedrooms"
           name="bedrooms"
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -237,7 +237,7 @@ export function PropertiesInquiryForm() {
           key="bathrooms"
           name="bathrooms"
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -272,7 +272,7 @@ export function PropertiesInquiryForm() {
           name="preferredContactMethod"
           control={control}
           // @ts-expect-error to show the place holder after resting the form
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
@@ -307,7 +307,7 @@ export function PropertiesInquiryForm() {
           key="budget"
           name="budget"
           control={control}
-          defaultValue="default"
+          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger
