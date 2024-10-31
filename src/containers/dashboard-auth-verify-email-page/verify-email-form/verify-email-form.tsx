@@ -44,6 +44,7 @@ export function VerifyEmailForm() {
                 Verification Code
               </label>
               <Controller
+                key="otp"
                 name="otp"
                 control={control}
                 render={({ field: { onChange, onBlur, ref, value } }) => (

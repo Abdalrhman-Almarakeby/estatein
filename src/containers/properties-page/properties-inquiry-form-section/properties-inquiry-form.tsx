@@ -93,6 +93,7 @@ export function PropertiesInquiryForm() {
           Preferred Location
         </label>
         <Controller
+          key="preferredLocation"
           name="preferredLocation"
           control={control}
           render={({ field }) => (
@@ -126,6 +127,7 @@ export function PropertiesInquiryForm() {
           Property Type
         </label>
         <Controller
+          key="propertyType"
           name="propertyType"
           control={control}
           render={({ field }) => (
@@ -159,6 +161,7 @@ export function PropertiesInquiryForm() {
           Property Size
         </label>
         <Controller
+          key="propertySize"
           name="propertySize"
           control={control}
           render={({ field }) => (
@@ -192,6 +195,7 @@ export function PropertiesInquiryForm() {
           No. of Bedrooms
         </label>
         <Controller
+          key="bedrooms"
           name="bedrooms"
           control={control}
           render={({ field }) => (
@@ -225,6 +229,7 @@ export function PropertiesInquiryForm() {
           No. of Bathrooms
         </label>
         <Controller
+          key="bathrooms"
           name="bathrooms"
           control={control}
           render={({ field }) => (
@@ -257,6 +262,7 @@ export function PropertiesInquiryForm() {
           Preferred Contact Method
         </label>
         <Controller
+          key="preferredContactMethod"
           name="preferredContactMethod"
           control={control}
           render={({ field }) => (
@@ -290,6 +296,7 @@ export function PropertiesInquiryForm() {
           Budget
         </label>
         <Controller
+          key="budget"
           name="budget"
           control={control}
           render={({ field }) => (

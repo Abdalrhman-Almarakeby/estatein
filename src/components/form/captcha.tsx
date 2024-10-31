@@ -29,6 +29,7 @@ export function Captcha<T extends { captchaToken: string }>({
         CAPTCHA Verification
       </label>
       <Controller
+        key="captchaToken"
         control={control}
         name={"captchaToken" as Path<T>}
         render={({ field: { onChange } }) => (
