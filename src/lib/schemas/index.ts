@@ -4,5 +4,6 @@ export * from "./login";
 export * from "./otp";
 export * from "./properties-filters";
 export * from "./property-inquiry";
+export * from "./reset-password";
 export * from "./signup";
 export * from "./specific-property-inquiry";

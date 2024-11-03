@@ -8,6 +8,8 @@ model User {
   isVerified                     Boolean   @default(false)
   emailVerificationCode          String?   @db.Char(8)
   emailVerificationCodeExpiresAt DateTime?
+  passwordResetToken             String?   @db.Char(64)
+  passwordResetTokenExpiresAt    DateTime?
   createdAt                      DateTime  @default(now())
 
   @@index([role])

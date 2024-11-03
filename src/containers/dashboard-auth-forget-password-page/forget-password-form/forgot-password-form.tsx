@@ -6,11 +6,10 @@ import { UserIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
-import { PasswordInput } from "@/components/form/password-input";
 import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
-import { useLoginForm } from "./use-login-form";
+import { useForgotPasswordForm } from "./use-forgot-password-form";
 
-export function LoginForm() {
+export function ForgotPasswordForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
@@ -21,7 +20,7 @@ export function LoginForm() {
     formState: { errors },
     captchaRef,
     isLoading,
-  } = useLoginForm(callbackUrl ?? undefined);
+  } = useForgotPasswordForm(callbackUrl ?? undefined);
 
   return (
     <>
@@ -30,9 +29,9 @@ export function LoginForm() {
       ) : (
         <>
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">Dashboard Login</h1>
+            <h1 className="text-2xl font-bold">Forgot Password</h1>
             <p className="text-primary text-base font-normal">
-              Enter your credentials to access the dashboard
+              Enter your email address to receive a password reset link
             </p>
             {errors.root?.message && (
               <FieldError>{errors.root?.message}</FieldError>
@@ -59,29 +58,6 @@ export function LoginForm() {
                 <FieldError>{errors.email?.message}</FieldError>
               )}
             </fieldset>
-            <fieldset className="space-y-2">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <PasswordInput
-                id="password"
-                className="pl-10"
-                placeholder="Password"
-                {...register("password")}
-              />
-              {errors.password?.message && (
-                <FieldError>{errors.password?.message}</FieldError>
-              )}
-              <Link
-                href={{
-                  pathname: "/dashboard/auth/forgot-password",
-                  query: callbackUrl ? { callbackUrl: callbackUrl } : undefined,
-                }}
-                className="text-primary block ps-2 text-start"
-              >
-                Forgot your password?
-              </Link>
-            </fieldset>
             <Captcha
               control={control}
               captchaRef={captchaRef}
@@ -93,18 +69,18 @@ export function LoginForm() {
               className="btn-sm btn-primary py-2 text-lg"
               disabled={isLoading}
             >
-              Log In
+              Send Reset Link
             </button>
           </form>
           <p className="text-primary">
-            Don't have an account yet?{" "}
+            Remember your password?{" "}
             <Link
               href={{
-                pathname: "/dashboard/auth/signup",
+                pathname: "/dashboard/auth/login",
                 query: callbackUrl ? { callbackUrl: callbackUrl } : undefined,
               }}
             >
-              Create an account
+              Back to login
             </Link>
           </p>
         </>
