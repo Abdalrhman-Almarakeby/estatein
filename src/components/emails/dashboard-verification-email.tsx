@@ -38,18 +38,19 @@ export function DashboardVerificationEmail({
               </Text>
               <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
                 Thank you for signing up for the dashboard. To complete your
-                registration and gain access, please use the verification code
+                registration and gain access, please use the one time password
                 below:
               </Text>
               <Section className="my-[40px] text-center">
-                <Text className="inline-block text-[36px] font-bold text-[#703bf7] tracking-[0.2em] border-2 border-[#703bf7] px-[30px] py-[15px]">
+                <Text className="inline-block border-2 border-[#703bf7] px-[30px] py-[15px] text-[36px] font-bold tracking-[0.2em] text-[#703bf7]">
                   {verificationCode}
                 </Text>
               </Section>
               <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
                 Enter this code on the verification page to confirm your email
-                address and activate your account. The code is case-sensitive
-                and should be entered exactly as shown above.
+                address and activate your account. For security reasons, the
+                code will expire after one hour. If an hour has passed, you can
+                request a new code from the verification page.
               </Text>
               <Text className="mb-[20px] px-[40px] text-[16px] leading-[26px] text-[#e0e0e0]">
                 If you didn't request this verification, please ignore this
