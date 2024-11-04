@@ -9,11 +9,12 @@ import { LocationCard } from "./location-card";
 export function OfficeLocations() {
   const searchParams = useSearchParams();
 
-  const foo = searchParams.get("locationsType");
+  const locationsType = searchParams.get("locationsType");
 
   const currentLocationsType =
-    foo && (LOCATIONS_TYPE as ReadonlyArray<string>).includes(foo)
-      ? foo
+    locationsType &&
+    (LOCATIONS_TYPE as ReadonlyArray<string>).includes(locationsType)
+      ? locationsType
       : "all";
 
   const filteredLocations =

@@ -89,7 +89,7 @@ export async function login(data: WithCaptcha<Login>) {
       };
     }
 
-    await rateLimit.resetUsedTokens(ip);
+    await rateLimit.resetUsedTokens(limitKey);
 
     return {
       success: true,

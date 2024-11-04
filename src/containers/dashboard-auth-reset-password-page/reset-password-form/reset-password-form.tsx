@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { UserIcon } from "lucide-react";
+import { LockIcon } from "lucide-react";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
-import { Input } from "@/components/form/input";
 import { PasswordInput } from "@/components/form/password-input";
 import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
-import { useLoginForm } from "./use-login-form";
+import { usePasswordResetForm } from "./use-password-reset-form";
 
-export function LoginForm() {
+export function ResetPasswordForm() {
   const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const callbackUrl = searchParams.get("callbackUrl");
 
   const {
@@ -21,7 +21,7 @@ export function LoginForm() {
     formState: { errors },
     captchaRef,
     isLoading,
-  } = useLoginForm(callbackUrl ?? undefined);
+  } = usePasswordResetForm(token ?? undefined, callbackUrl ?? undefined);
 
   return (
     <>
@@ -30,9 +30,9 @@ export function LoginForm() {
       ) : (
         <>
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">Dashboard Login</h1>
+            <h1 className="text-2xl font-bold">Reset Password</h1>
             <p className="text-primary text-base font-normal">
-              Enter your credentials to access the dashboard
+              Enter your new password to reset your account
             </p>
             {errors.root?.message && (
               <FieldError>{errors.root?.message}</FieldError>
@@ -40,47 +40,38 @@ export function LoginForm() {
           </div>
           <form onSubmit={onSubmit} className="grid gap-6">
             <fieldset className="space-y-2">
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <div className="relative">
-                <UserIcon
-                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
-                  size={18}
-                />
-                <Input
-                  id="email"
-                  className="pl-10"
-                  placeholder="Email"
-                  {...register("email")}
-                />
-              </div>
-              {errors.email?.message && (
-                <FieldError>{errors.email?.message}</FieldError>
-              )}
-            </fieldset>
-            <fieldset className="space-y-2">
               <label htmlFor="password" className="sr-only">
-                Password
+                New Password
               </label>
               <PasswordInput
                 id="password"
                 className="pl-10"
-                placeholder="Password"
+                placeholder="New Password"
                 {...register("password")}
               />
               {errors.password?.message && (
                 <FieldError>{errors.password?.message}</FieldError>
               )}
-              <Link
-                href={{
-                  pathname: "/dashboard/auth/forgot-password",
-                  query: callbackUrl ? { callbackUrl: callbackUrl } : undefined,
-                }}
-                className="text-primary block ps-2 text-start"
-              >
-                Forgot your password?
-              </Link>
+            </fieldset>
+            <fieldset className="space-y-2">
+              <label htmlFor="confirmPassword" className="sr-only">
+                Confirm New Password
+              </label>
+              <div className="relative">
+                <LockIcon
+                  className="absolute left-3 top-1/2 z-10 -translate-y-1/2 transform text-gray-medium"
+                  size={18}
+                />
+                <PasswordInput
+                  id="confirmPassword"
+                  className="pl-10"
+                  placeholder="Confirm New Password"
+                  {...register("confirmPassword")}
+                />
+              </div>
+              {errors.confirmPassword?.message && (
+                <FieldError>{errors.confirmPassword?.message}</FieldError>
+              )}
             </fieldset>
             <Captcha
               control={control}
@@ -93,19 +84,12 @@ export function LoginForm() {
               className="btn-sm btn-primary py-2 text-lg"
               disabled={isLoading}
             >
-              Log In
+              Reset Password
             </button>
           </form>
           <p className="text-primary">
-            Don't have an account yet?{" "}
-            <Link
-              href={{
-                pathname: "/dashboard/auth/signup",
-                query: callbackUrl ? { callbackUrl: callbackUrl } : undefined,
-              }}
-            >
-              Create an account
-            </Link>
+            Remember your password?{" "}
+            <Link href="/dashboard/auth/login">Back to login</Link>
           </p>
         </>
       )}

@@ -1,52 +1,26 @@
 import { z } from "zod";
+import {
+  agreeOnTermsSchema,
+  emailSchema,
+  messageSchema,
+  nameSchema,
+  phoneSchema,
+} from "./common";
 
 export const specificPropertyInquirySchema = z.object({
-  firstName: z
-    .string({
-      required_error: "First Name is required",
-      invalid_type_error: "Invalid First Name",
-    })
-    .min(1, "First Name is required")
-    .max(30, "First name must be at most 30 characters long"),
-  lastName: z
-    .string({
-      required_error: "Last Name is required",
-      invalid_type_error: "Invalid Last Name",
-    })
-    .min(1, "Last Name is required")
-    .max(30, "Last name must be at most 30 characters long"),
-  email: z
-    .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid Email",
-    })
-    .min(1, "Email is required")
-    .email("Invalid Email"),
-  phone: z
-    .string({
-      required_error: "Phone Number is required",
-      invalid_type_error: "Invalid Phone Number",
-    })
-    .min(1, "Phone Number is required")
-    .regex(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, {
-      message: "Invalid Phone Number",
-    }),
+  firstName: nameSchema("First name"),
+  lastName: nameSchema("Last name"),
+  email: emailSchema,
+  phone: phoneSchema,
   propertyId: z
-    .string()
-    .min(1, "Property Id is required")
-    .cuid("Invalid Property Id"),
-  message: z
     .string({
-      required_error: "Message is required",
-      invalid_type_error: "Invalid Message",
+      required_error: "Property ID is required",
+      invalid_type_error: "Invalid property ID",
     })
-    .min(1, "Message is required")
-    .max(1000, "Message must be at most 1000 characters long"),
-  agreeOnTerms: z.literal(true, {
-    errorMap: () => ({
-      message: "You have to agree to the terms and conditions",
-    }),
-  }),
+    .min(1, "Property ID is required")
+    .cuid("Invalid property ID format"),
+  message: messageSchema,
+  agreeOnTerms: agreeOnTermsSchema,
 });
 
 export type SpecificPropertyInquiry = z.infer<

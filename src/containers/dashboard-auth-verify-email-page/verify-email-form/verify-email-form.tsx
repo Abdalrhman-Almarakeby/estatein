@@ -1,7 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Controller } from "react-hook-form";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import {
@@ -11,6 +9,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
+import { useSearchParams } from "next/navigation";
+import { Controller } from "react-hook-form";
 import { useVerifyEmailForm } from "./use-verify-email-form";
 
 export function VerifyEmailForm() {
@@ -73,7 +73,7 @@ export function VerifyEmailForm() {
                 )}
               />
               {errors.otp?.message && (
-                <FieldError>{errors.otp?.message}</FieldError>
+                <FieldError className="mt-2">{errors.otp?.message}</FieldError>
               )}
             </fieldset>
             <Captcha

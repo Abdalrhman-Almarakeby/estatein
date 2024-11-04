@@ -2,12 +2,13 @@ model SpecificPropertyInquiry {
   id         String   @id @default(cuid())
   firstName  String
   lastName   String
-  email      String   @unique @db.VarChar(255)
-  phone      String   @unique @db.VarChar(20)
+  email      String   @db.VarChar(255)
+  phone      String   @db.VarChar(20)
   message    String
   property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([email, phone, propertyId])
 }

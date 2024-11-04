@@ -1,10 +1,8 @@
 import { z } from "zod";
+import { emailSchema as emailPropertySchema } from "./common";
 
 export const emailSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Please enter you email")
-    .email("Please enter a valid email"),
+  email: emailPropertySchema,
 });
 
 export type Email = z.infer<typeof emailSchema>;

@@ -1,19 +1,15 @@
 import { z } from "zod";
+import { emailSchema } from "./common";
 
 export const loginSchema = z.object({
-  email: z
-    .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid Email",
-    })
-    .min(1, "Email is required")
-    .email("Invalid Email"),
+  email: emailSchema,
   password: z
     .string({
       required_error: "Password is required",
-      invalid_type_error: "Invalid Password",
+      invalid_type_error: "Invalid password",
     })
-    .min(1, "Password is required"),
+    .min(1, "Password is required")
+    .max(64, "Password must not exceed 64 characters"),
 });
 
 export type Login = z.infer<typeof loginSchema>;

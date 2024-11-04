@@ -4,41 +4,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
-import { Signup, signupSchema } from "@/lib/schemas";
+import { Email, emailSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { signup } from "@/actions";
+import { forgotPassword } from "@/actions";
 
-export function useSignupForm(callbackUrl?: string) {
-  const router = useRouter();
+export function useForgotPasswordForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Signup>
+    WithCaptcha<Email>
   >({
-    resolver: zodResolver(signupSchema.and(captchaSchema)),
+    resolver: zodResolver(emailSchema.merge(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = useCallback(
-    async (data: WithCaptcha<Signup>) => {
+    async (data: WithCaptcha<Email>) => {
       setIsLoading(true);
       captchaRef.current?.reset();
       setValue("captchaToken", "", { shouldDirty: true });
 
-      const { success, message } = await signup(data);
+      const { success, message } = await forgotPassword(data, callbackUrl);
 
       if (success) {
-        const params = callbackUrl && new URLSearchParams({ callbackUrl });
-
-        const url =
-          `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
-
-        router.push(url);
+        router.push("/dashboard/auth/forgot-password/sent");
       } else {
         setError("root", { message });
         setIsLoading(false);
       }
     },
-    [callbackUrl, setValue, setError, router],
+    [setValue, callbackUrl, router, setError],
   );
 
   return {

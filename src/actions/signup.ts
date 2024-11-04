@@ -126,14 +126,12 @@ export async function signup(data: WithCaptcha<Signup>) {
       name: "verification-pending",
       value: "true",
       maxAge: ONE_HOUR,
-      path: "/dashboard/auth/verify-email",
     });
 
     cookieStore.set({
       name: "signup-email",
       value: data.email,
       maxAge: ONE_HOUR,
-      path: "/dashboard/auth/verify-email",
     });
 
     await sendEmail({

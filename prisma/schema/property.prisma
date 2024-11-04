@@ -21,4 +21,5 @@ model Property {
   mortgage                 Int
   inquiries                SpecificPropertyInquiry[]
   createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
 }

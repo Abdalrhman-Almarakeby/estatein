@@ -1,0 +1,6 @@
+enum InquiryType {
+  GENERAL
+  PROPERTIES
+  AGENT
+  OTHER
+}
