@@ -80,7 +80,6 @@ export async function forgotPassword(
       name: "reset-password-pending",
       value: "true",
       maxAge: ONE_HOUR,
-      path: "/dashboard/auth/forgot-password/sent",
     });
 
     if (!user) {
