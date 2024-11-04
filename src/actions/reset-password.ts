@@ -80,7 +80,9 @@ export async function resetPassword(
     if (!user) {
       return {
         success: false,
-        message: "Invalid or expired reset token. Please request a new one.",
+        isExpired: true,
+        message:
+          "Invalid or expired reset password token. Please request a new email.",
       };
     }
 
