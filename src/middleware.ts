@@ -4,6 +4,8 @@ import {
   authMiddlewareMatcher,
   blockedPageMiddleware,
   blockedPageMiddlewareMatcher,
+  forgotPasswordSentPageMiddleware,
+  forgotPasswordSentPageMiddlewareMatcher,
   rateLimitMiddleware,
   rateLimitMiddlewareMatcher,
   unauthenticatedMiddleware,
@@ -18,6 +20,7 @@ const middlewares: MiddlewareConfig = {
   [unauthenticatedMiddlewareMatcher]: unauthenticatedMiddleware,
   [blockedPageMiddlewareMatcher]: blockedPageMiddleware,
   [verifyEmailPageMiddlewareMatcher]: verifyEmailPageMiddleware,
+  [forgotPasswordSentPageMiddlewareMatcher]: forgotPasswordSentPageMiddleware,
 };
 
 export default createMiddleware(middlewares);
