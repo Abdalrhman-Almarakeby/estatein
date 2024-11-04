@@ -8,7 +8,7 @@ export const signupSchema = z
         invalid_type_error: "Invalid username",
       })
       .min(3, "Username must be at least 3 characters long")
-      .max(20, "Username cannot be more than 20 characters long")
+      .max(50, "Username cannot be more than 50 characters long")
       .regex(/^[a-zA-Z][a-zA-Z0-9_]*$/, {
         message:
           "Username must start with a letter and can only contain letters, numbers, and underscores",

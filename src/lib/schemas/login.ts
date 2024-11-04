@@ -13,7 +13,8 @@ export const loginSchema = z.object({
       required_error: "Password is required",
       invalid_type_error: "Invalid password",
     })
-    .min(1, "Password is required"),
+    .min(1, "Password is required")
+    .max(64, "Password must not exceed 64 characters"),
 });
 
 export type Login = z.infer<typeof loginSchema>;

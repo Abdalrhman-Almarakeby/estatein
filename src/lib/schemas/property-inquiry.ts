@@ -13,14 +13,14 @@ export const propertyInquirySchema = z.object({
       invalid_type_error: "Invalid first name",
     })
     .min(1, "First name is required")
-    .max(30, "First name must be at most 30 characters long"),
+    .max(50, "First name must be at most 50 characters long"),
   lastName: z
     .string({
       required_error: "Last name is required",
       invalid_type_error: "Invalid last name",
     })
     .min(1, "Last name is required")
-    .max(30, "Last name must be at most 30 characters long"),
+    .max(50, "Last name must be at most 50 characters long"),
   email: z
     .string({
       required_error: "Email is required",
@@ -84,7 +84,7 @@ export const propertyInquirySchema = z.object({
       invalid_type_error: "Invalid message",
     })
     .min(1, "Message is required")
-    .max(1000, "Message must be at most 1000 characters long"),
+    .max(5000, "Message must be at most 5000 characters long"),
   agreeOnTerms: z.literal(true, {
     errorMap: () => ({
       message: "You must agree to the terms and conditions",
