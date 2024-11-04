@@ -1,13 +1,8 @@
 import { z } from "zod";
+import { emailSchema } from "./common";
 
 export const loginSchema = z.object({
-  email: z
-    .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid email format",
-    })
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
+  email: emailSchema,
   password: z
     .string({
       required_error: "Password is required",

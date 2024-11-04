@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { emailSchema, passwordSchema } from "./common";
 
 export const signupSchema = z
   .object({
@@ -13,30 +14,8 @@ export const signupSchema = z
         message:
           "Username must start with a letter and can only contain letters, numbers, and underscores",
       }),
-    email: z
-      .string({
-        required_error: "Email is required",
-        invalid_type_error: "Invalid email format",
-      })
-      .min(1, "Email is required")
-      .email("Please enter a valid email address"),
-    // TODO: Also don't allow commonly used passwords
-    // you could check this out:
-    // https://www.npmjs.com/package/@zxcvbn-ts/core
-    password: z
-      .string({
-        required_error: "Password is required",
-        invalid_type_error: "Invalid password",
-      })
-      .min(12, "Password must be at least 12 characters long")
-      .max(64, "Password must not exceed 64 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number")
-      .regex(
-        /[!@#$%^&*(),.?":{}|<>]/,
-        "Password must contain at least one special character (e.g., !, @, #, $, %, ^, &, *)",
-      ),
+    email: emailSchema,
+    password: passwordSchema,
     confirmPassword: z
       .string({
         required_error: "Confirm password is required",
