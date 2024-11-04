@@ -2,8 +2,8 @@ model PropertyInquiry {
   id                     String        @id @default(cuid())
   firstName              String
   lastName               String
-  email                  String        @unique @db.VarChar(255)
-  phone                  String        @unique @db.VarChar(20)
+  email                  String        @db.VarChar(255)
+  phone                  String        @db.VarChar(20)
   preferredLocation      String
   propertyType           PropertyType
   bathrooms              Int
@@ -13,9 +13,7 @@ model PropertyInquiry {
   preferredContactMethod ContactMethod
   message                String
   createdAt              DateTime      @default(now())
-}
+  updatedAt              DateTime      @updatedAt
 
-enum ContactMethod {
-  EMAIL
-  PHONE
+  @@index([email, phone])
 }

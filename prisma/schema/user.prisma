@@ -11,11 +11,7 @@ model User {
   passwordResetToken             String?   @db.Char(64)
   passwordResetTokenExpiresAt    DateTime?
   createdAt                      DateTime  @default(now())
+  updatedAt                      DateTime  @updatedAt
 
-  @@index([role])
-}
-
-enum Role {
-  ADMIN
-  MODERATOR
+  @@index([email, role])
 }

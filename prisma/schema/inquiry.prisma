@@ -2,28 +2,13 @@ model Inquiry {
   id             String         @id @default(cuid())
   firstName      String
   lastName       String
-  email          String         @unique @db.VarChar(255)
-  phone          String         @unique @db.VarChar(20)
+  email          String         @db.VarChar(255)
+  phone          String         @db.VarChar(20)
   inquiryType    InquiryType
   referralSource ReferralSource
   message        String?
   createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@index([email, phone])
-}
-
-enum InquiryType {
-  GENERAL
-  PROPERTIES
-  AGENT
-  OTHER
-}
-
-enum ReferralSource {
-  SOCIAL_MEDIA
-  ADS
-  SEARCH
-  BUSINESS_PARTNER
-  FRIEND_OR_FAMILY_MEMBER
-  OTHER
 }
