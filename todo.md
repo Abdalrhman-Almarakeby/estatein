@@ -2,6 +2,15 @@
 
 - Write some simple documentation about the code and how to use it, edit, and deploy it.
 
-- Add a "Forget you password?" functionality
+- Add the ability for resending verification emails and resetting password emails.
 
-- Create a page for resending verification email
+- Add availability system for properties to show which ones are available and which is are not.
+
+- Add toasts for auth actions like signing up and resetting password
+  before redirecting
+
+- Add caps look warning for password inputs
+
+- Add better looking outlines instead of the defaults for buttons
+
+- Add metadata for the dashboard pages
