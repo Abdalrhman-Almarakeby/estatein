@@ -28,13 +28,12 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
 
       const { success, message } = await resetPassword(data, token);
 
-      const searchParams = new URLSearchParams();
-
-      if (callbackUrl) {
-        searchParams.set("callbackUrl", callbackUrl);
-      }
-
       if (success) {
+        const searchParams = new URLSearchParams();
+
+        if (callbackUrl) {
+          searchParams.set("callbackUrl", callbackUrl);
+        }
         router.push(`/dashboard/auth/login?${searchParams.toString()}`);
       } else {
         setError("root", { message });
