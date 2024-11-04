@@ -1,3 +1,4 @@
+export * from "./captcha";
 export * from "./email";
 export * from "./inquiry";
 export * from "./login";

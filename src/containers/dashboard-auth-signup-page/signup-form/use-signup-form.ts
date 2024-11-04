@@ -14,14 +14,7 @@ export function useSignupForm(callbackUrl?: string) {
   const { handleSubmit, setError, setValue, ...rest } = useForm<
     WithCaptcha<Signup>
   >({
-    resolver: zodResolver(
-      signupSchema
-        .merge(captchaSchema)
-        .refine((data) => data.password === data.confirmPassword, {
-          message: "Passwords must match",
-          path: ["confirmPassword"],
-        }),
-    ),
+    resolver: zodResolver(signupSchema.and(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
 

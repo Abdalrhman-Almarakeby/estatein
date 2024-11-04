@@ -3,9 +3,12 @@ import { z } from "zod";
 export const otpSchema = z.object({
   otp: z
     .string({
-      message: "Please enter the OTP",
+      required_error: "OTP is required",
+      invalid_type_error: "Invalid OTP format",
     })
-    .min(1, "Please enter the OTP"),
+    .min(1, "Please enter the OTP")
+    .regex(/^\d+$/, "OTP must contain only numbers")
+    .length(6, "OTP must be exactly 6 digits"),
 });
 
 export type Otp = z.infer<typeof otpSchema>;

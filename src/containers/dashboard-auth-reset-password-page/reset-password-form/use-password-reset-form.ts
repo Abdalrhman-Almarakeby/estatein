@@ -14,14 +14,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
   const { handleSubmit, setError, setValue, ...rest } = useForm<
     WithCaptcha<ResetPassword>
   >({
-    resolver: zodResolver(
-      resetPasswordSchema
-        .merge(captchaSchema)
-        .refine((data) => data.password === data.confirmPassword, {
-          message: "Passwords must match",
-          path: ["confirmPassword"],
-        }),
-    ),
+    resolver: zodResolver(resetPasswordSchema.and(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
 
