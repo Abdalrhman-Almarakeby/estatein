@@ -38,10 +38,12 @@ export const propertyInquirySchema = z.object({
       message: "Please enter a valid phone number",
     }),
   preferredLocation: z.enum(LOCATION_OPTIONS, {
+    message: "Preferred location is required",
     required_error: "Preferred location is required",
     invalid_type_error: "Invalid preferred location",
   }),
   propertyType: z.enum(PROPERTIES_TYPES, {
+    message: "Property type is required",
     required_error: "Property type is required",
     invalid_type_error: "Invalid property type",
   }),
@@ -62,14 +64,17 @@ export const propertyInquirySchema = z.object({
       message: "Number of bedrooms must be a whole number between 1 and 10",
     }),
   budget: z.enum(PRICING_RANGE_OPTIONS, {
+    message: "Budget is required",
     required_error: "Budget is required",
     invalid_type_error: "Invalid budget range",
   }),
   propertySize: z.enum(PROPERTY_SIZE_OPTIONS, {
+    message: "Property size is required",
     required_error: "Property size is required",
     invalid_type_error: "Invalid property size",
   }),
   preferredContactMethod: z.enum(["EMAIL", "PHONE"], {
+    message: "contact method is required",
     required_error: "Preferred contact method is required",
     invalid_type_error: "Invalid contact method",
   }),

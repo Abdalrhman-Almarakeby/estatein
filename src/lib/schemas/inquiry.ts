@@ -34,10 +34,12 @@ export const inquirySchema = z.object({
       message: "Please enter a valid phone number",
     }),
   inquiryType: z.enum(INQUIRY_TYPES, {
+    message: "Inquiry type is required",
     required_error: "Inquiry type is required",
     invalid_type_error: "Invalid inquiry type",
   }),
   referralSource: z.enum(REFERRAL_SOURCE, {
+    message: "Please select how you heard about us",
     required_error: "Please select how you heard about us",
     invalid_type_error: "Invalid referral source",
   }),
