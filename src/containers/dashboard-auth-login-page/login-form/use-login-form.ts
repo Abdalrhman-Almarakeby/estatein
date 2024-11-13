@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { Login, loginSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { login } from "@/actions";
+import { login } from "@/server/actions";
 
 export function useLoginForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);

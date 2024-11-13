@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { resetPassword } from "@/actions";
+import { resetPassword } from "@/server/actions";
 
 export function usePasswordResetForm(token?: string, callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);

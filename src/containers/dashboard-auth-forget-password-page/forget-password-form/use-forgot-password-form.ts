@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { Email, emailSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { forgotPassword } from "@/actions";
+import { forgotPassword } from "@/server/actions";
 
 export function useForgotPasswordForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);

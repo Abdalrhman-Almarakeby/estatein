@@ -1,6 +1,6 @@
 import { useFormHandler } from "@/hooks";
 import { Email, emailSchema } from "@/lib/schemas";
-import { subscribeToNewsletter } from "@/actions";
+import { subscribeToNewsletter } from "@/server/actions";
 
 export function useNewsletter() {
   return useFormHandler<Email>({
