@@ -1,8 +1,8 @@
-import { Banknote, Box, House, MapPin } from "lucide-react";
 import { formatWithComma, normalize, upperFirst } from "@/lib/utils";
+import { PropertyType } from "@prisma/client";
+import { Banknote, Box, House, MapPin } from "lucide-react";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
-import { PROPERTIES_TYPES } from "./properties-types";
 import { PROPERTY_SIZES } from "./property-sizes";
 
 export const FILTERING_DATA = [
@@ -19,7 +19,7 @@ export const FILTERING_DATA = [
     name: "propertyType",
     label: "Property Type",
     Icon: House,
-    options: PROPERTIES_TYPES.map((type) => ({
+    options: Object.keys(PropertyType).map((type) => ({
       label: upperFirst(normalize(type)),
       value: type,
     })),

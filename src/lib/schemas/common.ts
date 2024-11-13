@@ -1,3 +1,4 @@
+import { PropertyType } from "@prisma/client";
 import { z } from "zod";
 import {
   LOCATION_OPTIONS,
@@ -5,7 +6,6 @@ import {
   PROPERTY_SIZE_OPTIONS,
   PROPERTY_TYPE_OPTIONS,
 } from "@/constant";
-import { PROPERTIES_TYPES } from "@/constant/filters-data/properties-types";
 
 export const emailSchema = z
   .string({
@@ -83,7 +83,7 @@ export const propertySizeSchema = z.enum(PROPERTY_SIZE_OPTIONS, {
   invalid_type_error: "Invalid property size",
 });
 
-export const propertiesTypesSchema = z.enum(PROPERTIES_TYPES, {
+export const propertiesTypesSchema = z.nativeEnum(PropertyType, {
   message: "Property type is required",
   required_error: "Property type is required",
   invalid_type_error: "Invalid property type",

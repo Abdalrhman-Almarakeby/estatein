@@ -1,8 +1,0 @@
-export const REFERRAL_SOURCE = [
-  "SOCIAL_MEDIA",
-  "ADS",
-  "SEARCH",
-  "BUSINESS_PARTNER",
-  "FRIEND_OR_FAMILY_MEMBER",
-  "OTHER",
-] as const;

@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { createElement } from "react";
+import { Role } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { WithCaptcha } from "@/types";
@@ -58,7 +59,7 @@ export async function signup(data: WithCaptcha<Signup>) {
   try {
     const admin = await prisma.user.findFirst({
       where: {
-        role: "ADMIN",
+        role: Role.ADMIN,
       },
     });
 
@@ -111,7 +112,7 @@ export async function signup(data: WithCaptcha<Signup>) {
         name: data.username,
         emailVerificationCode: verificationCode,
         emailVerificationCodeExpiresAt,
-        role: isAdmin ? "ADMIN" : "MODERATOR",
+        role: isAdmin ? Role.ADMIN : Role.MODERATOR,
       },
     });
 

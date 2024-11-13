@@ -1,3 +1,4 @@
+import { ContactMethod } from "@prisma/client";
 import { z } from "zod";
 import {
   agreeOnTermsSchema,
@@ -36,7 +37,7 @@ export const propertyInquirySchema = z.object({
     }),
   budget: pricingRangeSchema,
   propertySize: propertySizeSchema,
-  preferredContactMethod: z.enum(["EMAIL", "PHONE"], {
+  preferredContactMethod: z.nativeEnum(ContactMethod, {
     message: "contact method is required",
     required_error: "Preferred contact method is required",
     invalid_type_error: "Invalid contact method",

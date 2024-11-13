@@ -1,5 +1,5 @@
+import { InquiryType, ReferralSource } from "@prisma/client";
 import { z } from "zod";
-import { INQUIRY_TYPES, REFERRAL_SOURCE } from "@/constant";
 import {
   agreeOnTermsSchema,
   emailSchema,
@@ -8,13 +8,15 @@ import {
   phoneSchema,
 } from "./common";
 
-const inquiryTypeSchema = z.enum(INQUIRY_TYPES, {
+const inquiryTypeSchema = z.nativeEnum(InquiryType, {
   message: "Inquiry type is required",
   required_error: "Inquiry type is required",
   invalid_type_error: "Invalid inquiry type",
 });
 
-const referralSourceSchema = z.enum(REFERRAL_SOURCE, {
+inquiryTypeSchema.safeParse("Other");
+
+const referralSourceSchema = z.nativeEnum(ReferralSource, {
   message: "Please select how you heard about us",
   required_error: "Please select how you heard about us",
   invalid_type_error: "Invalid referral source",

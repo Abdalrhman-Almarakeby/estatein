@@ -1,5 +1,6 @@
 "use client";
 
+import { ContactMethod } from "@prisma/client";
 import { Controller } from "react-hook-form";
 import { AgreeOnTerms } from "@/components/form/agree-on-terms";
 import { Captcha } from "@/components/form/captcha";
@@ -283,7 +284,7 @@ export function PropertiesInquiryForm() {
                 <SelectValue placeholder="Select Preferred Contact Method" />
               </SelectTrigger>
               <SelectContent>
-                {["EMAIL", "PHONE"].map((element) => (
+                {Object.keys(ContactMethod).map((element) => (
                   <SelectItem value={element} key={element}>
                     {upperFirst(normalize(element))}
                   </SelectItem>

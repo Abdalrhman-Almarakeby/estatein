@@ -1,5 +1,6 @@
 "use client";
 
+import { InquiryType, ReferralSource } from "@prisma/client";
 import { Controller } from "react-hook-form";
 import { AgreeOnTerms } from "@/components/form/agree-on-terms";
 import { Captcha } from "@/components/form/captcha";
@@ -14,7 +15,6 @@ import {
 } from "@/components/form/select";
 import { Textarea } from "@/components/form/textarea";
 import { normalize, upperFirst } from "@/lib/utils";
-import { INQUIRY_TYPES, REFERRAL_SOURCE } from "@/constant";
 import { useContactForm } from "./use-contact-form";
 
 export function ContactForm() {
@@ -114,7 +114,7 @@ export function ContactForm() {
                 <SelectValue placeholder="Inquiry Type" />
               </SelectTrigger>
               <SelectContent>
-                {INQUIRY_TYPES.map((element) => (
+                {Object.keys(InquiryType).map((element) => (
                   <SelectItem value={element} key={element}>
                     {upperFirst(normalize(element))}
                   </SelectItem>
@@ -153,7 +153,7 @@ export function ContactForm() {
                 <SelectValue placeholder="How did you hear about us?" />
               </SelectTrigger>
               <SelectContent>
-                {REFERRAL_SOURCE.map((source) => (
+                {Object.keys(ReferralSource).map((source) => (
                   <SelectItem value={source} key={source}>
                     {upperFirst(normalize(source))}
                   </SelectItem>
