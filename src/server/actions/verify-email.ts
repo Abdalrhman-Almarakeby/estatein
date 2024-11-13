@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { verifyCaptchaToken } from "@/services";
+import { verifyCaptchaToken } from "@/server/services";
 
 const MAX_VERIFY_EMAIL_ATTEMPTS = 5;
 const VERIFY_EMAIL_ATTEMPTS_WINDOW = "30m";

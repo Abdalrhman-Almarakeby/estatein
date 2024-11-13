@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Inquiry, inquirySchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { verifyCaptchaToken } from "@/services";
+import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
 const RATE_LIMIT_WINDOW_DURATION = "1h";

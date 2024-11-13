@@ -10,7 +10,7 @@ import {
   specificPropertyInquirySchema,
 } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { verifyCaptchaToken } from "@/services";
+import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 1;
 const RATE_LIMIT_WINDOW_DURATION = "1h";

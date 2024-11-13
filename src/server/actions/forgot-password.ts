@@ -11,7 +11,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { sendEmail, verifyCaptchaToken } from "@/services";
+import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
 const ONE_HOUR = 60 * 60;
 
