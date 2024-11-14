@@ -31,3 +31,12 @@ export const getPropertyDetails = cache(async (id: string) => {
 
   return property;
 });
+
+export const propertyExistsById = cache(async (id: string) => {
+  const property = await prisma.property.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+
+  return !!property;
+});

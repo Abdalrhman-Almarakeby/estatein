@@ -10,6 +10,7 @@ import {
   specificPropertyInquirySchema,
 } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import { propertyExistsById } from "@/server/db/properties";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 1;
@@ -51,13 +52,7 @@ export async function createSpecificPropertyInquiry(
   }
 
   try {
-    const property = await prisma.property.findUnique({
-      where: {
-        id: data.propertyId,
-      },
-    });
-
-    if (!property) {
+    if (!propertyExistsById(data.propertyId)) {
       return {
         message: "The property you are trying to inquire about does not exist.",
         success: false,
