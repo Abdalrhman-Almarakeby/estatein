@@ -1,4 +1,4 @@
-import { getProperties } from "@/data/properties";
+import { getProperties } from "@/server/db/properties";
 import { PropertiesCards } from "./properties-cards";
 
 export async function PropertiesSection() {

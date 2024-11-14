@@ -3,7 +3,7 @@ import {
   CarouselSection,
 } from "@/components/ui/carousel-section";
 import { PropertyCard } from "@/components/ui/property-card";
-import { getProperties } from "@/data/properties";
+import { getProperties } from "@/server/db/properties";
 
 export async function PropertiesSection() {
   const properties = await getProperties();

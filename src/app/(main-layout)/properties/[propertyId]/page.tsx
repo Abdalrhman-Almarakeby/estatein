@@ -4,7 +4,7 @@ import { HeroSection } from "@/containers/property-page/hero-section";
 import { PricingSection } from "@/containers/property-page/pricing-section";
 import { SpecificPropertyInquiryFormSection } from "@/containers/property-page/specific-property-inquiry-form-section";
 import { generatePropertyPageMetadata } from "@/lib/metadata";
-import { getProperty } from "@/data/properties";
+import { getProperty } from "@/server/db/properties";
 
 type PageParams = {
   params: { propertyId: string };
