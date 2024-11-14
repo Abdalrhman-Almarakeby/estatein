@@ -4,19 +4,19 @@ import { HeroSection } from "@/containers/property-page/hero-section";
 import { PricingSection } from "@/containers/property-page/pricing-section";
 import { SpecificPropertyInquiryFormSection } from "@/containers/property-page/specific-property-inquiry-form-section";
 import { generatePropertyPageMetadata } from "@/lib/metadata";
-import { getProperty } from "@/server/db/properties";
+import { getPropertyDetails } from "@/server/db/properties";
 
 type PageParams = {
   params: { propertyId: string };
 };
 
 export async function generateMetadata({ params: { propertyId } }: PageParams) {
-  const property = await getProperty(propertyId);
+  const property = await getPropertyDetails(propertyId);
   return generatePropertyPageMetadata(property);
 }
 
 export default async function Page({ params: { propertyId } }: PageParams) {
-  const property = await getProperty(propertyId);
+  const property = await getPropertyDetails(propertyId);
 
   return (
     <main className="page-spacing container flex-grow pt-15">
