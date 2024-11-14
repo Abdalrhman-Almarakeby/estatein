@@ -3,10 +3,14 @@
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
-import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Inquiry, inquirySchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import {
+  createInquiry as createInquiryDb,
+  inquiryExistsByEmail,
+  inquiryExistsByPhone,
+} from "@/server/db/inquiries";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -46,13 +50,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
   }
 
   try {
-    const existingInquiry = await prisma.inquiry.findFirst({
-      where: {
-        OR: [{ email: data.email }, { phone: data.phone }],
-      },
-    });
-
-    if (existingInquiry?.email === data.email) {
+    if (await inquiryExistsByEmail(data.email)) {
       return {
         message:
           "An inquiry with this email already exists. We will get back to you as soon as possible.",
@@ -60,7 +58,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
       };
     }
 
-    if (existingInquiry?.phone === data.phone) {
+    if (await inquiryExistsByPhone(data.phone)) {
       return {
         message:
           "An inquiry with this phone number already exists. We will get back to you as soon as possible.",
@@ -68,9 +66,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
       };
     }
 
-    await prisma.inquiry.create({
-      data: omit(data, "agreeOnTerms", "captchaToken"),
-    });
+    await createInquiryDb(omit(data, "agreeOnTerms", "captchaToken"));
 
     return { message: "Your inquiry was sent successfully.", success: true };
   } catch (error) {
