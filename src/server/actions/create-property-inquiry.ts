@@ -10,7 +10,7 @@ import {
   createPropertyInquiry as createPropertyInquiryDb,
   propertyInquiryExistsByEmail,
   propertyInquiryExistsByPhone,
-} from "@/server/db/properties-Inquiries";
+} from "@/server/db/properties-inquiries";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
