@@ -59,7 +59,7 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    const existingInquiry = await prisma.propertyInquiry.findFirst({
+    const existingInquiry = await prisma.specificPropertyInquiry.findFirst({
       where: {
         OR: [{ email: data.email }, { phone: data.phone }],
       },
