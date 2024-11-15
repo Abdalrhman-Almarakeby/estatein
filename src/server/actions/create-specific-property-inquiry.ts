@@ -3,14 +3,19 @@
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
-import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import {
   SpecificPropertyInquiry,
   specificPropertyInquirySchema,
 } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { verifyCaptchaToken } from "@/services";
+import { propertyExistsById } from "@/server/db/properties";
+import {
+  createSpecificPropertyInquiry as createSpecificPropertyInquiryDb,
+  specificPropertyInquiryExistsByEmail,
+  specificPropertyInquiryExistsByPhone,
+} from "@/server/db/specific-property-inquiry";
+import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 1;
 const RATE_LIMIT_WINDOW_DURATION = "1h";
@@ -51,26 +56,14 @@ export async function createSpecificPropertyInquiry(
   }
 
   try {
-    const property = await prisma.property.findUnique({
-      where: {
-        id: data.propertyId,
-      },
-    });
-
-    if (!property) {
+    if (!propertyExistsById(data.propertyId)) {
       return {
         message: "The property you are trying to inquire about does not exist.",
         success: false,
       };
     }
 
-    const existingInquiry = await prisma.propertyInquiry.findFirst({
-      where: {
-        OR: [{ email: data.email }, { phone: data.phone }],
-      },
-    });
-
-    if (existingInquiry?.email === data.email) {
+    if (await specificPropertyInquiryExistsByEmail(data.email)) {
       return {
         message:
           "An inquiry with this email already exists. We will get back to you as soon as possible.",
@@ -78,7 +71,7 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    if (existingInquiry?.phone === data.phone) {
+    if (await specificPropertyInquiryExistsByPhone(data.phone)) {
       return {
         message:
           "An inquiry with this phone number already exists. We will get back to you as soon as possible.",
@@ -86,10 +79,8 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    await prisma.specificPropertyInquiry.create({
-      data: {
-        ...omit(data, "agreeOnTerms", "captchaToken"),
-      },
+    await createSpecificPropertyInquiryDb({
+      ...omit(data, "agreeOnTerms", "captchaToken"),
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };

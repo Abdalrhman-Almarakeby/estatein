@@ -3,7 +3,7 @@ import {
   SpecificPropertyInquiry,
   specificPropertyInquirySchema,
 } from "@/lib/schemas";
-import { createSpecificPropertyInquiry } from "@/actions";
+import { createSpecificPropertyInquiry } from "@/server/actions";
 
 export function useSpecificPropertyInquiryForm() {
   return useFormHandler<SpecificPropertyInquiry>({

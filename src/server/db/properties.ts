@@ -2,7 +2,7 @@ import { unstable_cache as cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
-export const getProperties = cache(async () => {
+export const getPropertiesSummaries = cache(async () => {
   return await prisma.property.findMany({
     select: {
       id: true,
@@ -18,7 +18,7 @@ export const getProperties = cache(async () => {
   });
 });
 
-export const getProperty = cache(async (id: string) => {
+export const getPropertyDetails = cache(async (id: string) => {
   const property = await prisma.property.findUnique({
     where: {
       id,
@@ -30,4 +30,13 @@ export const getProperty = cache(async (id: string) => {
   }
 
   return property;
+});
+
+export const propertyExistsById = cache(async (id: string) => {
+  const property = await prisma.property.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+
+  return !!property;
 });

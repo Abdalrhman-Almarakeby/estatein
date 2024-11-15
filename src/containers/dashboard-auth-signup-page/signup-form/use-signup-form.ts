@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { signup } from "@/actions";
+import { signup } from "@/server/actions";
 
 export function useSignupForm(callbackUrl?: string) {
   const router = useRouter();
