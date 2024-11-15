@@ -3,7 +3,6 @@
 import { WithCaptcha } from "@/types";
 import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
-import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import {
   SpecificPropertyInquiry,
@@ -11,6 +10,11 @@ import {
 } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { propertyExistsById } from "@/server/db/properties";
+import {
+  createSpecificPropertyInquiry as createSpecificPropertyInquiryDb,
+  specificPropertyInquiryExistsByEmail,
+  specificPropertyInquiryExistsByPhone,
+} from "@/server/db/specific-property-inquiry";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 1;
@@ -59,13 +63,7 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    const existingInquiry = await prisma.specificPropertyInquiry.findFirst({
-      where: {
-        OR: [{ email: data.email }, { phone: data.phone }],
-      },
-    });
-
-    if (existingInquiry?.email === data.email) {
+    if (await specificPropertyInquiryExistsByEmail(data.email)) {
       return {
         message:
           "An inquiry with this email already exists. We will get back to you as soon as possible.",
@@ -73,7 +71,7 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    if (existingInquiry?.phone === data.phone) {
+    if (await specificPropertyInquiryExistsByPhone(data.phone)) {
       return {
         message:
           "An inquiry with this phone number already exists. We will get back to you as soon as possible.",
@@ -81,10 +79,8 @@ export async function createSpecificPropertyInquiry(
       };
     }
 
-    await prisma.specificPropertyInquiry.create({
-      data: {
-        ...omit(data, "agreeOnTerms", "captchaToken"),
-      },
+    await createSpecificPropertyInquiryDb({
+      ...omit(data, "agreeOnTerms", "captchaToken"),
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };
