@@ -19,84 +19,123 @@ function getGlobalRateLimitKey(ip: string, userAgent: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  // rate limiting middleware
-  if (
-    /^\/(?!api|blocked|_next\/static|_next\/image|favicon\.ico).*$/.test(
-      request.nextUrl.pathname,
-    )
-  ) {
-    const ip = getUserIpAddress();
-    const { ua: userAgent } = getUserAgent();
+  const { pathname } = request.nextUrl;
 
-    const limitKey = getGlobalRateLimitKey(ip, userAgent);
-
-    const { success } = await globalRateLimit.limit(limitKey);
-
-    if (!success) {
-      return NextResponse.redirect(new URL("/blocked", request.url));
-    }
+  // Apply rate limiting for non-static routes
+  if (shouldApplyRateLimit(pathname)) {
+    const rateLimitResult = await applyRateLimit(request);
+    if (rateLimitResult) return rateLimitResult;
   }
 
-  // blocked page middleware
-  if (request.nextUrl.pathname === "/blocked") {
-    const ip = getUserIpAddress();
-    const { ua: userAgent } = getUserAgent();
-
-    const limitKey = getGlobalRateLimitKey(ip, userAgent);
-
-    const { success } = await globalRateLimit.limit(limitKey);
-
-    if (success) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+  // Handle blocked page
+  if (pathname === "/blocked") {
+    return handleBlockedPage(request);
   }
 
-  // Auth middleware
-  if (/^\/dashboard(?!\/auth).*$/.test(request.nextUrl.pathname)) {
-    const token = await getToken({ req: request });
-    const isAuth = !!token;
-
-    if (!isAuth) {
-      const url = new URL("/dashboard/auth/login", request.url);
-
-      url.searchParams.set("callbackUrl", request.url);
-
-      return NextResponse.redirect(url);
-    }
+  // Handle authentication for dashboard routes
+  if (pathname.startsWith("/dashboard")) {
+    return handleDashboardAuth(request);
   }
 
-  // Unauthenticated middleware
-  if (/^\/dashboard\/auth.*$/.test(request.nextUrl.pathname)) {
-    const token = await getToken({ req: request });
-
-    if (token) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
+  // Handle forgot password sent page
+  if (pathname === "/dashboard/auth/forgot-password/sent") {
+    return handleForgotPasswordSent(request);
   }
 
-  // forgot password sent page middleware
-  if (request.nextUrl.pathname === "/dashboard/auth/forgot-password/sent") {
-    const cookieStore = cookies();
-
-    const isResetPasswordPending = cookieStore.get("reset-password-pending");
-
-    if (!isResetPasswordPending) {
-      return NextResponse.redirect(
-        new URL("/dashboard/auth/forgot-password", request.url),
-      );
-    }
+  // Handle verify email page
+  if (pathname === "/dashboard/auth/verify-email") {
+    return handleVerifyEmail(request);
   }
 
-  // verify email page middleware
-  if (request.nextUrl.pathname === "/dashboard/auth/verify-email") {
-    const cookieStore = cookies();
+  return NextResponse.next();
+}
 
-    const verificationPending = cookieStore.get("verification-pending");
+function shouldApplyRateLimit(pathname: string): boolean {
+  return /^\/(?!api|blocked|_next\/static|_next\/image|favicon\.ico).*$/.test(
+    pathname,
+  );
+}
 
-    if (!verificationPending) {
-      return NextResponse.redirect(
-        new URL("/dashboard/auth/signup", request.url),
-      );
-    }
+async function applyRateLimit(
+  request: NextRequest,
+): Promise<NextResponse | null> {
+  const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+  const limitKey = getGlobalRateLimitKey(ip, userAgent);
+
+  const { success } = await globalRateLimit.limit(limitKey);
+
+  if (!success) {
+    return NextResponse.redirect(new URL("/blocked", request.url));
+  }
+
+  return null;
+}
+
+async function handleBlockedPage(request: NextRequest): Promise<NextResponse> {
+  const ip = getUserIpAddress();
+  const { ua: userAgent } = getUserAgent();
+  const limitKey = getGlobalRateLimitKey(ip, userAgent);
+
+  const { success } = await globalRateLimit.limit(limitKey);
+
+  if (success) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return NextResponse.next();
+}
+
+async function handleDashboardAuth(
+  request: NextRequest,
+): Promise<NextResponse | undefined> {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/dashboard/auth")) {
+    return handleUnauthenticatedRoutes(request);
+  }
+
+  const token = await getToken({ req: request });
+  if (!token) {
+    const url = new URL("/dashboard/auth/login", request.url);
+    url.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(url);
   }
 }
+
+async function handleUnauthenticatedRoutes(
+  request: NextRequest,
+): Promise<NextResponse | undefined> {
+  const token = await getToken({ req: request });
+  if (token) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+}
+
+function handleForgotPasswordSent(
+  request: NextRequest,
+): NextResponse | undefined {
+  const cookieStore = cookies();
+  const isResetPasswordPending = cookieStore.get("reset-password-pending");
+
+  if (!isResetPasswordPending) {
+    return NextResponse.redirect(
+      new URL("/dashboard/auth/forgot-password", request.url),
+    );
+  }
+}
+
+function handleVerifyEmail(request: NextRequest): NextResponse | undefined {
+  const cookieStore = cookies();
+  const verificationPending = cookieStore.get("verification-pending");
+
+  if (!verificationPending) {
+    return NextResponse.redirect(
+      new URL("/dashboard/auth/signup", request.url),
+    );
+  }
+}
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
