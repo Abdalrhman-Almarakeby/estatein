@@ -1,0 +1,116 @@
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { Check, ChevronDown, ChevronUp, Edit2, X } from "lucide-react";
+import { Input } from "@/components/form/input";
+import { cn } from "@/lib/utils";
+
+type MultiInputItemProps = {
+  item: { value: string };
+  index: number;
+  isEditing: boolean;
+  onKeyDown: (e: KeyboardEvent<HTMLInputElement>, index: number) => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  onStartEditing: () => void;
+  onStopEditing: (value: string) => void;
+  onRemove: () => void;
+  isFirst: boolean;
+  isLast: boolean;
+};
+
+export function MultiInputItem({
+  item,
+  index,
+  isEditing,
+  onKeyDown,
+  onMoveUp,
+  onMoveDown,
+  onStartEditing,
+  onStopEditing,
+  onRemove,
+  isFirst,
+  isLast,
+}: MultiInputItemProps) {
+  const [inputValue, setInputValue] = useState(item.value);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setInputValue(item.value);
+  }, [item.value]);
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  return (
+    <div className="flex items-center space-x-2">
+      <div
+        className={cn(
+          "flex-grow p-2 border rounded-md ",
+          isEditing ? "bg-background" : "bg-muted",
+        )}
+      >
+        {isEditing ? (
+          <Input
+            ref={inputRef}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => onKeyDown(e, index)}
+            className="w-full"
+            aria-label={`Edit item ${index + 1}`}
+          />
+        ) : (
+          <span>{item.value}</span>
+        )}
+      </div>
+      <div className="flex space-x-1">
+        <button
+          type="button"
+          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          onClick={onMoveUp}
+          disabled={isFirst}
+          aria-label={`Move item ${index + 1} up`}
+        >
+          <ChevronUp className="size-4" />
+        </button>
+        <button
+          type="button"
+          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          onClick={onMoveDown}
+          disabled={isLast}
+          aria-label={`Move item ${index + 1} down`}
+        >
+          <ChevronDown className="size-4" />
+        </button>
+        {isEditing ? (
+          <button
+            type="button"
+            className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+            onClick={() => onStopEditing(inputValue)}
+            aria-label={`Save edit for item ${index + 1}`}
+          >
+            <Check className="size-4" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+            onClick={onStartEditing}
+            aria-label={`Edit item ${index + 1}`}
+          >
+            <Edit2 className="size-4" />
+          </button>
+        )}
+        <button
+          type="button"
+          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          onClick={onRemove}
+          aria-label={`Remove item ${index + 1}`}
+        >
+          <X className="size-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
