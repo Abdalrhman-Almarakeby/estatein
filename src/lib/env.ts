@@ -26,6 +26,7 @@ export const env = createEnv({
     KV_REST_API_READ_ONLY_TOKEN: z.string().trim().min(1),
     UPSTASH_REDIS_REST_URL: z.string().trim().min(1).url(),
     UPSTASH_REDIS_REST_TOKEN: z.string().trim().min(1),
+    BLOB_READ_WRITE_TOKEN: z.string().trim().min(1),
   },
   client: {
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().trim().min(1),
@@ -64,5 +65,6 @@ export const env = createEnv({
     KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   },
 });
