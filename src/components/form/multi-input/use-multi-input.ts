@@ -23,7 +23,7 @@ type UseMultiInputReturn = Pick<
   stopEditing: () => void;
   moveUp: (index: number) => void;
   moveDown: (index: number) => void;
-  values: { value: string }[];
+  values: string[];
 };
 
 export function useMultiInput({
@@ -47,14 +47,12 @@ export function useMultiInput({
 
         const isEditing = editingIndex !== null;
         if (isEditing) {
-          update(editingIndex, {
-            value: inputValue,
-          });
+          update(editingIndex, inputValue);
           setEditingIndex(null);
           return;
         }
 
-        append({ value: inputValue });
+        append(inputValue);
         inputElement.value = "";
       }
     },

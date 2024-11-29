@@ -4,7 +4,7 @@ import { Input } from "@/components/form/input";
 import { cn } from "@/lib/utils";
 
 type MultiInputItemProps = {
-  item: { value: string };
+  item: string;
   index: number;
   isEditing: boolean;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>, index: number) => void;
@@ -30,12 +30,12 @@ export function MultiInputItem({
   isFirst,
   isLast,
 }: MultiInputItemProps) {
-  const [inputValue, setInputValue] = useState(item.value);
+  const [inputValue, setInputValue] = useState(item);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setInputValue(item.value);
-  }, [item.value]);
+    setInputValue(item);
+  }, [item]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -61,7 +61,7 @@ export function MultiInputItem({
             aria-label={`Edit item ${index + 1}`}
           />
         ) : (
-          <span>{item.value}</span>
+          <span>{item}</span>
         )}
       </div>
       <div className="flex space-x-1">

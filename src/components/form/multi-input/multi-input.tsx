@@ -44,14 +44,12 @@ export function MultiInput({
         {fields.map((field, index) => (
           <MultiInputItem
             key={field.id}
-            item={values[index] || { value: "" }}
+            item={values[index] || ""}
             index={index}
             isEditing={editingIndex === index}
             onKeyDown={(e, index) => {
               if (e.key === "Enter") {
-                update(index, {
-                  value: (e.target as HTMLInputElement).value.trim(),
-                });
+                update(index, (e.target as HTMLInputElement).value.trim());
                 stopEditing();
               }
             }}
@@ -59,7 +57,7 @@ export function MultiInput({
             onMoveDown={() => moveDown(index)}
             onStartEditing={() => startEditing(index)}
             onStopEditing={(value) => {
-              update(index, { value: value.trim() });
+              update(index, value.trim());
               stopEditing();
             }}
             onRemove={() => remove(index)}
