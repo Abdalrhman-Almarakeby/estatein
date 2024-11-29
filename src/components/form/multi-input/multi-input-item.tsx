@@ -1,5 +1,5 @@
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, ChevronUp, Edit2, X } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Edit2, Trash2 } from "lucide-react";
 import { Input } from "@/components/form/input";
 import { cn } from "@/lib/utils";
 
@@ -67,7 +67,7 @@ export function MultiInputItem({
       <div className="flex space-x-1">
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          className="inline-flex items-center justify-center size-8 btn-secondary"
           onClick={onMoveUp}
           disabled={isFirst}
           aria-label={`Move item ${index + 1} up`}
@@ -76,7 +76,7 @@ export function MultiInputItem({
         </button>
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          className="inline-flex items-center justify-center size-8 btn-secondary"
           onClick={onMoveDown}
           disabled={isLast}
           aria-label={`Move item ${index + 1} down`}
@@ -86,7 +86,7 @@ export function MultiInputItem({
         {isEditing ? (
           <button
             type="button"
-            className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+            className="inline-flex items-center justify-center size-8 btn-secondary"
             onClick={() => onStopEditing(inputValue)}
             aria-label={`Save edit for item ${index + 1}`}
           >
@@ -95,7 +95,7 @@ export function MultiInputItem({
         ) : (
           <button
             type="button"
-            className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+            className="inline-flex items-center justify-center size-8 btn-secondary"
             onClick={onStartEditing}
             aria-label={`Edit item ${index + 1}`}
           >
@@ -104,11 +104,11 @@ export function MultiInputItem({
         )}
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 rounded-md border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background"
+          className="inline-flex items-center justify-center size-8 btn bg-red-500"
           onClick={onRemove}
           aria-label={`Remove item ${index + 1}`}
         >
-          <X className="size-4" />
+          <Trash2 className="size-4" />
         </button>
       </div>
     </div>
