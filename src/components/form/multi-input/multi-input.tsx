@@ -62,6 +62,8 @@ export function MultiInput({
             }
 
             inputElement.value = "";
+
+            inputElement.focus();
           }}
         >
           <Check className="size-4" />
