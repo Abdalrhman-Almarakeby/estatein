@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId } from "react";
 import { Camera, Loader2 } from "lucide-react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import { Input } from "@/components/form/input";
@@ -23,7 +23,6 @@ export function MultiImageUpload<T extends FieldValues>({
   control,
   maxNumber = MAX_IMAGE_NUMBER,
 }: MultiImageUploadProps<T>) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const imageUploadId = useId();
 
   const { images, isUploading, handleImageChange, moveImage, removeImage } =
@@ -34,7 +33,7 @@ export function MultiImageUpload<T extends FieldValues>({
       <div
         className={cn(
           "w-full p-4 flex flex-col items-center justify-center border-2 border-white border-dashed rounded-lg text-center transition-colors cursor-pointer",
-          !isUploading && "hover:bg-gray-dark",
+          !isUploading && "hover:bg-gray-dark focus-within:bg-gray-dark",
         )}
       >
         <label
@@ -59,7 +58,6 @@ export function MultiImageUpload<T extends FieldValues>({
             onChange={(e) => handleImageChange(e.target.files)}
             disabled={isUploading}
             id={imageUploadId}
-            ref={fileInputRef}
             className="absolute inset-0 w-full h-full opacity-0 disabled:opacity-0 cursor-pointer"
           />
         </label>
@@ -70,7 +68,6 @@ export function MultiImageUpload<T extends FieldValues>({
             key={image.id}
             image={image}
             index={index}
-            onEdit={() => fileInputRef.current?.click()}
             onRemove={() => removeImage(index)}
             onMoveUp={() => moveImage(index, index - 1)}
             onMoveDown={() => moveImage(index, index + 1)}
