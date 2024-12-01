@@ -11,8 +11,7 @@ export default async function PropertiesDashboard() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Properties Dashboard</h1>
         <Link
-          // TODO
-          href="/dashboard/properties"
+          href="/dashboard/properties/new"
           className="btn btn-primary py-2 px-4 rounded inline-flex gap-2 items-center"
         >
           Add New Property
