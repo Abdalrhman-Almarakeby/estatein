@@ -51,6 +51,7 @@
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.53.2",
     "react-hot-toast": "^2.4.1",
+    "react-number-format": "^5.4.2",
     "sharp": "^0.33.5",
     "tailwind-container-break-out": "^2.0.9",
     "tailwind-merge": "^2.5.4",
