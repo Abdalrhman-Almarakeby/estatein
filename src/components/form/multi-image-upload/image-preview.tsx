@@ -111,17 +111,6 @@ export function ImagePreview({
             <span className="font-semibold">{imageDetails.size}</span>
           </div>
         )}
-        {image.status !== "success" && (
-          <p className="text-xs mt-1">
-            {
-              {
-                uploading: "Uploading...",
-                deleting: "Deleting...",
-                error: "Upload failed",
-              }[image.status]
-            }
-          </p>
-        )}
       </div>
     </div>
   );
