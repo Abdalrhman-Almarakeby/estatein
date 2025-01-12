@@ -2,6 +2,8 @@ export * from "./create-inquiry";
 export * from "./create-property-inquiry";
 export * from "./create-specific-property-inquiry";
 export * from "./forgot-password";
+export * from "./images/delete-image";
+export * from "./images/upload-image";
 export * from "./login";
 export * from "./reset-password";
 export * from "./signup";

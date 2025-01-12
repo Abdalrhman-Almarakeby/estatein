@@ -40,3 +40,7 @@ export function formatPrice(number: number): string {
     maximumFractionDigits: 0,
   });
 }
+
+export function generateId(): string {
+  return Math.random().toString(36).slice(2, 9);
+}

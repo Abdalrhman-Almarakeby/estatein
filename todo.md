@@ -9,6 +9,14 @@
 - Add toasts for auth actions like signing up and resetting password
   before redirecting
 
+- Add toasts for actions like creating property or editing one
+
+- Fix actions security. (use auth in it)
+
+- change title to name
+
+- USE SEARCH PARAM
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons

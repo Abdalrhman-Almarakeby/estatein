@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 import { Header } from "@/containers/dashboard-layout/header";
 import { Sidebar } from "@/containers/dashboard-layout/sidebar";
 import { DashboardSidebarContextProvider } from "@/contexts/dashboard-sidebar";
@@ -9,7 +10,11 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-svh flex-col overflow-x-hidden bg-gray-darkest text-white contain-paint lg:flex-row">
+    <div className="flex min-h-svh flex-col overflow-x-hidden bg-gray-darkest text-white lg:flex-row">
+      <Toaster
+        toastOptions={{ className: "toast" }}
+        containerClassName="fixed bottom-5 left-5 right-5 top-5"
+      />
       <DashboardSidebarContextProvider>
         <Header />
         <Sidebar />

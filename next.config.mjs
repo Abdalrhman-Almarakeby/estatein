@@ -10,13 +10,11 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
-  // TODO
   images: {
-    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "picsum.photos",
+        hostname: "wumjlbmt5kom556f.public.blob.vercel-storage.com",
       },
     ],
   },
