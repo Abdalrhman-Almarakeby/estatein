@@ -17,6 +17,10 @@
 
 - USE SEARCH PARAM
 
+- Use optimistic updates for deleting a property
+
+- add archive to move properties to
+
 - Add cache system
 
 - Add caps look warning for password inputs
