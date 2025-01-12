@@ -1,5 +1,6 @@
 import { unstable_cache as cache } from "next/cache";
 import { notFound } from "next/navigation";
+import { Property } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export const getPropertiesSummaries = cache(async () => {
@@ -40,3 +41,13 @@ export const propertyExistsById = cache(async (id: string) => {
 
   return !!property;
 });
+
+export async function createProperty(
+  data: Omit<Property, "id" | "inquiries" | "updatedAt" | "createdAt">,
+) {
+  const property = await prisma.property.create({
+    data,
+  });
+
+  return property;
+}
