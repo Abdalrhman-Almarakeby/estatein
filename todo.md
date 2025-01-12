@@ -13,6 +13,8 @@
 
 - Fix actions security. (use auth in it)
 
+- change title to name
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
