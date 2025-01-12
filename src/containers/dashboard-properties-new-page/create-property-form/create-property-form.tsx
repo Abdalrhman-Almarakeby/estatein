@@ -16,11 +16,25 @@ import {
   SelectValue,
 } from "@/components/form/select";
 import { Textarea } from "@/components/form/textarea";
+import { useToastNotification } from "@/hooks";
 import { normalize } from "@/lib/utils";
 import { CreateProperty, createPropertySchema } from "@/lib/schemas";
 import { LOCATIONS } from "@/constant/filters-data/locations";
+import { createProperty } from "@/server/actions/create-property";
 
-export function CreatePropertyForm() {
+type CreatePropertyFormProps = {
+  onPropertyCreated: (property: { id: string; name: string }) => void;
+};
+
+export function CreatePropertyForm({
+  onPropertyCreated,
+}: CreatePropertyFormProps) {
+  const toastNotification = useToastNotification({
+    successMessage: "Property created successfully",
+    errorMessage: "Failed to create property",
+    loadingMessage: "Creating property...",
+  });
+
   const {
     control,
     handleSubmit,
@@ -31,11 +45,21 @@ export function CreatePropertyForm() {
   });
 
   const onSubmit = async (data: CreateProperty) => {
-    // TODO
-    // eslint-disable-next-line no-console
-    console.log("Good!");
-    // eslint-disable-next-line no-console
-    console.log(data);
+    toastNotification.showLoading();
+
+    try {
+      const { success, data: property } = await createProperty(data);
+
+      if (!success || !property) {
+        toastNotification.showError();
+        return;
+      }
+
+      onPropertyCreated({ id: property.id, name: property.title });
+      toastNotification.showSuccess();
+    } catch (error) {
+      toastNotification.showError();
+    }
   };
 
   return (
