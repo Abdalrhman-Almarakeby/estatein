@@ -1,7 +1,10 @@
 "use server";
 
 import { CreateProperty, createPropertySchema } from "@/lib/schemas";
-import { createProperty as createPropertyDb } from "@/server/db/properties";
+import {
+  createProperty as createPropertyDb,
+  propertyExistsByName,
+} from "@/server/db/properties";
 
 export async function createProperty(data: CreateProperty) {
   const { success: isDataValid, error } = createPropertySchema.safeParse(data);
@@ -11,6 +14,15 @@ export async function createProperty(data: CreateProperty) {
   }
 
   try {
+    const propertyWithSameName = await propertyExistsByName(data.title);
+
+    if (propertyWithSameName) {
+      return {
+        message: "Property with the same name already exists.",
+        success: false,
+      };
+    }
+
     const property = await createPropertyDb(data);
 
     return {

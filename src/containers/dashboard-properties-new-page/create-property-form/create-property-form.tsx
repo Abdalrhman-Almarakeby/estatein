@@ -48,10 +48,10 @@ export function CreatePropertyForm({
     toastNotification.showLoading();
 
     try {
-      const { success, data: property } = await createProperty(data);
+      const { success, data: property, message } = await createProperty(data);
 
       if (!success || !property) {
-        toastNotification.showError();
+        toastNotification.showError(message);
         return;
       }
 
