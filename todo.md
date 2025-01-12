@@ -17,6 +17,8 @@
 
 - USE SEARCH PARAM
 
+- Add cache system
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
