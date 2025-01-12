@@ -15,6 +15,8 @@
 
 - change title to name
 
+- USE SEARCH PARAM
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
