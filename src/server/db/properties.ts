@@ -42,6 +42,15 @@ export const propertyExistsById = cache(async (id: string) => {
   return !!property;
 });
 
+export const propertyExistsByName = cache(async (title: string) => {
+  const property = await prisma.property.findUnique({
+    where: { title },
+    select: { title: true },
+  });
+
+  return !!property;
+});
+
 export async function createProperty(
   data: Omit<Property, "id" | "inquiries" | "updatedAt" | "createdAt">,
 ) {
