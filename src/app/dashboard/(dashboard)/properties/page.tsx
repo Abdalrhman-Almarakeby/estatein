@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { PropertiesTable } from "@/containers/dashboard-properties-page/properties-table";
-import { prisma } from "@/lib/prisma";
+import { getProperties } from "@/server/db/properties";
 
 export default async function PropertiesDashboard() {
-  const properties = await prisma.property.findMany();
+  const properties = await getProperties();
 
   return (
     <div className="container mx-auto py-10">

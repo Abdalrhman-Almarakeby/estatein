@@ -39,6 +39,11 @@ export const columns: ColumnDef<Property>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsMenu propertyId={row.original.id} />,
+    cell: ({ row }) => (
+      <ActionsMenu
+        propertyId={row.original.id}
+        propertyName={row.original.title}
+      />
+    ),
   },
 ];
