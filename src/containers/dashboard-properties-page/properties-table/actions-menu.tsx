@@ -59,7 +59,7 @@ export function ActionsMenu({ propertyId, propertyName }: ActionsMenuProps) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="[&_*]:!no-underline">
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link href={`/properties/${propertyId}`}>View Property Page</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -78,7 +78,7 @@ export function ActionsMenu({ propertyId, propertyName }: ActionsMenuProps) {
             Copy property Page Link
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link href={`/dashboard/properties/${propertyId}/edit`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem
