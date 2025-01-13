@@ -79,7 +79,7 @@ export function ActionsMenu({ propertyId, propertyName }: ActionsMenuProps) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href={"/dashboard/properties"}>Edit</Link>
+            <Link href={`/dashboard/properties/${propertyId}/edit`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={() => {

@@ -2,7 +2,7 @@ import { PropertyType } from "@prisma/client";
 import { z } from "zod";
 import { locationSchema } from "./common";
 
-export const createPropertySchema = z.object({
+export const propertyDataSchema = z.object({
   title: z
     .string({
       required_error: "Title is required",
@@ -127,4 +127,4 @@ export const createPropertySchema = z.object({
     .positive("Mortgage must be a positive number"),
 });
 
-export type CreateProperty = z.infer<typeof createPropertySchema>;
+export type PropertyData = z.infer<typeof propertyDataSchema>;

@@ -65,6 +65,15 @@ export async function createProperty(
   return property;
 }
 
+export async function updateProperty(id: string, data: Partial<Property>) {
+  const property = await prisma.property.update({
+    where: { id },
+    data,
+  });
+
+  return property;
+}
+
 export async function deleteProperty(id: string) {
   const property = await prisma.property.delete({
     where: { id },
