@@ -23,6 +23,8 @@
 
 - Add cache system
 
+- There is a problem with the cache in the dashboard properties page
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
