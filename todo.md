@@ -19,6 +19,8 @@
 
 - Use optimistic updates for deleting a property
 
+- create a config file for property data (like currency, image aspect ratio, locations, etc..)
+
 - add archive to move properties to
 
 - Add cache system
