@@ -22,22 +22,21 @@ export function PropertyCreatedSuccess({
           </h2>
 
           <p className="text-center mt-2">
-            Your new property "{propertyTitle}" has been added to the system.
+            Your property "{propertyTitle}" has been added to the system.
           </p>
 
           <div className="grid grid-cols-2 gap-2 text-center mt-10">
             <Link
-              className=" py-2 px-4 btn-sm btn-primary"
+              className="py-2 px-4 btn-sm btn-primary"
               href={`/properties/${propertyId}`}
             >
               View Property Page
             </Link>
             <Link
               className="py-2 px-4 btn-sm btn-tertiary"
-              // @ts-expect-error // TODO
               href={`/dashboard/properties/${propertyId}/edit`}
             >
-              Edit property
+              Edit Property
             </Link>
           </div>
         </div>
@@ -50,7 +49,7 @@ export function PropertyCreatedSuccess({
           </Link>
           <button
             className="flex gap-2 !no-underline"
-            onClick={() => onCreateNewProperty()}
+            onClick={onCreateNewProperty}
           >
             <Plus /> Create Another
           </button>

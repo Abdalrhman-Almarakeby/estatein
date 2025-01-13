@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { Property } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
+export const getProperties = cache(async () => {
+  return await prisma.property.findMany();
+});
+
 export const getPropertiesSummaries = cache(async () => {
   return await prisma.property.findMany({
     select: {
@@ -56,6 +60,23 @@ export async function createProperty(
 ) {
   const property = await prisma.property.create({
     data,
+  });
+
+  return property;
+}
+
+export async function updateProperty(id: string, data: Partial<Property>) {
+  const property = await prisma.property.update({
+    where: { id },
+    data,
+  });
+
+  return property;
+}
+
+export async function deleteProperty(id: string) {
+  const property = await prisma.property.delete({
+    where: { id },
   });
 
   return property;

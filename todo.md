@@ -17,6 +17,16 @@
 
 - USE SEARCH PARAM
 
+- Use optimistic updates for deleting a property
+
+- create a config file for property data (like currency, image aspect ratio, locations, etc..)
+
+- add archive to move properties to
+
+- Add cache system
+
+- There is a problem with the cache in the dashboard properties page
+
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
