@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { PropertyData, propertyDataSchema } from "@/lib/schemas";
 import {
   propertyExistsById,
@@ -24,6 +25,7 @@ export async function updateProperty(id: string, data: PropertyData) {
     }
 
     const updatedProperty = await updatePropertyDb(id, data);
+    revalidatePath("/dashboard/properties");
 
     return {
       message: "Property was updated successfully.",
