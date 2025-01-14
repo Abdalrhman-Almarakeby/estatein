@@ -1,4 +1,5 @@
 import { unstable_cache as cache } from "next/cache";
+import { subDays, subMonths, subWeeks } from "date-fns";
 import { prisma } from "@/lib/prisma";
 
 export const newsletterSubscriberExists = cache(async (email: string) => {
@@ -24,12 +25,12 @@ export const createNewsletterSubscriber = async (email: string) => {
 
 export const getNewsletterStats = cache(async () => {
   const now = new Date();
-  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
-  const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
-  const twoMonthsAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+  const oneDayAgo = subDays(now, 1);
+  const oneWeekAgo = subWeeks(now, 1);
+  const oneMonthAgo = subMonths(now, 1);
+  const twoDaysAgo = subDays(now, 2);
+  const twoWeeksAgo = subWeeks(now, 2);
+  const twoMonthsAgo = subMonths(now, 2);
 
   const [
     totalSubscribers,

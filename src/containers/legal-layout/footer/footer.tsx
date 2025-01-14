@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { getYear } from "date-fns";
 
 export function Footer() {
-  const year = new Date().getFullYear();
+  const year = getYear(new Date());
 
   return (
     <footer className="container mt-12 grid gap-5 py-6">

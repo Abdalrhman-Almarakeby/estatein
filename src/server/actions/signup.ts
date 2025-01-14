@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { createElement } from "react";
 import { Role } from "@prisma/client";
 import { hash } from "bcryptjs";
+import { addHours, hoursToSeconds } from "date-fns";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { WithCaptcha } from "@/types";
 import { env } from "@/lib/env";
@@ -14,8 +15,6 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
-
-const ONE_HOUR = 60 * 60;
 
 const RATE_LIMIT_MAX_ATTEMPTS = 5;
 const RATE_LIMIT_WINDOW_DURATION = "1h";
@@ -98,10 +97,7 @@ export async function signup(data: WithCaptcha<Signup>) {
 
     const verificationCode = generateNumericOTP();
 
-    const emailVerificationCodeExpiresAt = new Date();
-    emailVerificationCodeExpiresAt.setHours(
-      emailVerificationCodeExpiresAt.getHours() + 1,
-    );
+    const emailVerificationCodeExpiresAt = addHours(new Date(), 1);
 
     const isAdmin = data.email === env.ADMIN_EMAIL && !admin;
 
@@ -126,13 +122,13 @@ export async function signup(data: WithCaptcha<Signup>) {
     cookieStore.set({
       name: "verification-pending",
       value: "true",
-      maxAge: ONE_HOUR,
+      maxAge: hoursToSeconds(1),
     });
 
     cookieStore.set({
       name: "signup-email",
       value: data.email,
-      maxAge: ONE_HOUR,
+      maxAge: hoursToSeconds(1),
     });
 
     await sendEmail({

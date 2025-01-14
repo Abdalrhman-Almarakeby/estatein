@@ -10,6 +10,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { getYear } from "date-fns";
 
 type DashboardVerificationEmailProps = {
   username: string;
@@ -20,7 +21,7 @@ export function DashboardVerificationEmail({
   username,
   verificationCode,
 }: DashboardVerificationEmailProps) {
-  const year = new Date().getFullYear();
+  const year = getYear(new Date());
 
   return (
     <Html>

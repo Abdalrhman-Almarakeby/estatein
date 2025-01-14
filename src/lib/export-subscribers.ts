@@ -1,4 +1,5 @@
 import { NewsletterSubscriber } from "@prisma/client";
+import { format } from "date-fns";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
@@ -49,7 +50,7 @@ async function exportXLSX(subscribers: Subscribers) {
   subscribers.forEach((sub) => {
     worksheet.addRow({
       email: sub.email,
-      subscribedAt: formatDate(sub.subscribedAt),
+      subscribedAt: format(sub.subscribedAt, "P p"),
     });
   });
 
@@ -79,7 +80,7 @@ function exportXML(subscribers: Subscribers) {
       (sub) => `
   <subscriber>
     <subscriberEmail>${sub.email}</subscriberEmail>
-    <subscriptionDate>${new Date(sub.subscribedAt).toLocaleString()}</subscriptionDate>
+    <subscriptionDate>${format(sub.subscribedAt, "Pp")}</subscriptionDate>
   </subscriber>`,
     )
     .join("")}
@@ -94,9 +95,7 @@ function exportXML(subscribers: Subscribers) {
 
 function exportTXT(subscribers: Subscribers) {
   const txtString = subscribers
-    .map(
-      (sub) => `${sub.email}, ${new Date(sub.subscribedAt).toLocaleString()}`,
-    )
+    .map((sub) => `${sub.email}, ${format(sub.subscribedAt, "Pp")}`)
     .join("\n");
 
   const blob = new Blob([txtString], { type: "text/plain;charset=utf-8;" });
@@ -110,18 +109,11 @@ function exportPDF(subscribers: Subscribers) {
 
   subscribers.forEach((sub, index) => {
     doc.text(
-      `${index + 1}. ${sub.email} - ${new Date(sub.subscribedAt).toLocaleString()}`,
+      `${index + 1}. ${sub.email} - ${format(sub.subscribedAt, "Pp")}`,
       10,
       20 + index * 10,
     );
   });
 
   doc.save("newsletter_subscribers.pdf");
-}
-
-function formatDate(subscribedAt: Date) {
-  const date = new Date(subscribedAt);
-  const formattedDate = date.toLocaleDateString();
-  const formattedTime = date.toLocaleTimeString();
-  return `${formattedDate} ${formattedTime}`;
 }
