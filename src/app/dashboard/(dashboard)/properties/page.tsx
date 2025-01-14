@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { PropertiesTable } from "@/containers/dashboard-properties-page/properties-table";
 import { generateDashboardMetadata } from "@/lib/metadata";
-import { getProperties } from "@/server/db/properties";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = generateDashboardMetadata({
   title: "Properties - Estatein",
@@ -10,8 +10,7 @@ export const metadata = generateDashboardMetadata({
 });
 
 export default async function Page() {
-  const properties = await getProperties();
-
+  const properties = await prisma.property.findMany();
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-6">

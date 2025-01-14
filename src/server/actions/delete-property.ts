@@ -1,20 +1,23 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import {
-  deleteProperty as deletePropertyDb,
-  propertyExistsById,
-} from "@/server/db/properties";
+import { prisma } from "@/lib/prisma";
 
 export async function deleteProperty(id: string) {
   try {
-    const property = await propertyExistsById(id);
+    const property = await prisma.property.findUnique({
+      where: { id },
+      select: { id: true },
+    });
 
     if (!property) {
       return { success: false, message: "Property not found" };
     }
 
-    const deletedProperty = await deletePropertyDb(id);
+    const deletedProperty = await prisma.property.delete({
+      where: { id },
+    });
+
     revalidatePath("/dashboard/properties");
 
     return { success: true, property: deletedProperty };

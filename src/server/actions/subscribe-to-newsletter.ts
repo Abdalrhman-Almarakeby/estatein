@@ -2,13 +2,10 @@
 
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
+import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  createNewsletterSubscriber,
-  newsletterSubscriberExists,
-} from "@/server/db/newsletter-subscriber";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -48,11 +45,25 @@ export async function subscribeToNewsletter(data: WithCaptcha<Email>) {
   }
 
   try {
-    if (await newsletterSubscriberExists(data.email)) {
+    const newsletterSubscriberExists =
+      await prisma.newsletterSubscriber.findFirst({
+        where: {
+          email: data.email,
+        },
+        select: {
+          email: true,
+        },
+      });
+
+    if (newsletterSubscriberExists) {
       return { message: "Email is already subscribed.", success: false };
     }
 
-    await createNewsletterSubscriber(data.email);
+    await prisma.newsletterSubscriber.create({
+      data: {
+        email: data.email,
+      },
+    });
 
     return {
       message: "Successfully subscribed to the newsletter.",

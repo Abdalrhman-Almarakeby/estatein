@@ -3,10 +3,22 @@ import {
   CarouselSection,
 } from "@/components/ui/carousel-section";
 import { PropertyCard } from "@/components/ui/property-card";
-import { getPropertiesSummaries } from "@/server/db/properties";
+import { prisma } from "@/lib/prisma";
 
 export async function PropertiesSection() {
-  const properties = await getPropertiesSummaries();
+  const properties = await prisma.property.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      bedrooms: true,
+      bathrooms: true,
+      images: true,
+      propertyType: true,
+      listingPrice: true,
+      area: true,
+    },
+  });
 
   return (
     <CarouselSection
