@@ -23,7 +23,7 @@ export const createNewsletterSubscriber = async (email: string) => {
   });
 };
 
-export const getNewsletterStats = cache(async () => {
+export const getNewsletterStats = async () => {
   const now = new Date();
   const oneDayAgo = subDays(now, 1);
   const oneWeekAgo = subWeeks(now, 1);
@@ -84,9 +84,9 @@ export const getNewsletterStats = cache(async () => {
       count: totalSubscribers,
     },
   };
-});
+};
 
-export const getSubscribers = cache(async () => {
+export const getSubscribers = async () => {
   return prisma.newsletterSubscriber.findMany({
     select: {
       email: true,
@@ -96,4 +96,4 @@ export const getSubscribers = cache(async () => {
       subscribedAt: "desc",
     },
   });
-});
+};
