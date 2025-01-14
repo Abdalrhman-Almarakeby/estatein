@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { getYear } from "date-fns";
 
 type PasswordResetEmailProps = {
   username: string;
@@ -22,7 +23,7 @@ export function PasswordResetEmail({
   username,
   resetLink,
 }: PasswordResetEmailProps) {
-  const year = new Date().getFullYear();
+  const year = getYear(new Date());
 
   return (
     <Html>

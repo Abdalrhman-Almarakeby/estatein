@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { getYear } from "date-fns";
 import { SocialMediaLinks } from "./social-media-links";
 
 export function FooterInfo() {
-  const year = new Date().getFullYear();
+  const year = getYear(new Date());
 
   return (
     <div className="bg-gray-darker py-5 text-center md:py-3">

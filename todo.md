@@ -32,5 +32,3 @@
 - Add better looking outlines instead of the defaults for buttons
 
 - Add metadata for the dashboard pages
-
-- Use date-fns

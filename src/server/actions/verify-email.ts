@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { formatDistanceToNow, isAfter } from "date-fns";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
@@ -30,11 +31,9 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
   } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
-    const remainingMinutes = Math.ceil((reset - Date.now()) / (1000 * 60));
-
     return {
       success: false,
-      message: `Too many verification attempts, please try again in ${remainingMinutes} ${remainingMinutes === 1 ? "minute" : "minutes"}.`,
+      message: `Too many verification attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
     };
   }
 
@@ -91,10 +90,11 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
       };
     }
 
-    if (
+    const isExpired =
       user.emailVerificationCodeExpiresAt &&
-      new Date() > user.emailVerificationCodeExpiresAt
-    ) {
+      isAfter(new Date(), user.emailVerificationCodeExpiresAt);
+
+    if (isExpired) {
       return {
         success: false,
         message: "Token has expired. Please request a new verification email",

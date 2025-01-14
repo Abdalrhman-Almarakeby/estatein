@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { createElement } from "react";
 import { randomBytes } from "crypto";
+import { add, formatDistanceToNow, hoursToSeconds, isBefore } from "date-fns";
 import { PasswordResetEmail } from "@/components/emails/password-reset-email";
 import { WithCaptcha } from "@/types";
 import { getBaseUrl } from "@/lib/utils";
@@ -12,8 +13,6 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
-
-const ONE_HOUR = 60 * 60;
 
 const MAX_RESET_PASSWORD_ATTEMPTS = 5;
 const RESET_PASSWORD_ATTEMPTS_WINDOW = "30m";
@@ -39,11 +38,9 @@ export async function forgotPassword(
   } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
-    const remainingMinutes = Math.ceil((reset - Date.now()) / (1000 * 60));
-
     return {
       success: false,
-      message: `Too many attempts, please try again in ${remainingMinutes} ${remainingMinutes === 1 ? "minute" : "minutes"}.`,
+      message: `Too many attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
     };
   }
 
@@ -79,7 +76,7 @@ export async function forgotPassword(
     cookieStore.set({
       name: "reset-password-pending",
       value: "true",
-      maxAge: ONE_HOUR,
+      maxAge: hoursToSeconds(1),
     });
 
     if (!user) {
@@ -93,15 +90,14 @@ export async function forgotPassword(
     let resetToken = user.passwordResetToken;
     let resetTokenExpiresAt = user.passwordResetTokenExpiresAt;
 
-    if (
-      !resetToken ||
-      !resetTokenExpiresAt ||
-      resetTokenExpiresAt <= new Date()
-    ) {
+    const isExpired =
+      !resetTokenExpiresAt || isBefore(resetTokenExpiresAt, new Date());
+
+    if (!resetToken || isExpired) {
       resetToken = randomBytes(32).toString("hex");
-      resetTokenExpiresAt = new Date(Date.now() + 3_600_000);
+      resetTokenExpiresAt = add(new Date(), { hours: 1 });
     } else {
-      resetTokenExpiresAt = new Date(Date.now() + 3_600_000);
+      resetTokenExpiresAt = add(new Date(), { hours: 1 });
     }
 
     await prisma.user.update({

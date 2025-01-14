@@ -1,6 +1,7 @@
 "use server";
 
 import { hash } from "bcryptjs";
+import { formatDistanceToNow } from "date-fns";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
@@ -33,13 +34,9 @@ export async function resetPassword(
   } = await rateLimit.limit(limitKey);
 
   if (!rateLimitIsSuccess) {
-    const remainingMinutes = Math.ceil((reset - Date.now()) / (1000 * 60));
-
     return {
       success: false,
-      message: `Too many attempts, please try again in ${remainingMinutes} ${
-        remainingMinutes === 1 ? "minute" : "minutes"
-      }.`,
+      message: `Too many attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
     };
   }
 
