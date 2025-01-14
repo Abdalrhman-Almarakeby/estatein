@@ -1,4 +1,7 @@
 import { AlertTriangle } from "lucide-react";
+import { BLOCKED_PAGE_METADATA } from "@/constant/metadata/blocked";
+
+export const metadata = BLOCKED_PAGE_METADATA;
 
 export default function Page() {
   return (

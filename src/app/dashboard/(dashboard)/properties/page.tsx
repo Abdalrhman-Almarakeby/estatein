@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { PropertiesTable } from "@/containers/dashboard-properties-page/properties-table";
+import { generateDashboardMetadata } from "@/lib/metadata";
 import { getProperties } from "@/server/db/properties";
 
-export default async function PropertiesDashboard() {
+export const metadata = generateDashboardMetadata({
+  title: "Properties - Estatein",
+  description: "Manage and view all properties.",
+});
+
+export default async function Page() {
   const properties = await getProperties();
 
   return (

@@ -1,6 +1,6 @@
-import { generateMetadata } from "@/lib/metadata";
+import { generateAppMetadata } from "@/lib/metadata";
 
-export const PROPERTIES_PAGE_METADATA = generateMetadata({
+export const PROPERTIES_PAGE_METADATA = generateAppMetadata({
   title: "Properties - Estatein | Discover the Best Real Estate Listings",
   description:
     "Explore a diverse range of real estate properties with Estatein. Find your dream home, investment property, or rental with ease. Browse our listings today and discover the best properties available.",
