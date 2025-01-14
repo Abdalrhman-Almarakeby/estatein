@@ -1,3 +1,7 @@
+import { FORGOT_PASSWORD_SENT_PAGE_METADATA } from "@/constant/metadata/forgot-password-sent";
+
+export const metadata = FORGOT_PASSWORD_SENT_PAGE_METADATA;
+
 export default function Page() {
   return (
     <>
