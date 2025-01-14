@@ -12,4 +12,10 @@ export const ERROR_PAGE_METADATA = generateAppMetadata({
     "support",
     "try again",
   ],
+  metadata: {
+    robots: {
+      index: false,
+      follow: false,
+    },
+  },
 });

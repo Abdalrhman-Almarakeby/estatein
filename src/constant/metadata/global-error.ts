@@ -12,4 +12,10 @@ export const GLOBAL_ERROR_PAGE_METADATA = generateAppMetadata({
     "technical difficulties",
     "refresh",
   ],
+  metadata: {
+    robots: {
+      index: false,
+      follow: false,
+    },
+  },
 });

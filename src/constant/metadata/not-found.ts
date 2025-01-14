@@ -13,4 +13,10 @@ export const NOT_FOUND_PAGE_METADATA = generateAppMetadata({
     "error",
     "homepage",
   ],
+  metadata: {
+    robots: {
+      index: false,
+      follow: false,
+    },
+  },
 });
