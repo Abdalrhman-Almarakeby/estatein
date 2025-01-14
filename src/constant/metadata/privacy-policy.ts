@@ -1,6 +1,6 @@
-import { generateMetadata } from "@/lib/metadata";
+import { generateAppMetadata } from "@/lib/metadata";
 
-export const PRIVACY_POLICY_PAGE_METADATA = generateMetadata({
+export const PRIVACY_POLICY_PAGE_METADATA = generateAppMetadata({
   title: "Terms of Service - Estatein",
   description:
     "Read the Terms of Service for Estatein, which outline the rules and guidelines for using our services. By accessing or using our website, you agree to comply with these terms.",
