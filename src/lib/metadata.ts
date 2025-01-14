@@ -2,19 +2,19 @@ import { Metadata } from "next";
 import { Property } from "@prisma/client";
 import { formatPrice, getBaseUrl, normalize, upperFirst } from "@/lib/utils";
 
-type PageMetadataOptions = {
+type AppPagesMetadataOptions = {
   title: string;
   description: string;
   keywords: string | string[];
   metadata?: Partial<Metadata>;
 };
 
-export function generateMetadata({
+export function generateAppMetadata({
   title,
   description,
   keywords,
   metadata,
-}: PageMetadataOptions): Metadata {
+}: AppPagesMetadataOptions): Metadata {
   const appName = "Estatein";
   const url = getBaseUrl();
 
@@ -47,30 +47,24 @@ export function generateMetadata({
   };
 }
 
-export function generatePropertyPageMetadata(
-  {
-    bedrooms,
-    propertyType,
-    bathrooms,
-    area,
-    listingPrice,
-    images,
-    location,
-    ...property
-  }: Property,
-  metadata?: Partial<Metadata>,
-) {
-  const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(normalize(propertyType))} in ${location} - ${bathrooms} Bathrooms | ${
-    area
-  } ft² | Priced at ${formatPrice(listingPrice)}`;
+type PropertyMetadataOptions = Property & {
+  metadata?: Partial<Metadata>;
+};
 
-  const description = `${property.description} This stunning ${upperFirst(normalize(propertyType))} features ${bedrooms} bedrooms and ${
-    bathrooms
-  } bathrooms, perfect for families and entertaining guests. Located in the heart of ${
-    location
-  }, this property offers a generous area of ${
-    area
-  } ft², and is priced at ${formatPrice(listingPrice)}.`;
+export function generatePropertyPageMetadata({
+  bedrooms,
+  propertyType,
+  bathrooms,
+  area,
+  listingPrice,
+  images,
+  location,
+  description: propertyDescription,
+  ...property
+}: PropertyMetadataOptions): Metadata {
+  const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(normalize(propertyType))} in ${location} - ${bathrooms} Bathrooms | ${area} ft² | Priced at ${formatPrice(listingPrice)}`;
+
+  const description = `${propertyDescription} This stunning ${upperFirst(normalize(propertyType))} features ${bedrooms} bedrooms and ${bathrooms} bathrooms, perfect for families and entertaining guests. Located in the heart of ${location}, this property offers a generous area of ${area} ft², and is priced at ${formatPrice(listingPrice)}.`;
 
   const keywords = [
     upperFirst(normalize(propertyType)),
@@ -83,23 +77,43 @@ export function generatePropertyPageMetadata(
     "house",
     "villa",
     "luxury property",
-    "real estate",
-    "property for sale",
     "home listing",
     "buy property",
     "mortgage",
     "investment property",
   ];
 
-  return generateMetadata({
+  return generateAppMetadata({
     title,
     description,
     keywords,
     metadata: {
       openGraph: {
-        images: images,
+        images,
       },
-      ...metadata,
+      ...property.metadata,
     },
   });
+}
+
+type DashboardPagesMetadataOptions = {
+  title: string;
+  description: string;
+  metadata?: Partial<Metadata>;
+};
+
+export function generateDashboardMetadata({
+  title,
+  description,
+  metadata,
+}: DashboardPagesMetadataOptions): Metadata {
+  return {
+    title,
+    description,
+    robots: {
+      index: false,
+      follow: false,
+    },
+    ...metadata,
+  };
 }
