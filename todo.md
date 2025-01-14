@@ -13,8 +13,6 @@
 
 - Fix actions security. (use auth in it)
 
-- change title to name
-
 - USE SEARCH PARAM
 
 - Use optimistic updates for deleting a property

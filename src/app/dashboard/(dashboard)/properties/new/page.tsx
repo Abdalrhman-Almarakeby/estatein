@@ -9,7 +9,7 @@ import { createProperty } from "@/server/actions/create-property";
 export default function Page() {
   const [createdProperty, setCreatedProperty] = useState<{
     id: string;
-    name: string;
+    title: string;
   } | null>(null);
 
   const handleSubmit = async (data: PropertyData) => {
@@ -19,13 +19,13 @@ export default function Page() {
       throw new Error(message || "Failed to create property");
     }
 
-    setCreatedProperty({ id: property.id, name: property.title });
+    setCreatedProperty({ id: property.id, title: property.title });
   };
 
   return createdProperty ? (
     <PropertyCreatedSuccess
       propertyId={createdProperty.id}
-      propertyTitle={createdProperty.name}
+      propertyTitle={createdProperty.title}
       onCreateNewProperty={() => setCreatedProperty(null)}
     />
   ) : (
