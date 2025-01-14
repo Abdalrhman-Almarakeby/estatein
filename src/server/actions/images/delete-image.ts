@@ -8,14 +8,14 @@ export async function deleteImage(url: string) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    return { success: false, error: "Unauthorized" };
+    return { success: false, message: "Unauthorized" };
   }
 
   try {
     await del(url);
 
-    return { success: true };
+    return { success: true, message: "Image deleted" };
   } catch (error) {
-    return { success: false, error: "Failed to delete image" };
+    return { success: false, message: "Failed to delete image" };
   }
 }
