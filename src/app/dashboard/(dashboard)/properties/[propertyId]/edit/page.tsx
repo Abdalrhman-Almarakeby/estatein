@@ -13,8 +13,8 @@ export async function generateMetadata({ params: { propertyId } }: PageParams) {
   const property = await getPropertyDetails(propertyId);
 
   return generateDashboardMetadata({
-    title: `Edit ${property.title} Property - Estatein`,
-    description: `Update details for ${property.title} property.`,
+    title: `Edit ${property.title} - Estatein`,
+    description: `Update details for ${property.title} in the system.`,
   });
 }
 
