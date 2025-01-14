@@ -7,7 +7,9 @@ export const metadata = generateDashboardMetadata({
 });
 
 export default function Page() {
-  <>
-    <CreateNewPropertySection />
-  </>;
+  return (
+    <>
+      <CreateNewPropertySection />
+    </>
+  );
 }
