@@ -1,9 +1,15 @@
 import { NewsletterDataSection } from "@/containers/dashboard-newsletter-page/newsletter-data-section";
 import { NewsletterStatsSection } from "@/containers/dashboard-newsletter-page/newsletter-stats-section";
+import { generateDashboardMetadata } from "@/lib/metadata";
 import {
   getNewsletterStats,
   getSubscribers,
 } from "@/server/db/newsletter-subscriber";
+
+export const metadata = generateDashboardMetadata({
+  title: "Newsletter - Estatein",
+  description: "View subscription stats and download subscribes data.",
+});
 
 export default async function Page() {
   const [stats, subscribers] = await Promise.all([
