@@ -1,9 +1,8 @@
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from "next/cache";
+import { unstable_cache as cache, revalidateTag } from "next/cache";
 import { subDays, subMonths, subWeeks } from "date-fns";
 import { prisma } from "@/lib/prisma";
+
+const NEWSLETTER_CACHE_TAG = "newsletter-data";
 
 export const newsletterSubscriberExists = cache(async (email: string) => {
   const newsletterSubscriber = await prisma.newsletterSubscriber.findFirst({
@@ -24,10 +23,11 @@ export const createNewsletterSubscriber = async (email: string) => {
       email,
     },
   });
+
+  revalidateTag(NEWSLETTER_CACHE_TAG);
 };
 
-export const getNewsletterStats = async () => {
-  noStore();
+export const getNewsletterStats = cache(async () => {
   const now = new Date();
   const oneDayAgo = subDays(now, 1);
   const oneWeekAgo = subWeeks(now, 1);
@@ -88,10 +88,9 @@ export const getNewsletterStats = async () => {
       count: totalSubscribers,
     },
   };
-};
+}, [NEWSLETTER_CACHE_TAG]);
 
-export const getSubscribers = async () => {
-  noStore();
+export const getSubscribers = cache(async () => {
   return prisma.newsletterSubscriber.findMany({
     select: {
       email: true,
@@ -101,4 +100,4 @@ export const getSubscribers = async () => {
       subscribedAt: "desc",
     },
   });
-};
+}, [NEWSLETTER_CACHE_TAG]);
