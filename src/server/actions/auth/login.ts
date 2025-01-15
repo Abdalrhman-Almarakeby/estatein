@@ -8,84 +8,77 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import { LOGIN_WINDOW_MINUTES, MAX_LOGIN_ATTEMPTS } from "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
-const MAX_LOGIN_ATTEMPTS = 5;
-const LOGIN_ATTEMPTS_WINDOW = "30m";
+const GENERIC_ERROR = "Invalid login credentials. Please try again.";
 
 export async function login(data: WithCaptcha<Login>) {
-  const ip = getUserIpAddress();
-  const { ua: userAgent } = getUserAgent();
-
-  const rateLimit = createRateLimiter(
-    MAX_LOGIN_ATTEMPTS,
-    LOGIN_ATTEMPTS_WINDOW,
-  );
-
-  const limitKey = `login_ratelimit_${ip}_${userAgent}`;
-
-  const {
-    success: rateLimitIsSuccess,
-    reset,
-    remaining,
-  } = await rateLimit.limit(limitKey);
-
-  if (!rateLimitIsSuccess) {
-    return {
-      success: false,
-      message: `Too many login attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
-    };
-  }
-
-  const { success: captchaIsSuccess } = await verifyCaptchaToken(
-    data.captchaToken,
-  );
-
-  if (!captchaIsSuccess) {
-    return {
-      success: false,
-      message: "Invalid login credentials, Please try again.",
-    };
-  }
-
-  const { success: isDataValid } = loginSchema.safeParse(data);
-
-  if (!isDataValid) {
-    return {
-      success: false,
-      message: `Invalid login credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
-    };
-  }
-
   try {
+    const parseResult = loginSchema.safeParse(data);
+    if (!parseResult.success) {
+      return { success: false, message: GENERIC_ERROR };
+    }
+
+    const ip = getUserIpAddress();
+    const { ua: userAgent } = getUserAgent();
+    const rateLimit = createRateLimiter(
+      MAX_LOGIN_ATTEMPTS,
+      `${LOGIN_WINDOW_MINUTES}m`,
+    );
+    const limitKey = `login_${ip}_${userAgent}`;
+
+    const {
+      success: rateLimitSuccess,
+      reset,
+      remaining,
+    } = await rateLimit.limit(limitKey);
+
+    if (!rateLimitSuccess) {
+      return {
+        success: false,
+        message: `Too many attempts. Try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
+      };
+    }
+
+    const { success: captchaSuccess } = await verifyCaptchaToken(
+      data.captchaToken,
+    );
+    if (!captchaSuccess) {
+      return { success: false, message: GENERIC_ERROR };
+    }
+
     const user = await prisma.user.findUnique({
-      where: {
-        email: data.email,
+      where: { email: data.email },
+      select: {
+        id: true,
+        password: true,
+        isVerified: true,
       },
     });
 
     if (!user) {
-      return {
-        success: false,
-        message: "Invalid email or password, Please try again.",
-      };
+      const message =
+        remaining < 3
+          ? `${GENERIC_ERROR} (${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)`
+          : GENERIC_ERROR;
+      return { success: false, message };
     }
 
     if (!user.isVerified) {
       return {
         success: false,
-        message:
-          "Your account is not verified. Please check your email for the verification link.",
+        message: "Please verify your email before logging in.",
       };
     }
 
-    const isPasswordValid = await compare(data.password, user.password);
-
-    if (!isPasswordValid) {
-      return {
-        success: false,
-        message: "Invalid email or password, Please try again.",
-      };
+    const isValidPassword = await compare(data.password, user.password);
+    if (!isValidPassword) {
+      const message =
+        remaining < 3
+          ? `${GENERIC_ERROR} (${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)`
+          : GENERIC_ERROR;
+      return { success: false, message };
     }
 
     await rateLimit.resetUsedTokens(limitKey);
@@ -95,9 +88,6 @@ export async function login(data: WithCaptcha<Login>) {
       message: "Login successful.",
     };
   } catch (error) {
-    return {
-      success: false,
-      message: "Something went wrong, Please try again later.",
-    };
+    return { success: false, message: GENERIC_ERROR };
   }
 }
