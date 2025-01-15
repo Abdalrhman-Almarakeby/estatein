@@ -1,14 +1,20 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { compare } from "bcryptjs";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, hoursToSeconds } from "date-fns";
+import { env } from "process";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import { LOGIN_WINDOW_MINUTES, MAX_LOGIN_ATTEMPTS } from "@/constant";
+import {
+  LOGIN_WINDOW_MINUTES,
+  MAX_LOGIN_ATTEMPTS,
+  SIGNUP_COOKIE_MAX_AGE_HOURS,
+} from "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid login credentials. Please try again.";
@@ -66,9 +72,30 @@ export async function login(data: WithCaptcha<Login>) {
     }
 
     if (!user.isVerified) {
+      const cookieStore = cookies();
+      const cookieOptions = {
+        maxAge: hoursToSeconds(SIGNUP_COOKIE_MAX_AGE_HOURS),
+        secure: env.NODE_ENV === "production",
+        httpOnly: true,
+        sameSite: "strict" as const,
+      };
+
+      cookieStore.set({
+        name: "verification-pending",
+        value: "true",
+        ...cookieOptions,
+      });
+
+      cookieStore.set({
+        name: "signup-email",
+        value: data.email,
+        ...cookieOptions,
+      });
+
       return {
         success: false,
         message: "Please verify your email before logging in.",
+        shouldVerifyEmail: true,
       };
     }
 
