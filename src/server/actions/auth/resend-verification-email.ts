@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { createElement } from "react";
-import { addHours, formatDistanceToNow, hoursToSeconds } from "date-fns";
+import { addMinutes, formatDistanceToNow, minutesToSeconds } from "date-fns";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
@@ -11,10 +11,10 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserAgent } from "@/lib/user-agent";
 import {
-  MAX_RESEND_ATTEMPTS,
-  RESEND_WINDOW_MINUTES,
-  SIGNUP_COOKIE_MAX_AGE_HOURS,
-  SIGNUP_VERIFICATION_CODE_EXPIRY_HOURS,
+  EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
+  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
+  MAX_RESEND_VERIFICATION_EMAIL_ATTEMPTS,
+  RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES,
 } from "@/constant";
 import { sendEmail } from "@/server/services";
 
@@ -33,8 +33,8 @@ export async function resendVerificationEmail() {
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      MAX_RESEND_ATTEMPTS,
-      `${RESEND_WINDOW_MINUTES}m`,
+      MAX_RESEND_VERIFICATION_EMAIL_ATTEMPTS,
+      `${RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES}m`,
     );
 
     const limitKey = `resend_verification_${ip}_${userAgent}`;
@@ -68,9 +68,9 @@ export async function resendVerificationEmail() {
     }
 
     const verificationCode = generateNumericOTP();
-    const emailVerificationCodeExpiresAt = addHours(
+    const emailVerificationCodeExpiresAt = addMinutes(
       new Date(),
-      SIGNUP_VERIFICATION_CODE_EXPIRY_HOURS,
+      EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
     );
 
     await prisma.$transaction(async (tx) => {
@@ -98,7 +98,7 @@ export async function resendVerificationEmail() {
     });
 
     const cookieOptions = {
-      maxAge: hoursToSeconds(SIGNUP_COOKIE_MAX_AGE_HOURS),
+      maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "strict" as const,

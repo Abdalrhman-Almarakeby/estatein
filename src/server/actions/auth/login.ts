@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { compare } from "bcryptjs";
-import { formatDistanceToNow, hoursToSeconds } from "date-fns";
+import { formatDistanceToNow, minutesToSeconds } from "date-fns";
 import { env } from "process";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
@@ -11,9 +11,9 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import {
+  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
   LOGIN_WINDOW_MINUTES,
   MAX_LOGIN_ATTEMPTS,
-  SIGNUP_COOKIE_MAX_AGE_HOURS,
 } from "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
@@ -74,7 +74,7 @@ export async function login(data: WithCaptcha<Login>) {
     if (!user.isVerified) {
       const cookieStore = cookies();
       const cookieOptions = {
-        maxAge: hoursToSeconds(SIGNUP_COOKIE_MAX_AGE_HOURS),
+        maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
         secure: env.NODE_ENV === "production",
         httpOnly: true,
         sameSite: "strict" as const,

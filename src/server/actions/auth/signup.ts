@@ -5,10 +5,10 @@ import { createElement } from "react";
 import { Role } from "@prisma/client";
 import { hash } from "bcryptjs";
 import {
-  addHours,
+  addMinutes,
   formatDuration,
-  hoursToSeconds,
   intervalToDuration,
+  minutesToSeconds,
 } from "date-fns";
 import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
 import { WithCaptcha } from "@/types";
@@ -20,11 +20,11 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import {
+  EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
+  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
   PASSWORD_HASH_SALT_ROUNDS,
-  SIGNUP_COOKIE_MAX_AGE_HOURS,
   SIGNUP_RATE_LIMIT_MAX_ATTEMPTS,
   SIGNUP_RATE_LIMIT_WINDOW_DURATION,
-  SIGNUP_VERIFICATION_CODE_EXPIRY_HOURS,
 } from "@/constant";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
@@ -108,9 +108,9 @@ export async function signup(data: WithCaptcha<Signup>) {
 
     const verificationCode = generateNumericOTP();
     const now = new Date();
-    const emailVerificationCodeExpiresAt = addHours(
+    const emailVerificationCodeExpiresAt = addMinutes(
       now,
-      SIGNUP_VERIFICATION_CODE_EXPIRY_HOURS,
+      EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
     );
 
     const isAdmin = isAdminEmail && !existingAdmin;
@@ -150,7 +150,7 @@ export async function signup(data: WithCaptcha<Signup>) {
 
     const cookieStore = cookies();
     const cookieOptions = {
-      maxAge: hoursToSeconds(SIGNUP_COOKIE_MAX_AGE_HOURS),
+      maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "strict" as const,
