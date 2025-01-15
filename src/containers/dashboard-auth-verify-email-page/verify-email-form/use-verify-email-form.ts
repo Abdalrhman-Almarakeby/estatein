@@ -1,16 +1,15 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addSeconds, differenceInSeconds } from "date-fns";
+import { addSeconds, differenceInSeconds, minutesToSeconds } from "date-fns";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
+import { RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES } from "@/constant";
 import { verifyEmail } from "@/server/actions";
 import { resendVerificationEmail } from "@/server/actions/auth/resend-verification-email";
-
-const COOL_DOWN_PERIOD = 60;
 
 export function useVerifyEmailForm() {
   const searchParams = useSearchParams();
@@ -79,7 +78,12 @@ export function useVerifyEmailForm() {
 
     setResendLoading(true);
     const { success, message } = await resendVerificationEmail();
-    setCoolDownEndTime(addSeconds(new Date(), COOL_DOWN_PERIOD));
+    setCoolDownEndTime(
+      addSeconds(
+        new Date(),
+        minutesToSeconds(RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES),
+      ),
+    );
     setResendLoading(false);
 
     return { success, message };

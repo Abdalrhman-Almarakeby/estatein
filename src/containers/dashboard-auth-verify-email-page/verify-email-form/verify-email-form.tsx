@@ -102,7 +102,7 @@ export function VerifyEmailForm() {
                   ? "Sending..."
                   : coolDownTime > 0
                     ? `Resend in ${coolDownTime}s`
-                    : "Resend"}
+                    : "Resend Verification Email"}
               </button>
               {coolDownTime > 0 && (
                 <span id="resend-timer" className="sr-only">
