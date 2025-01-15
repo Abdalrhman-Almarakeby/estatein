@@ -8,8 +8,7 @@ import { WithCaptcha } from "@/types";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES } from "@/constant";
-import { verifyEmail } from "@/server/actions";
-import { resendVerificationEmail } from "@/server/actions/auth/resend-verification-email";
+import { resendVerificationEmail, verifyEmail } from "@/server/actions";
 
 export function useVerifyEmailForm() {
   const searchParams = useSearchParams();
