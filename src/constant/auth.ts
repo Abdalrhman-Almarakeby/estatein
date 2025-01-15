@@ -10,3 +10,6 @@ export const VERIFY_EMAIL_WINDOW_MINUTES = 30;
 
 export const MAX_LOGIN_ATTEMPTS = 5;
 export const LOGIN_WINDOW_MINUTES = 30;
+
+export const MAX_RESEND_ATTEMPTS = 3;
+export const RESEND_WINDOW_MINUTES = 60;
