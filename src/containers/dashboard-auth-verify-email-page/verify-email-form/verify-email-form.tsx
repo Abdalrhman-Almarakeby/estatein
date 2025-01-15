@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
 import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
@@ -14,16 +13,16 @@ import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboa
 import { useVerifyEmailForm } from "./use-verify-email-form";
 
 export function VerifyEmailForm() {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
-
   const {
     onSubmit,
     control,
     formState: { errors },
     captchaRef,
     isLoading,
-  } = useVerifyEmailForm(callbackUrl ?? undefined);
+    resendLoading,
+    coolDownTime,
+    handleResendEmail,
+  } = useVerifyEmailForm();
 
   return (
     <>
@@ -44,7 +43,6 @@ export function VerifyEmailForm() {
                 Verification Code
               </label>
               <Controller
-                key="otp"
                 name="otp"
                 control={control}
                 render={({ field: { onChange, onBlur, ref, value } }) => (
@@ -85,13 +83,34 @@ export function VerifyEmailForm() {
             <p className="mt-3 text-sm italic text-gray-light">
               Please enter the 6-digit code sent to your email.
             </p>
-            <button
-              type="submit"
-              className="btn-primary btn-md mx-auto w-fit px-8 py-2 text-base"
-              disabled={isLoading}
-            >
-              Verify Email
-            </button>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                type="submit"
+                className="btn-primary btn-md px-8 py-2 text-base"
+                disabled={isLoading}
+              >
+                Verify Email
+              </button>
+              <button
+                type="button"
+                onClick={handleResendEmail}
+                className="btn-secondary btn-md px-8 py-2 text-base"
+                disabled={resendLoading || coolDownTime > 0}
+                aria-describedby="resend-timer"
+              >
+                {resendLoading
+                  ? "Sending..."
+                  : coolDownTime > 0
+                    ? `Resend in ${coolDownTime}s`
+                    : "Resend"}
+              </button>
+              {coolDownTime > 0 && (
+                <span id="resend-timer" className="sr-only">
+                  You can resend the verification email in {coolDownTime}{" "}
+                  seconds
+                </span>
+              )}
+            </div>
           </form>
         </>
       )}
