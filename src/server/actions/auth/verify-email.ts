@@ -1,128 +1,126 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { formatDistanceToNow, isAfter } from "date-fns";
+import { timingSafeEqual } from "crypto";
+import { formatDistanceToNow } from "date-fns";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import {
+  MAX_VERIFY_EMAIL_ATTEMPTS,
+  VERIFY_EMAIL_WINDOW_MINUTES,
+} from "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
-const MAX_VERIFY_EMAIL_ATTEMPTS = 5;
-const VERIFY_EMAIL_ATTEMPTS_WINDOW = "30m";
+const GENERIC_ERROR = "Invalid verification attempt. Please try again.";
 
 export async function verifyEmail(data: WithCaptcha<Otp>) {
-  const ip = getUserIpAddress();
-  const { ua: userAgent } = getUserAgent();
-
-  const rateLimit = createRateLimiter(
-    MAX_VERIFY_EMAIL_ATTEMPTS,
-    VERIFY_EMAIL_ATTEMPTS_WINDOW,
-  );
-
-  const limitKey = `email_verification_ratelimit_${ip}_${userAgent}`;
-
-  const {
-    success: rateLimitIsSuccess,
-    reset,
-    remaining,
-  } = await rateLimit.limit(limitKey);
-
-  if (!rateLimitIsSuccess) {
-    return {
-      success: false,
-      message: `Too many verification attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
-    };
-  }
-
-  const { success: captchaIsSuccess } = await verifyCaptchaToken(
-    data.captchaToken,
-  );
-
-  if (!captchaIsSuccess) {
-    return {
-      success: false,
-      message: "Invalid  credentials, Please try again.",
-    };
-  }
-
-  const { success: isDataValid } = otpSchema.safeParse(data);
-
-  if (!isDataValid) {
-    return {
-      success: false,
-      message: `Invalid credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
-    };
-  }
-
   try {
+    const parseResult = otpSchema.safeParse(data);
+
+    if (!parseResult.success) {
+      return { success: false, message: GENERIC_ERROR };
+    }
+
+    const ip = getUserIpAddress();
+    const { ua: userAgent } = getUserAgent();
+
+    const rateLimit = createRateLimiter(
+      MAX_VERIFY_EMAIL_ATTEMPTS,
+      `${VERIFY_EMAIL_WINDOW_MINUTES}m`,
+    );
+
+    const limitKey = `email_verification_${ip}_${userAgent}`;
+    const {
+      success: rateLimitSuccess,
+      reset,
+      remaining,
+    } = await rateLimit.limit(limitKey);
+
+    if (!rateLimitSuccess) {
+      return {
+        success: false,
+        message: `Too many attempts. Try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
+      };
+    }
+
+    const { success: captchaSuccess } = await verifyCaptchaToken(
+      data.captchaToken,
+    );
+    if (!captchaSuccess) {
+      return { success: false, message: GENERIC_ERROR };
+    }
+
     const cookieStore = cookies();
-
     const signupEmail = cookieStore.get("signup-email")?.value;
-
     if (!signupEmail) {
-      return {
-        success: false,
-        message: "Invalid credentials. Please try again.",
-      };
+      return { success: false, message: GENERIC_ERROR };
     }
 
-    const user = await prisma.user.findFirst({
-      where: {
-        email: signupEmail,
-        emailVerificationCode: data.otp,
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findFirst({
+        where: {
+          email: signupEmail,
+          isVerified: false,
+          emailVerificationCodeExpiresAt: { gt: new Date() },
+        },
+        select: {
+          id: true,
+          emailVerificationCode: true,
+          emailVerificationCodeExpiresAt: true,
+        },
+      });
+
+      if (!user?.emailVerificationCode) {
+        return { success: false };
+      }
+
+      const otpBuffer = new Uint8Array(Buffer.from(data.otp));
+      const storedOtpBuffer = new Uint8Array(
+        Buffer.from(user.emailVerificationCode),
+      );
+      const isValidOtp =
+        otpBuffer.length === storedOtpBuffer.length &&
+        timingSafeEqual(otpBuffer, storedOtpBuffer);
+
+      if (!isValidOtp) {
+        const attemptsLeft = remaining - 1;
+        const message =
+          attemptsLeft < 3
+            ? `${GENERIC_ERROR} (${attemptsLeft} ${attemptsLeft === 1 ? "attempt" : "attempts"} remaining)`
+            : GENERIC_ERROR;
+        return { success: false, message };
+      }
+
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          isVerified: true,
+          emailVerificationCode: null,
+          emailVerificationCodeExpiresAt: null,
+        },
+      });
+
+      return { success: true };
     });
 
-    if (!user) {
+    if (result.success) {
+      cookieStore.delete("signup-email");
+      cookieStore.delete("verification-pending");
+
       return {
-        success: false,
-        message: "Invalid credentials. Please try again.",
+        success: true,
+        message: "Email verified successfully.",
       };
     }
-
-    if (user.isVerified) {
-      return {
-        success: false,
-        message: "Invalid credentials. Please try again.",
-      };
-    }
-
-    const isExpired =
-      user.emailVerificationCodeExpiresAt &&
-      isAfter(new Date(), user.emailVerificationCodeExpiresAt);
-
-    if (isExpired) {
-      return {
-        success: false,
-        message: "Token has expired. Please request a new verification email",
-      };
-    }
-
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        isVerified: true,
-        emailVerificationCode: null,
-        emailVerificationCodeExpiresAt: null,
-      },
-    });
-
-    cookieStore.delete("signup-email");
-    cookieStore.delete("verification-pending");
-
-    return {
-      success: true,
-      message: "Email verified successfully.",
-    };
-  } catch (err) {
     return {
       success: false,
-      message: "Something went wrong, please try again later.",
+      message: result.message || GENERIC_ERROR,
     };
+  } catch (error) {
+    return { success: false, message: GENERIC_ERROR };
   }
 }
