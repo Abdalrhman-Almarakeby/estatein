@@ -16,6 +16,8 @@ import {
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid verification attempt. Please try again.";
+const EXPIRED_CODE_ERROR =
+  "Verification code has expired. Please request a new one.";
 
 export async function verifyEmail(data: WithCaptcha<Otp>) {
   try {
@@ -65,7 +67,6 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
         where: {
           email: signupEmail,
           isVerified: false,
-          emailVerificationCodeExpiresAt: { gt: new Date() },
         },
         select: {
           id: true,
@@ -76,6 +77,17 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
 
       if (!user?.emailVerificationCode) {
         return { success: false };
+      }
+
+      const isCodeExpired =
+        !user.emailVerificationCodeExpiresAt ||
+        user.emailVerificationCodeExpiresAt < new Date();
+
+      if (isCodeExpired) {
+        return {
+          success: false,
+          message: EXPIRED_CODE_ERROR,
+        };
       }
 
       const otpBuffer = new Uint8Array(Buffer.from(data.otp));
