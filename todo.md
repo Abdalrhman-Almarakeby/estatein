@@ -28,3 +28,5 @@
 - Add caps look warning for password inputs
 
 - Add better looking outlines instead of the defaults for buttons
+
+trying to login with un verified accounts
