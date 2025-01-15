@@ -11,6 +11,7 @@ import { resetPassword } from "@/server/actions";
 
 export function usePasswordResetForm(token?: string, callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isExpired, setIsExpired] = useState(false);
   const { handleSubmit, setError, setValue, ...rest } = useForm<
     WithCaptcha<ResetPassword>
   >({
@@ -26,7 +27,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
       captchaRef.current?.reset();
       setValue("captchaToken", "", { shouldDirty: true });
 
-      const { success, message } = await resetPassword(data, token);
+      const { success, message, isExpired } = await resetPassword(data, token);
 
       if (success) {
         const searchParams = new URLSearchParams();
@@ -36,6 +37,10 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
         }
         router.push(`/dashboard/auth/login?${searchParams.toString()}`);
       } else {
+        if (isExpired) {
+          setIsExpired(true);
+        }
+
         setError("root", { message });
         setIsLoading(false);
       }
@@ -48,6 +53,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
     setValue,
     captchaRef,
     isLoading,
+    isExpired,
     ...rest,
   };
 }

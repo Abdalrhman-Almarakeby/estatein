@@ -14,9 +14,9 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import {
-  MAX_RESET_PASSWORD_ATTEMPTS,
-  RESET_PASSWORD_TOKEN_EXPIRY_MINUTES,
-  RESET_PASSWORD_WINDOW_MINUTES,
+  FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES,
+  FORGOT_PASSWORD_WINDOW_MINUTES,
+  MAX_FORGOT_PASSWORD_ATTEMPTS,
 } from "@/constant";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
@@ -38,8 +38,8 @@ export async function forgotPassword(
     const { ua: userAgent } = getUserAgent();
 
     const rateLimit = createRateLimiter(
-      MAX_RESET_PASSWORD_ATTEMPTS,
-      `${RESET_PASSWORD_WINDOW_MINUTES}m`,
+      MAX_FORGOT_PASSWORD_ATTEMPTS,
+      `${FORGOT_PASSWORD_WINDOW_MINUTES}m`,
     );
     const limitKey = `reset_password_${ip}_${userAgent}`;
 
@@ -76,7 +76,7 @@ export async function forgotPassword(
 
       const resetToken = randomBytes(32).toString("hex");
       const resetTokenExpiresAt = add(new Date(), {
-        minutes: RESET_PASSWORD_TOKEN_EXPIRY_MINUTES,
+        minutes: FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES,
       });
 
       await tx.user.update({
@@ -109,7 +109,7 @@ export async function forgotPassword(
     cookieStore.set({
       name: "reset-password-pending",
       value: "true",
-      maxAge: minutesToSeconds(RESET_PASSWORD_TOKEN_EXPIRY_MINUTES),
+      maxAge: minutesToSeconds(FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",

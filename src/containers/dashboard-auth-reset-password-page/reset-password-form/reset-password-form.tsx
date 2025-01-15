@@ -21,6 +21,7 @@ export function ResetPasswordForm() {
     formState: { errors },
     captchaRef,
     isLoading,
+    isExpired,
   } = usePasswordResetForm(token ?? undefined, callbackUrl ?? undefined);
 
   return (
@@ -34,8 +35,14 @@ export function ResetPasswordForm() {
             <p className="text-primary text-base font-normal">
               Enter your new password to reset your account
             </p>
-            {errors.root?.message && (
+            {errors.root?.message && !isExpired && (
               <FieldError>{errors.root?.message}</FieldError>
+            )}
+            {isExpired && (
+              <FieldError>
+                Reset link expired. Please request a new one from{" "}
+                <Link href="/dashboard/auth/forgot-password">here</Link>.
+              </FieldError>
             )}
           </div>
           <form onSubmit={onSubmit} className="grid gap-6">
@@ -79,6 +86,7 @@ export function ResetPasswordForm() {
               error={errors.captchaToken?.message}
               size="compact"
             />
+
             <button
               type="submit"
               className="btn-sm btn-primary py-2 text-lg"

@@ -8,103 +8,105 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import {
+  MAX_RESET_PASSWORD_ATTEMPTS,
+  PASSWORD_HASH_SALT_ROUNDS,
+  RESET_PASSWORD_WINDOW_MINUTES,
+} from "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
-const MAX_RESET_PASSWORD_ATTEMPTS = 5;
-const RESET_PASSWORD_ATTEMPTS_WINDOW = "30m";
+const GENERIC_ERROR = "Invalid request. Please try again.";
+
+type ResetPasswordResponse = {
+  success: boolean;
+  message: string;
+  isExpired?: boolean;
+};
 
 export async function resetPassword(
   data: WithCaptcha<ResetPassword>,
   token?: string,
-) {
-  const ip = getUserIpAddress();
-  const { ua: userAgent } = getUserAgent();
-
-  const rateLimit = createRateLimiter(
-    MAX_RESET_PASSWORD_ATTEMPTS,
-    RESET_PASSWORD_ATTEMPTS_WINDOW,
-  );
-
-  const limitKey = `reset_password_ratelimit_${ip}_${userAgent}`;
-
-  const {
-    success: rateLimitIsSuccess,
-    reset,
-    remaining,
-  } = await rateLimit.limit(limitKey);
-
-  if (!rateLimitIsSuccess) {
-    return {
-      success: false,
-      message: `Too many attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
-    };
-  }
-
-  const { success: captchaIsSuccess } = await verifyCaptchaToken(
-    data.captchaToken,
-  );
-
-  if (!captchaIsSuccess) {
-    return {
-      success: false,
-      message: "Invalid request, please try again.",
-    };
-  }
-
-  const { success: isDataValid } = resetPasswordSchema.safeParse(data);
-
-  if (!isDataValid) {
-    return {
-      success: false,
-      message: `Invalid data. Please try again. ${
-        remaining < 3
-          ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)`
-          : ""
-      }`,
-    };
-  }
-
+): Promise<ResetPasswordResponse> {
   try {
-    const user = await prisma.user.findFirst({
-      where: {
-        passwordResetToken: token,
-        passwordResetTokenExpiresAt: {
-          gt: new Date(),
-        },
-      },
-    });
+    const parseResult = resetPasswordSchema.safeParse(data);
 
-    if (!user) {
+    if (!parseResult.success) {
+      return { success: false, message: GENERIC_ERROR };
+    }
+
+    const ip = getUserIpAddress();
+    const { ua: userAgent } = getUserAgent();
+    const rateLimit = createRateLimiter(
+      MAX_RESET_PASSWORD_ATTEMPTS,
+      `${RESET_PASSWORD_WINDOW_MINUTES}m`,
+    );
+    const limitKey = `reset_password_${ip}_${userAgent}`;
+
+    const {
+      success: rateLimitSuccess,
+      reset,
+      remaining,
+    } = await rateLimit.limit(limitKey);
+
+    if (!rateLimitSuccess) {
       return {
         success: false,
-        isExpired: true,
-        message:
-          "Invalid or expired reset password token. Please request a new email.",
+        message: `Too many attempts. Try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
       };
     }
 
-    const hashedPassword = await hash(data.password, 10);
+    const { success: captchaSuccess } = await verifyCaptchaToken(
+      data.captchaToken,
+    );
+    if (!captchaSuccess) {
+      return { success: false, message: GENERIC_ERROR };
+    }
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        password: hashedPassword,
-        passwordResetToken: null,
-        passwordResetTokenExpiresAt: null,
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findFirst({
+        where: {
+          passwordResetToken: token,
+          passwordResetTokenExpiresAt: { gt: new Date() },
+        },
+        select: { id: true },
+      });
+
+      if (!user) {
+        return {
+          success: false,
+          isExpired: true,
+          message: "Reset link expired. Please request a new one.",
+        };
+      }
+
+      const hashedPassword = await hash(
+        data.password,
+        PASSWORD_HASH_SALT_ROUNDS,
+      );
+
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          password: hashedPassword,
+          passwordResetToken: null,
+          passwordResetTokenExpiresAt: null,
+        },
+      });
+
+      return {
+        success: true,
+        message: "Password reset successful. You can now log in.",
+      };
     });
 
-    await rateLimit.resetUsedTokens(limitKey);
+    if (result.success) {
+      await rateLimit.resetUsedTokens(limitKey);
+    } else if (remaining < 3) {
+      result.message += ` (${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)`;
+    }
 
-    return {
-      success: true,
-      message:
-        "Password has been successfully reset. You can now log in with your new password.",
-    };
+    return result;
   } catch (error) {
-    return {
-      success: false,
-      message: "Something went wrong. Please try again later.",
-    };
+    return { success: false, isExpired: false, message: GENERIC_ERROR };
   }
 }
