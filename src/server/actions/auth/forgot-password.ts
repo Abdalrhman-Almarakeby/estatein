@@ -3,136 +3,120 @@
 import { cookies } from "next/headers";
 import { createElement } from "react";
 import { randomBytes } from "crypto";
-import { add, formatDistanceToNow, hoursToSeconds, isBefore } from "date-fns";
+import { add, formatDistanceToNow, minutesToSeconds } from "date-fns";
 import { PasswordResetEmail } from "@/components/emails/password-reset-email";
 import { WithCaptcha } from "@/types";
 import { getBaseUrl } from "@/lib/utils";
+import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
+import {
+  MAX_RESET_PASSWORD_ATTEMPTS,
+  RESET_PASSWORD_TOKEN_EXPIRY_MINUTES,
+  RESET_PASSWORD_WINDOW_MINUTES,
+} from "@/constant";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
-const MAX_RESET_PASSWORD_ATTEMPTS = 5;
-const RESET_PASSWORD_ATTEMPTS_WINDOW = "30m";
+const GENERIC_MESSAGE =
+  "If an account exists with this email, a reset link has been sent.";
+const GENERIC_ERROR = "Please try again later.";
 
 export async function forgotPassword(
   data: WithCaptcha<Email>,
   callbackUrl?: string,
 ) {
-  const ip = getUserIpAddress();
-  const { ua: userAgent } = getUserAgent();
-
-  const rateLimit = createRateLimiter(
-    MAX_RESET_PASSWORD_ATTEMPTS,
-    RESET_PASSWORD_ATTEMPTS_WINDOW,
-  );
-
-  const limitKey = `login_ratelimit_${ip}_${userAgent}`;
-
-  const {
-    success: rateLimitIsSuccess,
-    reset,
-    remaining,
-  } = await rateLimit.limit(limitKey);
-
-  if (!rateLimitIsSuccess) {
-    return {
-      success: false,
-      message: `Too many attempts, please try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
-    };
-  }
-
-  const { success: captchaIsSuccess } = await verifyCaptchaToken(
-    data.captchaToken,
-  );
-
-  if (!captchaIsSuccess) {
-    return {
-      success: false,
-      message: "Invalid credentials, Please try again.",
-    };
-  }
-
-  const { success: isDataValid } = emailSchema.safeParse(data);
-
-  if (!isDataValid) {
-    return {
-      success: false,
-      message: `Invalid credentials. Please try again. ${remaining < 3 ? `(${remaining} ${remaining === 1 ? "attempt" : "attempts"} remaining)` : ""}`,
-    };
-  }
-
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+    const parseResult = emailSchema.safeParse(data);
+    if (!parseResult.success) {
+      return { success: false, message: GENERIC_ERROR };
+    }
 
-    const cookieStore = cookies();
+    const ip = getUserIpAddress();
+    const { ua: userAgent } = getUserAgent();
 
-    cookieStore.set({
-      name: "reset-password-pending",
-      value: "true",
-      maxAge: hoursToSeconds(1),
-    });
+    const rateLimit = createRateLimiter(
+      MAX_RESET_PASSWORD_ATTEMPTS,
+      `${RESET_PASSWORD_WINDOW_MINUTES}m`,
+    );
+    const limitKey = `reset_password_${ip}_${userAgent}`;
 
-    if (!user) {
+    const { success: rateLimitSuccess, reset } =
+      await rateLimit.limit(limitKey);
+    if (!rateLimitSuccess) {
       return {
-        success: true,
-        message:
-          "If a user with this email exists, a reset link has been sent.",
+        success: false,
+        message: `Too many attempts. Try again ${formatDistanceToNow(reset, { addSuffix: true })}.`,
       };
     }
 
-    let resetToken = user.passwordResetToken;
-    let resetTokenExpiresAt = user.passwordResetTokenExpiresAt;
+    const { success: captchaSuccess } = await verifyCaptchaToken(
+      data.captchaToken,
+    );
 
-    const isExpired =
-      !resetTokenExpiresAt || isBefore(resetTokenExpiresAt, new Date());
-
-    if (!resetToken || isExpired) {
-      resetToken = randomBytes(32).toString("hex");
-      resetTokenExpiresAt = add(new Date(), { hours: 1 });
-    } else {
-      resetTokenExpiresAt = add(new Date(), { hours: 1 });
+    if (!captchaSuccess) {
+      return { success: false, message: GENERIC_ERROR };
     }
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        passwordResetToken: resetToken,
-        passwordResetTokenExpiresAt: resetTokenExpiresAt,
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({
+        where: { email: data.email },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          passwordResetToken: true,
+          passwordResetTokenExpiresAt: true,
+        },
+      });
+
+      if (!user) return { success: true, message: GENERIC_MESSAGE };
+
+      const resetToken = randomBytes(32).toString("hex");
+      const resetTokenExpiresAt = add(new Date(), {
+        minutes: RESET_PASSWORD_TOKEN_EXPIRY_MINUTES,
+      });
+
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          passwordResetToken: resetToken,
+          passwordResetTokenExpiresAt: resetTokenExpiresAt,
+        },
+      });
+
+      const params = new URLSearchParams({ token: resetToken });
+
+      if (callbackUrl) params.append("callbackUrl", callbackUrl);
+
+      const template = createElement(PasswordResetEmail, {
+        username: user.name,
+        resetLink: `${getBaseUrl()}/dashboard/auth/reset-password?${params.toString()}`,
+      });
+
+      await sendEmail({
+        subject: "Reset Password",
+        to: user.email,
+        template,
+      });
+
+      return { success: true, message: GENERIC_MESSAGE };
     });
 
-    const params = new URLSearchParams({ token: resetToken });
-
-    if (callbackUrl) {
-      params.append("callbackUrl", callbackUrl);
-    }
-
-    const template = createElement(PasswordResetEmail, {
-      username: user.name,
-      resetLink: `${getBaseUrl()}/dashboard/auth/reset-password?${params.toString()}`,
+    const cookieStore = cookies();
+    cookieStore.set({
+      name: "reset-password-pending",
+      value: "true",
+      maxAge: minutesToSeconds(RESET_PASSWORD_TOKEN_EXPIRY_MINUTES),
+      secure: env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
     });
 
-    await sendEmail({
-      subject: "Reset Password",
-      to: user.email,
-      template,
-    });
-
-    return {
-      success: true,
-      message: "If a user with this email exists, a reset link has been sent.",
-    };
+    return result;
   } catch (error) {
-    return {
-      success: false,
-      message: "Something went wrong, Please try again later.",
-    };
+    return { success: false, message: GENERIC_ERROR };
   }
 }
