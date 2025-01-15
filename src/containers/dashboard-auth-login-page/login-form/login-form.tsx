@@ -93,9 +93,7 @@ export function LoginForm() {
 
             {shouldVerifyEmail ? (
               <div className="space-y-2">
-                <FieldError>
-                  Please verify your email before logging in.
-                </FieldError>
+                <FieldError>To Verify your email please click here:</FieldError>
                 <button
                   type="button"
                   className="btn-sm btn-primary py-2 text-lg"

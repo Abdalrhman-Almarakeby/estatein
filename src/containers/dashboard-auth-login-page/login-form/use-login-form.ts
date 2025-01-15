@@ -56,10 +56,11 @@ export function useLoginForm(callbackUrl?: string) {
         `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
 
       router.push(url);
-    }
-    setIsLoading(false);
+    } else {
+      setIsLoading(false);
 
-    return { success, message };
+      return { success, message };
+    }
   };
 
   return {
