@@ -18,6 +18,7 @@ export async function PropertiesSection() {
       listingPrice: true,
       area: true,
     },
+    take: 20,
   });
 
   return (
