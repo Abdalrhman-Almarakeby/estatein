@@ -23,8 +23,8 @@ import {
   EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
   EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
   PASSWORD_HASH_SALT_ROUNDS,
-  SIGNUP_RATE_LIMIT_MAX_ATTEMPTS,
-  SIGNUP_RATE_LIMIT_WINDOW_DURATION,
+  SIGNUP_MAX_ATTEMPTS,
+  SIGNUP_WINDOW_MINUTES,
 } from "@/constant";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
@@ -42,8 +42,8 @@ export async function signup(data: WithCaptcha<Signup>) {
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      SIGNUP_RATE_LIMIT_MAX_ATTEMPTS,
-      SIGNUP_RATE_LIMIT_WINDOW_DURATION,
+      SIGNUP_MAX_ATTEMPTS,
+      `${SIGNUP_WINDOW_MINUTES}m`,
     );
 
     const limitKey = `signup_ratelimit_${ip}_${userAgent}`;
