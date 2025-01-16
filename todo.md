@@ -2,12 +2,7 @@
 
 - Write some simple documentation about the code and how to use it, edit, and deploy it.
 
-- Add the ability for resending verification emails and resetting password emails.
-
 - Add availability system for properties to show which ones are available and which is are not.
-
-- Add toasts for auth actions like signing up and resetting password
-  before redirecting
 
 - Add toasts for actions like creating property or editing one
 

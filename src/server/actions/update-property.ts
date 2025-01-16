@@ -1,11 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
 import { PropertyData, propertyDataSchema } from "@/lib/schemas";
-import {
-  propertyExistsById,
-  updateProperty as updatePropertyDb,
-} from "@/server/db/properties";
 
 export async function updateProperty(id: string, data: PropertyData) {
   const { success: isDataValid, error } = propertyDataSchema.safeParse(data);
@@ -15,7 +12,10 @@ export async function updateProperty(id: string, data: PropertyData) {
   }
 
   try {
-    const propertyExists = await propertyExistsById(id);
+    const propertyExists = await prisma.property.findUnique({
+      where: { id },
+      select: { id: true },
+    });
 
     if (!propertyExists) {
       return {
@@ -24,7 +24,11 @@ export async function updateProperty(id: string, data: PropertyData) {
       };
     }
 
-    const updatedProperty = await updatePropertyDb(id, data);
+    const updatedProperty = await prisma.property.update({
+      where: { id },
+      data,
+    });
+
     revalidatePath("/dashboard/properties");
 
     return {

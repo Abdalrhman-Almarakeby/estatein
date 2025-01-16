@@ -111,7 +111,7 @@ export function SignupForm() {
               control={control}
               captchaRef={captchaRef}
               error={errors.captchaToken?.message}
-              size="compact"
+              size="normal"
             />
             <button type="submit" className="btn-sm btn-primary py-2 text-lg">
               Signup

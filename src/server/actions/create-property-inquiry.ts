@@ -1,16 +1,11 @@
 "use server";
 
 import { WithCaptcha } from "@/types";
-import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
+import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { PropertyInquiry, propertyInquirySchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  createPropertyInquiry as createPropertyInquiryDb,
-  propertyInquiryExistsByEmail,
-  propertyInquiryExistsByPhone,
-} from "@/server/db/properties-inquiries";
 import { verifyCaptchaToken } from "@/server/services";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 3;
@@ -52,7 +47,18 @@ export async function createPropertyInquiry(
   }
 
   try {
-    if (await propertyInquiryExistsByEmail(data.email)) {
+    const propertyInquiryExistsByEmail = await prisma.propertyInquiry.findFirst(
+      {
+        where: {
+          email: data.email,
+        },
+        select: {
+          email: true,
+        },
+      },
+    );
+
+    if (propertyInquiryExistsByEmail) {
       return {
         message:
           "An inquiry with this email already exists. We will get back to you as soon as possible.",
@@ -60,7 +66,18 @@ export async function createPropertyInquiry(
       };
     }
 
-    if (await propertyInquiryExistsByPhone(data.phone)) {
+    const propertyInquiryExistsByPhone = await prisma.propertyInquiry.findFirst(
+      {
+        where: {
+          phone: data.phone,
+        },
+        select: {
+          phone: true,
+        },
+      },
+    );
+
+    if (propertyInquiryExistsByPhone) {
       return {
         message:
           "An inquiry with this phone number already exists. We will get back to you as soon as possible.",
@@ -68,10 +85,12 @@ export async function createPropertyInquiry(
       };
     }
 
-    await createPropertyInquiryDb({
-      ...omit(data, "agreeOnTerms", "captchaToken"),
-      bathrooms: +data.bathrooms,
-      bedrooms: +data.bedrooms,
+    await prisma.propertyInquiry.create({
+      data: {
+        ...data,
+        bathrooms: +data.bathrooms,
+        bedrooms: +data.bedrooms,
+      },
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };

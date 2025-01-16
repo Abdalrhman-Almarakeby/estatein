@@ -62,7 +62,7 @@ export function ForgotPasswordForm() {
               control={control}
               captchaRef={captchaRef}
               error={errors.captchaToken?.message}
-              size="compact"
+              size="normal"
             />
             <button
               type="submit"

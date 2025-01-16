@@ -1,16 +1,24 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { PropertyForm } from "@/containers/dashboard-properties-new-page/property-form/property-form";
 import { generateDashboardMetadata } from "@/lib/metadata";
+import { prisma } from "@/lib/prisma";
 import { PropertyData } from "@/lib/schemas";
 import { updateProperty } from "@/server/actions/update-property";
-import { getPropertyDetails } from "@/server/db/properties";
 
 type PageParams = {
   params: { propertyId: string };
 };
 
 export async function generateMetadata({ params: { propertyId } }: PageParams) {
-  const property = await getPropertyDetails(propertyId);
+  const property = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!property) {
+    notFound();
+  }
 
   return generateDashboardMetadata({
     title: `Edit ${property.title} - Estatein`,
@@ -19,7 +27,15 @@ export async function generateMetadata({ params: { propertyId } }: PageParams) {
 }
 
 export default async function Page({ params: { propertyId } }: PageParams) {
-  const property = await getPropertyDetails(propertyId);
+  const property = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!property) {
+    notFound();
+  }
 
   async function handleUpdateProperty(data: PropertyData) {
     "use server";

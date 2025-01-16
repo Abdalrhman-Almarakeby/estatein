@@ -21,6 +21,8 @@ export function LoginForm() {
     formState: { errors },
     captchaRef,
     isLoading,
+    shouldVerifyEmail,
+    handleResendEmail,
   } = useLoginForm(callbackUrl ?? undefined);
 
   return (
@@ -86,15 +88,29 @@ export function LoginForm() {
               control={control}
               captchaRef={captchaRef}
               error={errors.captchaToken?.message}
-              size="compact"
+              size="normal"
             />
-            <button
-              type="submit"
-              className="btn-sm btn-primary py-2 text-lg"
-              disabled={isLoading}
-            >
-              Log In
-            </button>
+
+            {shouldVerifyEmail ? (
+              <div className="space-y-2">
+                <FieldError>To Verify your email please click here:</FieldError>
+                <button
+                  type="button"
+                  className="btn-sm btn-primary py-2 text-lg"
+                  onClick={handleResendEmail}
+                >
+                  Resend Verification Email
+                </button>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="btn-sm btn-primary py-2 text-lg"
+                disabled={isLoading || shouldVerifyEmail}
+              >
+                Log In
+              </button>
+            )}
           </form>
           <p className="text-primary">
             Don't have an account yet?{" "}

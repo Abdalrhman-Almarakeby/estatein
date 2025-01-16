@@ -8,13 +8,13 @@ export async function uploadImage(formData: FormData) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    return { success: false, error: "Unauthorized" };
+    return { success: false, message: "Unauthorized" };
   }
 
-  const file = formData.get("file") as File;
+  const file = formData.get("file") as File | null;
 
   if (!file) {
-    return { success: false, error: "No file provided" };
+    return { success: false, message: "No file provided" };
   }
 
   const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -22,7 +22,7 @@ export async function uploadImage(formData: FormData) {
   if (!allowedTypes.has(file.type)) {
     return {
       success: false,
-      error: "Invalid file type. Only JPEG, PNG, and WebP are allowed.",
+      message: "Invalid file type. Only JPEG, PNG, and WebP are allowed.",
     };
   }
 
@@ -31,7 +31,7 @@ export async function uploadImage(formData: FormData) {
   if (file.size > MAX_SIZE) {
     return {
       success: false,
-      error: "File size exceeds the maximum limit of 5MB.",
+      message: "File size exceeds the maximum limit of 5MB.",
     };
   }
 
@@ -40,8 +40,8 @@ export async function uploadImage(formData: FormData) {
       access: "public",
     });
 
-    return { success: true, url };
+    return { success: true, url, message: "Image uploaded" };
   } catch (error) {
-    return { success: false, error: "Failed to upload image" };
+    return { success: false, message: "Failed to upload image" };
   }
 }

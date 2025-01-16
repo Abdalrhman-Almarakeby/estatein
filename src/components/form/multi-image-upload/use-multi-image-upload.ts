@@ -54,18 +54,16 @@ export function useMultiImageUpload<T extends FieldValues>({
   }, [images, updateFormValue]);
 
   const uploadSingleImage = async (image: ImageItem): Promise<ImageItem> => {
-    try {
-      const formData = new FormData();
-      formData.append("file", image.file);
-      const result = await uploadImage(formData);
+    const formData = new FormData();
+    formData.append("file", image.file);
 
-      if (result.success && result.url) {
-        return { ...image, url: result.url, status: "success" as const };
-      }
-      return { ...image, status: "error" as const };
-    } catch (error) {
-      return { ...image, status: "error" as const };
+    const { success, url } = await uploadImage(formData);
+
+    if (success && url) {
+      return { ...image, url, status: "success" as const };
     }
+
+    return { ...image, status: "error" as const };
   };
 
   const addImages = useCallback(async (newImages: File[]) => {
@@ -128,13 +126,8 @@ export function useMultiImageUpload<T extends FieldValues>({
       );
 
       if (imageToRemove.status === "success") {
-        try {
-          const result = await deleteImage(imageToRemove.url);
-          if (!result.success) {
-            throw new Error("Failed to delete image from Vercel Blob");
-          }
-        } catch (error) {
-          // TODO handle Error
+        const result = await deleteImage(imageToRemove.url);
+        if (!result.success) {
           setImages((prevImages) =>
             prevImages.map((img, i) =>
               i === index ? { ...img, status: "success" } : img,

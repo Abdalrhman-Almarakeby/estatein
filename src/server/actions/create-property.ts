@@ -1,10 +1,7 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
 import { PropertyData, propertyDataSchema } from "@/lib/schemas";
-import {
-  createProperty as createPropertyDb,
-  propertyExistsByName,
-} from "@/server/db/properties";
 
 export async function createProperty(data: PropertyData) {
   const { success: isDataValid, error } = propertyDataSchema.safeParse(data);
@@ -14,16 +11,21 @@ export async function createProperty(data: PropertyData) {
   }
 
   try {
-    const propertyWithSameName = await propertyExistsByName(data.title);
+    const propertyWithSameTitle = await prisma.property.findUnique({
+      where: { title: data.title },
+      select: { title: true },
+    });
 
-    if (propertyWithSameName) {
+    if (propertyWithSameTitle) {
       return {
         message: "Property with the same name already exists.",
         success: false,
       };
     }
 
-    const property = await createPropertyDb(data);
+    const property = await prisma.property.create({
+      data,
+    });
 
     return {
       message: "Property was created successfully.",

@@ -1,4 +1,5 @@
 export * from "./achievements";
+export * from "./auth";
 export * from "./clients";
 export * from "./faqs";
 export * from "./filters-data";
