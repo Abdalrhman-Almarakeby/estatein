@@ -84,7 +84,7 @@ export function ResetPasswordForm() {
               control={control}
               captchaRef={captchaRef}
               error={errors.captchaToken?.message}
-              size="compact"
+              size="normal"
             />
 
             <button
