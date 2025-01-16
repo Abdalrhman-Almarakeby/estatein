@@ -3,11 +3,11 @@ import Link from "next/link";
 import { HTMLAttributeAnchorTarget, SVGProps } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { IconContainer } from "@/components/ui/icon-container";
-import { SVGcomponent } from "@/types";
+import { SVGComponent } from "@/types";
 
 type LinkItemProps = {
   to: Route;
-  Icon: SVGcomponent;
+  Icon: SVGComponent;
   iconProps?: SVGProps<SVGSVGElement>;
   label: string;
   target?: HTMLAttributeAnchorTarget;

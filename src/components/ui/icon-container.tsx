@@ -1,10 +1,10 @@
 import { SVGProps } from "react";
-import { SVGcomponent } from "@/types";
+import { SVGComponent } from "@/types";
 import { cn, omit } from "@/lib/utils";
 import IconContainerSVG from "@/assets/icon-container.svg";
 
 type IconContainerProps = {
-  Icon: SVGcomponent;
+  Icon: SVGComponent;
   iconProps?: SVGProps<SVGSVGElement>;
   className?: string;
 };

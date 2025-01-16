@@ -1,11 +1,11 @@
 import { IconContainer } from "@/components/ui/icon-container";
-import { SVGcomponent } from "@/types";
+import { SVGComponent } from "@/types";
 import { cn } from "@/lib/utils";
 
 type DataCardProps = {
   title: string;
   paragraph: string;
-  Icon?: SVGcomponent;
+  Icon?: SVGComponent;
   className?: string;
 };
 

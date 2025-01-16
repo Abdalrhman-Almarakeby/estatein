@@ -1,3 +1,3 @@
 import { FunctionComponent, SVGProps } from "react";
 
-export type SVGcomponent = FunctionComponent<SVGProps<SVGSVGElement>>;
+export type SVGComponent = FunctionComponent<SVGProps<SVGSVGElement>>;

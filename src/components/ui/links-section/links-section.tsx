@@ -1,11 +1,11 @@
 import { Route } from "next";
-import { SVGcomponent } from "@/types";
+import { SVGComponent } from "@/types";
 import { cn } from "@/lib/utils";
 import { LinkItem } from "./link-item";
 
 type LinkData = {
   to: Route;
-  Icon: SVGcomponent;
+  Icon: SVGComponent;
   label: string;
   target?: React.HTMLAttributeAnchorTarget;
   ariaLabel?: string;
