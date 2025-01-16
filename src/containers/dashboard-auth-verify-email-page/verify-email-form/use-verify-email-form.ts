@@ -5,6 +5,7 @@ import { addSeconds, differenceInSeconds, minutesToSeconds } from "date-fns";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
+import { useToastNotification } from "@/hooks";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES } from "@/constant";
@@ -26,6 +27,12 @@ export function useVerifyEmailForm() {
 
   const captchaRef = useRef<ReCAPTCHA>(null);
   const router = useRouter();
+
+  const toast = useToastNotification({
+    successMessage:
+      "Your account has been successfully created and verified! Please log in to continue.",
+    duration: 5000,
+  });
 
   useEffect(() => {
     if (!coolDownEndTime) {
@@ -63,13 +70,14 @@ export function useVerifyEmailForm() {
         const params = callbackUrl && new URLSearchParams({ callbackUrl });
         const url =
           `/dashboard/auth/login${params ? (`?${params.toString()}` as const) : ""}` as const;
+        toast.showSuccess();
         router.push(url);
       } else {
         setError("root", { message });
         setIsLoading(false);
       }
     },
-    [setValue, callbackUrl, router, setError],
+    [setValue, callbackUrl, toast, router, setError],
   );
 
   const handleResendEmail = async () => {

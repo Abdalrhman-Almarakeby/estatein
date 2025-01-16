@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
+import { useToastNotification } from "@/hooks";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { resetPassword } from "@/server/actions";
@@ -21,6 +22,12 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
 
   const router = useRouter();
 
+  const toast = useToastNotification({
+    successMessage:
+      "Your password has been successfully reset! Please log in to continue.",
+    duration: 5000,
+  });
+
   const onSubmit = useCallback(
     async (data: WithCaptcha<ResetPassword>) => {
       setIsLoading(true);
@@ -35,6 +42,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
         if (callbackUrl) {
           searchParams.set("callbackUrl", callbackUrl);
         }
+        toast.showSuccess();
         router.push(`/dashboard/auth/login?${searchParams.toString()}`);
       } else {
         if (isExpired) {
@@ -45,7 +53,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
         setIsLoading(false);
       }
     },
-    [setValue, token, callbackUrl, router, setError],
+    [setValue, token, callbackUrl, toast, router, setError],
   );
 
   return {
