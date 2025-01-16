@@ -114,7 +114,7 @@ export function SpecificPropertyInquiryForm({
         control={control}
         error={errors.captchaToken?.message}
       />
-      <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:justify-between xl:col-span-3 2xl:col-span-4">
+      <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:items-center lg:justify-between xl:col-span-3 2xl:col-span-4">
         <AgreeOnTerms
           {...register("agreeOnTerms")}
           error={errors.agreeOnTerms?.message}
