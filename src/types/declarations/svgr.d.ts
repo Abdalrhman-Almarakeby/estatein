@@ -1,6 +1,6 @@
 declare module "*.svg" {
-  import { SVGcomponent } from "@/types";
-  const component: SVGcomponent;
+  import { SVGComponent } from "@/types";
+  const component: SVGComponent;
   export default component;
 }
 

@@ -2,12 +2,12 @@ import { Route } from "next";
 import { DataCard } from "@/components/ui/data-card";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { CTACard } from "@/containers/services-page/cta-card";
-import { SVGcomponent } from "@/types";
+import { SVGComponent } from "@/types";
 
 type ServiceData = {
   title: string;
   paragraph: string;
-  Icon: SVGcomponent;
+  Icon: SVGComponent;
 };
 
 type ServicesSectionProps = React.HTMLAttributes<HTMLDivElement> & {

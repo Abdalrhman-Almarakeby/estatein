@@ -36,7 +36,7 @@ export function LocationCard({
       <div className="badges-container mt-6 lg:mt-7.5">
         <a
           href={`mailto:${contact.email}`}
-          className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
+          className="flex items-center gap-2 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`Email ${contact.email}`}
         >
           <Mail aria-hidden="true" className="size-4 text-purple-light" />{" "}
@@ -44,7 +44,7 @@ export function LocationCard({
         </a>
         <a
           href={`tel:${contact.phone}`}
-          className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
+          className="flex items-center gap-2 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`Call ${contact.phone}`}
         >
           <Phone aria-hidden="true" className="size-4 text-purple-light" />{" "}
@@ -54,7 +54,7 @@ export function LocationCard({
           href={contact.location.link}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-1 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
+          className="flex items-center gap-2 rounded-3xl border bg-gray-darker px-3.5 py-[0.40625rem]"
           aria-label={`View location of our office in ${contact.location.name}`}
         >
           <MapPin aria-hidden="true" className="size-4 text-purple-light" />{" "}
@@ -66,7 +66,7 @@ export function LocationCard({
         target="_blank"
         rel="noreferrer"
         aria-label={`Get directions to our office in ${location}`}
-        className="btn-primary btn-sm 3xl:btn-lg mt-6 block text-center lg:mt-7.5"
+        className="btn-primary btn-sm 3xl:btn-lg mt-6 block text-center lg:mt-7.5 lg:text-base"
       >
         Get Directions
       </a>
