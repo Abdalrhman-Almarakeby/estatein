@@ -1,6 +1,6 @@
-import { formatWithComma, normalize, upperFirst } from "@/lib/utils";
 import { PropertyType } from "@prisma/client";
 import { Banknote, Box, House, MapPin } from "lucide-react";
+import { formatWithComma, normalize, upperFirst } from "@/lib/utils";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTY_SIZES } from "./property-sizes";
