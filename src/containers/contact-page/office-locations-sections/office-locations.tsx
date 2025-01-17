@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LOCATIONS, LOCATIONS_TYPE } from "@/content";
+import { OFFICE_LOCATIONS, OFFICE_TYPES } from "@/content";
 import { LocationCard } from "./location-card";
 
 export function OfficeLocations() {
@@ -13,21 +13,24 @@ export function OfficeLocations() {
 
   const currentLocationsType =
     locationsType &&
-    (LOCATIONS_TYPE as ReadonlyArray<string>).includes(locationsType)
+    (OFFICE_TYPES as ReadonlyArray<string>).includes(locationsType)
       ? locationsType
       : "all";
 
   const filteredLocations =
     currentLocationsType === "all"
-      ? LOCATIONS
-      : LOCATIONS.filter((location) => location.type === currentLocationsType);
+      ? OFFICE_LOCATIONS
+      : OFFICE_LOCATIONS.filter(
+          (location) => location.type === currentLocationsType,
+        );
+
   return (
     <div className="flex flex-col gap-7.5 lg:gap-10 3xl:gap-15">
       <div
         role="tablist"
         className="grid grid-cols-2 gap-2.5 rounded-[0.625rem] bg-gray-darker p-2.5 min-[450px]:grid-cols-3 lg:self-start"
       >
-        {LOCATIONS_TYPE.map((locationType) => (
+        {OFFICE_TYPES.map((locationType) => (
           <Link
             scroll={false}
             href={`?locationsType=${locationType}`}
@@ -51,7 +54,7 @@ export function OfficeLocations() {
         className="grid gap-5 lg:grid-cols-2 lg:gap-5 3xl:gap-7.5"
       >
         {filteredLocations.map((location) => (
-          <LocationCard key={location.label} {...location} />
+          <LocationCard key={location.name} {...location} />
         ))}
       </div>
     </div>

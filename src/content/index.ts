@@ -3,7 +3,7 @@ export * from "./clients";
 export * from "./faqs";
 export * from "./gallery-images";
 export * from "./how-it-is-work";
-export * from "./locations";
+export * from "./office-locations";
 export * from "./page-links-data";
 export * from "./privacy-policy";
 export * from "./services";
