@@ -1,19 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "404 Not Found - Estatein",
   description:
     "Oops! We couldn’t find the page you’re looking for. Head back to the homepage and explore more.",
-  keywords: [],
-  metadata: {
-    robots: {
-      index: false,
-      follow: false,
-    },
-  },
 });
 
 export default function NotFound() {

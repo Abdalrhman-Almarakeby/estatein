@@ -5,9 +5,9 @@ import { HeroSection } from "@/containers/about-page/hero-section";
 import { HowItIsWorkSection } from "@/containers/about-page/how-it-is-work-section";
 import { TeamSection } from "@/containers/about-page/team-section";
 import { ValuesSection } from "@/containers/about-page/values-section";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title: "About Estatein | Our Story & Vision in Real Estate",
   description:
     "Learn more about Estatein, our mission to simplify your real estate journey, and our commitment to helping you find the perfect property. Discover who we are and what drives us.",

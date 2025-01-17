@@ -2,19 +2,23 @@ import { Metadata } from "next";
 import { Property } from "@prisma/client";
 import { formatPrice, getBaseUrl, normalize, upperFirst } from "@/lib/utils";
 
-type AppPagesMetadataOptions = {
+type NonSEOMetadataOptions = {
   title: string;
   description: string;
-  keywords: string | string[];
   metadata?: Partial<Metadata>;
 };
 
-export function generateAppMetadata({
+type SEOMetadataOptions = NonSEOMetadataOptions & {
+  keywords: string | string[];
+};
+
+// Base function for generating SEO-friendly metadata
+export function generateSEOMetadata({
   title,
   description,
   keywords,
   metadata,
-}: AppPagesMetadataOptions): Metadata {
+}: SEOMetadataOptions): Metadata {
   const appName = "Estatein";
   const url = getBaseUrl();
 
@@ -47,10 +51,28 @@ export function generateAppMetadata({
   };
 }
 
+// Function for generating non-SEO metadata (e.g., for dashboard pages)
+export function generateNonSEOMetadata({
+  title,
+  description,
+  metadata,
+}: NonSEOMetadataOptions): Metadata {
+  return {
+    title,
+    description,
+    robots: {
+      index: false,
+      follow: false,
+    },
+    ...metadata,
+  };
+}
+
 type PropertyMetadataOptions = Property & {
   metadata?: Partial<Metadata>;
 };
 
+// Specialized function for generating property page metadata
 export function generatePropertyPageMetadata({
   bedrooms,
   propertyType,
@@ -63,15 +85,12 @@ export function generatePropertyPageMetadata({
   ...property
 }: PropertyMetadataOptions): Metadata {
   const title = `Stunning ${bedrooms}-Bedroom ${upperFirst(normalize(propertyType))} in ${location} - ${bathrooms} Bathrooms | ${area} ft² | Priced at ${formatPrice(listingPrice)}`;
-
   const description = `${propertyDescription} This stunning ${upperFirst(normalize(propertyType))} features ${bedrooms} bedrooms and ${bathrooms} bathrooms, perfect for families and entertaining guests. Located in the heart of ${location}, this property offers a generous area of ${area} ft², and is priced at ${formatPrice(listingPrice)}.`;
-
   const keywords = [
     upperFirst(normalize(propertyType)),
     `${bedrooms} bedrooms`,
     `${bathrooms} bathrooms`,
     location,
-    ...location.split(", "),
     "real estate",
     "property for sale",
     "house",
@@ -83,7 +102,7 @@ export function generatePropertyPageMetadata({
     "investment property",
   ];
 
-  return generateAppMetadata({
+  return generateSEOMetadata({
     title,
     description,
     keywords,
@@ -94,26 +113,4 @@ export function generatePropertyPageMetadata({
       ...property.metadata,
     },
   });
-}
-
-type DashboardPagesMetadataOptions = {
-  title: string;
-  description: string;
-  metadata?: Partial<Metadata>;
-};
-
-export function generateDashboardMetadata({
-  title,
-  description,
-  metadata,
-}: DashboardPagesMetadataOptions): Metadata {
-  return {
-    title,
-    description,
-    robots: {
-      index: false,
-      follow: false,
-    },
-    ...metadata,
-  };
 }

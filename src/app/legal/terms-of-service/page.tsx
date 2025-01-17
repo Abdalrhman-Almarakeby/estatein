@@ -1,9 +1,9 @@
 import { Navbar } from "@/containers/legal-layout/nav-bar";
 import { Section } from "@/containers/legal-layout/section";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 import { TERMS_OF_SERVICE } from "@/constant/terms-of-service";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title: "Privacy Policy - Estatein",
   description:
     "Our Privacy Policy explains how Estatein collects, uses, and protects your personal information. We value your privacy and are committed to safeguarding your data.",

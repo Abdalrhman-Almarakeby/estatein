@@ -1,9 +1,9 @@
 import { Navbar } from "@/containers/legal-layout/nav-bar";
 import { Section } from "@/containers/legal-layout/section";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 import { PRIVACY_POLICY } from "@/constant/privacy-policy";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title: "Terms of Service - Estatein",
   description:
     "Read the Terms of Service for Estatein, which outline the rules and guidelines for using our services. By accessing or using our website, you agree to comply with these terms.",

@@ -1,7 +1,7 @@
 import { VerifyEmailForm } from "@/containers/dashboard-auth-verify-email-page/verify-email-form";
-import { generateDashboardMetadata } from "@/lib/metadata";
+import { generateNoneSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateDashboardMetadata({
+export const metadata = generateNoneSEOMetadata({
   title: "Verify Email - Estatein",
   description:
     "Enter the 6-digit code sent to your email to verify your account.",

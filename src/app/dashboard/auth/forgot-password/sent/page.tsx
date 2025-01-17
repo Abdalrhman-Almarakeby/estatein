@@ -1,6 +1,6 @@
-import { generateDashboardMetadata } from "@/lib/metadata";
+import { generateNoneSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateDashboardMetadata({
+export const metadata = generateNoneSEOMetadata({
   title: "Check Your Email - Estatein",
   description:
     "We've sent a reset link to your email. Check your inbox to continue.",

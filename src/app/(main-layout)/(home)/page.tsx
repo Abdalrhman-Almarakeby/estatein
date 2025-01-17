@@ -3,9 +3,9 @@ import { FAQsSection } from "@/components/ui/faqs-section";
 import { HeroSection } from "@/containers/home-page/hero-section";
 import { PropertiesSection } from "@/containers/home-page/properties-section";
 import { TestimonialsSection } from "@/containers/home-page/testimonials-section";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title:
     "Estatein - Your Ultimate Real Estate Destination | Discover Properties",
   description:

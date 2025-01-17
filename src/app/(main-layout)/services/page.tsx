@@ -3,14 +3,14 @@ import { HeaderSection } from "@/components/ui/header-section";
 import { LinksSection } from "@/components/ui/links-section";
 import { InvestmentSection } from "@/containers/services-page/investment-section";
 import { ServicesSection } from "@/containers/services-page/services-section";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 import {
   PROPERTIES_SERVICES,
   PROPERTY_MANAGEMENT_SERVICES,
   SERVICES_PAGE_LINKS_DATA,
 } from "@/constant";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title:
     "Real Estate Services | Estatein - Evaluation, Investment & Property Management",
   description:

@@ -4,9 +4,9 @@ import { FiltersForm } from "@/containers/properties-page/filters-form";
 import { PropertiesInquiryFormSection } from "@/containers/properties-page/properties-inquiry-form-section";
 import { PropertiesSection } from "@/containers/properties-page/properties-section";
 import { PropertiesFiltersProvider } from "@/contexts/properties-filters";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateSEOMetadata({
   title: "Properties - Estatein | Discover the Best Real Estate Listings",
   description:
     "Explore a diverse range of real estate properties with Estatein. Find your dream home, investment property, or rental with ease. Browse our listings today and discover the best properties available.",

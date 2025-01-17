@@ -1,17 +1,10 @@
 import { AlertTriangle } from "lucide-react";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateAppMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Rate Limit Exceeded",
   description:
     "You have exceeded the global rate limit for our application. Please try again later. If you believe this is an error, contact our support team.",
-  keywords: [],
-  metadata: {
-    robots: {
-      index: false,
-      follow: false,
-    },
-  },
 });
 
 export default function Page() {

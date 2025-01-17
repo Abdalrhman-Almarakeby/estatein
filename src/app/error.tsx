@@ -4,24 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
-import { generateAppMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
 type ErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
 };
 
-export const metadata = generateAppMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Error - Estatein",
   description:
     "Oops! Something went wrong. We're working on fixing the issue. Please try again later.",
-  keywords: [],
-  metadata: {
-    robots: {
-      index: false,
-      follow: false,
-    },
-  },
 });
 
 export default function Error({ error, reset }: ErrorProps) {
