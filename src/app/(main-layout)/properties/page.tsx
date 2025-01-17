@@ -4,9 +4,15 @@ import { FiltersForm } from "@/containers/properties-page/filters-form";
 import { PropertiesInquiryFormSection } from "@/containers/properties-page/properties-inquiry-form-section";
 import { PropertiesSection } from "@/containers/properties-page/properties-section";
 import { PropertiesFiltersProvider } from "@/contexts/properties-filters";
-import { PROPERTIES_PAGE_METADATA } from "@/constant";
+import { generateAppMetadata } from "@/lib/metadata";
 
-export const metadata = PROPERTIES_PAGE_METADATA;
+export const metadata = generateAppMetadata({
+  title: "Properties - Estatein | Discover the Best Real Estate Listings",
+  description:
+    "Explore a diverse range of real estate properties with Estatein. Find your dream home, investment property, or rental with ease. Browse our listings today and discover the best properties available.",
+  keywords:
+    "real estate, properties, homes for sale, investment properties, rentals, buy property, estate listings",
+});
 
 export default function Page() {
   return (

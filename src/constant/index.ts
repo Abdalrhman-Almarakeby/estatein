@@ -6,7 +6,6 @@ export * from "./filters-data";
 export * from "./gallery-images";
 export * from "./how-it-is-work";
 export * from "./locations";
-export * from "./metadata";
 export * from "./page-links-data";
 export * from "./services";
 export * from "./social-media-links";

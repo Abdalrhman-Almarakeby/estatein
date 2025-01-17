@@ -1,7 +1,10 @@
 import { SignupForm } from "@/containers/dashboard-auth-signup-page/signup-form";
-import { SIGNUP_PAGE_METADATA } from "@/constant/metadata/signup";
+import { generateDashboardMetadata } from "@/lib/metadata";
 
-export const metadata = SIGNUP_PAGE_METADATA;
+export const metadata = generateDashboardMetadata({
+  title: "Sign Up - Estatein",
+  description: "Create an account to access Estatein dashboard.",
+});
 
 export default function Page() {
   return (

@@ -1,7 +1,10 @@
 import { LoginForm } from "@/containers/dashboard-auth-login-page/login-form";
-import { LOGIN_PAGE_METADATA } from "@/constant/metadata/login";
+import { generateDashboardMetadata } from "@/lib/metadata";
 
-export const metadata = LOGIN_PAGE_METADATA;
+export const metadata = generateDashboardMetadata({
+  title: "Login - Estatein",
+  description: "Log in to access Estatein dashboard.",
+});
 
 export default function Page() {
   return (

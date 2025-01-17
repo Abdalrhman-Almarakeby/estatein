@@ -1,6 +1,10 @@
-import { FORGOT_PASSWORD_SENT_PAGE_METADATA } from "@/constant/metadata/forgot-password-sent";
+import { generateDashboardMetadata } from "@/lib/metadata";
 
-export const metadata = FORGOT_PASSWORD_SENT_PAGE_METADATA;
+export const metadata = generateDashboardMetadata({
+  title: "Check Your Email - Estatein",
+  description:
+    "We've sent a reset link to your email. Check your inbox to continue.",
+});
 
 export default function Page() {
   return (
