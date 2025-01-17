@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { SectionTitle } from "@/components/ui/section";
 import WavesSVG from "@/assets/abstract-designs/waves-1.svg";
-import { GALLERY_IMAGES } from "@/constant";
+import { GALLERY_IMAGES } from "@/content";
 
 export function GallerySection() {
   return (

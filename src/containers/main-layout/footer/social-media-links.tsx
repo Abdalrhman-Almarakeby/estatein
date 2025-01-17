@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { SOCIAL_LINKS } from "@/constant";
+import { SOCIAL_LINKS } from "@/content";
 
 type SocialMediaLinksProps = {
   className?: string;

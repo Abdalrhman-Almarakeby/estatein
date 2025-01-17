@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LOCATIONS, LOCATIONS_TYPE } from "@/constant";
+import { LOCATIONS, LOCATIONS_TYPE } from "@/content";
 import { LocationCard } from "./location-card";
 
 export function OfficeLocations() {

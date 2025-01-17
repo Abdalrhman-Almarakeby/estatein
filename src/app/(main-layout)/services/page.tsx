@@ -8,7 +8,7 @@ import {
   PROPERTIES_SERVICES,
   PROPERTY_MANAGEMENT_SERVICES,
   SERVICES_PAGE_LINKS_DATA,
-} from "@/constant";
+} from "@/content";
 
 export const metadata = generateSEOMetadata({
   title:

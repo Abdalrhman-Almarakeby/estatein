@@ -1,7 +1,7 @@
 import { Navbar } from "@/containers/legal-layout/nav-bar";
 import { Section } from "@/containers/legal-layout/section";
 import { generateSEOMetadata } from "@/lib/metadata";
-import { PRIVACY_POLICY } from "@/constant/privacy-policy";
+import { PRIVACY_POLICY } from "@/content";
 
 export const metadata = generateSEOMetadata({
   title: "Terms of Service - Estatein",

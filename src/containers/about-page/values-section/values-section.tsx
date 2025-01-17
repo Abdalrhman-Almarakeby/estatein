@@ -1,6 +1,6 @@
 import { DataCard } from "@/components/ui/data-card";
 import { SectionTitle } from "@/components/ui/section";
-import { VALUES } from "@/constant";
+import { VALUES } from "@/content";
 
 export function ValuesSection() {
   return (
