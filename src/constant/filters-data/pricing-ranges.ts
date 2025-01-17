@@ -40,8 +40,3 @@ export const PRICE_RANGES_BOUNDARIES = [
     max: Number.MAX_SAFE_INTEGER,
   },
 ] as const;
-
-export const PRICE_RANGES_LABELS = PRICE_RANGES_BOUNDARIES.map(
-  ({ min, max }) =>
-    max === Number.MAX_SAFE_INTEGER ? `${min}` : `${min}-${max}`,
-);
