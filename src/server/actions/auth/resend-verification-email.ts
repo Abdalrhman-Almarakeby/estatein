@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { createElement } from "react";
 import { addMinutes, formatDistanceToNow, minutesToSeconds } from "date-fns";
-import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
+import { EmailVerification } from "@/components/emails";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
 import { generateNumericOTP } from "@/lib/otp";
@@ -82,13 +82,10 @@ export async function resendVerificationEmail() {
         },
       });
 
-      const verificationEmailTemplate = createElement(
-        DashboardVerificationEmail,
-        {
-          username: user.name,
-          verificationCode,
-        },
-      );
+      const verificationEmailTemplate = createElement(EmailVerification, {
+        recipientName: user.name,
+        verificationCode,
+      });
 
       await sendEmail({
         to: email,

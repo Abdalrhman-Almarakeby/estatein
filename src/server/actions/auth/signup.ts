@@ -10,7 +10,7 @@ import {
   intervalToDuration,
   minutesToSeconds,
 } from "date-fns";
-import { DashboardVerificationEmail } from "@/components/emails/dashboard-verification-email";
+import { EmailVerification } from "@/components/emails";
 import { WithCaptcha } from "@/types";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
@@ -133,13 +133,10 @@ export async function signup(data: WithCaptcha<Signup>) {
         },
       });
 
-      const verificationEmailTemplate = createElement(
-        DashboardVerificationEmail,
-        {
-          username: data.username,
-          verificationCode,
-        },
-      );
+      const verificationEmailTemplate = createElement(EmailVerification, {
+        recipientName: data.username,
+        verificationCode,
+      });
 
       await sendEmail({
         to: data.email,
