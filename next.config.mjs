@@ -10,6 +10,11 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {
