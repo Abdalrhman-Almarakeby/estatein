@@ -1,7 +1,11 @@
 import { AlertTriangle } from "lucide-react";
-import { BLOCKED_PAGE_METADATA } from "@/constant/metadata/blocked";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = BLOCKED_PAGE_METADATA;
+export const metadata = generateNonSEOMetadata({
+  title: "Rate Limit Exceeded",
+  description:
+    "You have exceeded the global rate limit for our application. Please try again later. If you believe this is an error, contact our support team.",
+});
 
 export default function Page() {
   return (

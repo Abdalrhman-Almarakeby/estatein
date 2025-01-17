@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { PropertyForm } from "@/containers/dashboard-properties-new-page/property-form/property-form";
-import { generateDashboardMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
 import { PropertyData } from "@/lib/schemas";
 import { updateProperty } from "@/server/actions/update-property";
@@ -20,7 +20,7 @@ export async function generateMetadata({ params: { propertyId } }: PageParams) {
     notFound();
   }
 
-  return generateDashboardMetadata({
+  return generateNonSEOMetadata({
     title: `Edit ${property.title} - Estatein`,
     description: `Update details for ${property.title} in the system.`,
   });

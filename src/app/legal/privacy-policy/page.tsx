@@ -1,9 +1,23 @@
 import { Navbar } from "@/containers/legal-layout/nav-bar";
 import { Section } from "@/containers/legal-layout/section";
-import { PRIVACY_POLICY_PAGE_METADATA } from "@/constant";
+import { generateSEOMetadata } from "@/lib/metadata";
 import { PRIVACY_POLICY } from "@/constant/privacy-policy";
 
-export const metadata = PRIVACY_POLICY_PAGE_METADATA;
+export const metadata = generateSEOMetadata({
+  title: "Terms of Service - Estatein",
+  description:
+    "Read the Terms of Service for Estatein, which outline the rules and guidelines for using our services. By accessing or using our website, you agree to comply with these terms.",
+  keywords: [
+    "Terms of Service",
+    "Estatein",
+    "user agreement",
+    "website terms",
+    "services",
+    "legal",
+    "rules",
+    "conditions",
+  ],
+});
 
 export default function Page() {
   return (

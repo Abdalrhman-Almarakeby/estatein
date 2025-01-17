@@ -1,10 +1,10 @@
 import { subDays, subMonths, subWeeks } from "date-fns";
 import { NewsletterDataSection } from "@/containers/dashboard-newsletter-page/newsletter-data-section";
 import { NewsletterStatsSection } from "@/containers/dashboard-newsletter-page/newsletter-stats-section";
-import { generateDashboardMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
 
-export const metadata = generateDashboardMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Newsletter - Estatein",
   description: "View subscription stats and download subscribes data.",
 });

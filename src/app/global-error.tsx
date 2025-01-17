@@ -1,10 +1,14 @@
 "use client";
 
 import { AlertTriangle, RefreshCw } from "lucide-react";
-import { GLOBAL_ERROR_PAGE_METADATA } from "@/constant";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 import "@/styles/global.css";
 
-export const metadata = GLOBAL_ERROR_PAGE_METADATA;
+export const metadata = generateNonSEOMetadata({
+  title: "Error - Estatein",
+  description:
+    "Oops! Something went wrong. We're working on fixing the issue. Please try refreshing the page.",
+});
 
 export default function GlobalError() {
   function refresh() {

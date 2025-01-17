@@ -5,9 +5,16 @@ import { LinksSection } from "@/components/ui/links-section";
 import { ContactFormSection } from "@/containers/contact-page/contact-form-section";
 import { GallerySection } from "@/containers/contact-page/gallery-section";
 import { OfficeLocationsSection } from "@/containers/contact-page/office-locations-sections";
-import { CONTACT_PAGE_LINKS_DATA, CONTACT_PAGE_METADATA } from "@/constant";
+import { generateSEOMetadata } from "@/lib/metadata";
+import { CONTACT_PAGE_LINKS_DATA } from "@/constant";
 
-export const metadata = CONTACT_PAGE_METADATA;
+export const metadata = generateSEOMetadata({
+  title: "Contact Estatein | Get in Touch for Real Estate Assistance",
+  description:
+    "Need help with your property search? Contact Estatein today! Our team is ready to assist with all your real estate needs. Reach out via phone, email, or our contact form.",
+  keywords:
+    "contact Estatein, real estate assistance, customer support, contact form, property inquiries",
+});
 
 export default function Page() {
   return (

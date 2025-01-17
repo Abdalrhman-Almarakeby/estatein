@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { PropertiesTable } from "@/containers/dashboard-properties-page/properties-table";
-import { generateDashboardMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
 
-export const metadata = generateDashboardMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Properties - Estatein",
   description: "Manage and view all properties.",
 });

@@ -4,36 +4,57 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z, ZodError } from "zod";
 
+const nonEmptyString = z.string().trim().min(1);
+const emailSchema = z.string().trim().min(1).email();
+const urlSchema = z.string().trim().min(1).url();
+
 export const env = createEnv({
   server: {
-    ADMIN_EMAIL: z.string().trim().min(1).email(),
+    // Authentication
+    NEXTAUTH_SECRET: nonEmptyString,
+    NEXTAUTH_URL: urlSchema,
+
+    // Email Configuration
+    ADMIN_EMAIL: emailSchema,
+    GMAIL_EMAIL: emailSchema,
     GMAIL_APP_PASSWORD: z.string().trim().length(19),
-    GMAIL_EMAIL: z.string().trim().min(1).email(),
-    RECAPTCHA_SECRET_KEY: z.string().trim().min(1),
-    POSTGRES_URL: z.string().trim().min(1).url(),
-    POSTGRES_PRISMA_URL: z.string().trim().min(1).url(),
-    POSTGRES_URL_NO_SSL: z.string().trim().min(1).url(),
-    POSTGRES_URL_NON_POOLING: z.string().trim().min(1).url(),
-    POSTGRES_USER: z.string().trim().min(1),
-    POSTGRES_HOST: z.string().trim().min(1),
-    POSTGRES_PASSWORD: z.string().trim().min(1),
-    POSTGRES_DATABASE: z.string().trim().min(1),
-    NEXTAUTH_SECRET: z.string().trim().min(1),
-    NEXTAUTH_URL: z.string().trim().min(1).url(),
-    KV_URL: z.string().trim().min(1).url(),
-    KV_REST_API_URL: z.string().trim().min(1).url(),
-    KV_REST_API_TOKEN: z.string().trim().min(1),
-    KV_REST_API_READ_ONLY_TOKEN: z.string().trim().min(1),
-    UPSTASH_REDIS_REST_URL: z.string().trim().min(1).url(),
-    UPSTASH_REDIS_REST_TOKEN: z.string().trim().min(1),
-    BLOB_READ_WRITE_TOKEN: z.string().trim().min(1),
-    NODE_ENV: z.union([z.literal("development"), z.literal("production")]),
+
+    // ReCAPTCHA
+    RECAPTCHA_SECRET_KEY: nonEmptyString,
+
+    // Database Configuration
+    POSTGRES_URL: urlSchema,
+    POSTGRES_PRISMA_URL: urlSchema,
+    POSTGRES_URL_NO_SSL: urlSchema,
+    POSTGRES_URL_NON_POOLING: urlSchema,
+    POSTGRES_USER: nonEmptyString,
+    POSTGRES_HOST: nonEmptyString,
+    POSTGRES_PASSWORD: nonEmptyString,
+    POSTGRES_DATABASE: nonEmptyString,
+
+    // KV Storage
+    KV_URL: urlSchema,
+    KV_REST_API_URL: urlSchema,
+    KV_REST_API_TOKEN: nonEmptyString,
+    KV_REST_API_READ_ONLY_TOKEN: nonEmptyString,
+
+    // Redis
+    UPSTASH_REDIS_REST_URL: urlSchema,
+    UPSTASH_REDIS_REST_TOKEN: nonEmptyString,
+
+    // Storage
+    BLOB_READ_WRITE_TOKEN: nonEmptyString,
+
+    // Environment
+    NODE_ENV: z.enum(["development", "production"]),
   },
+
   client: {
-    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().trim().min(1),
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: nonEmptyString,
     NEXT_PUBLIC_VERCEL_URL: z.string().trim().optional(),
     NEXT_PUBLIC_BASE_URL: z.string().trim().optional(),
   },
+
   onValidationError: (error: ZodError) => {
     console.error(
       "❌ Invalid environment variables:",

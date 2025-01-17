@@ -1,10 +1,24 @@
 import { Navbar } from "@/containers/legal-layout/nav-bar";
 import { Section } from "@/containers/legal-layout/section";
-import { TERMS_OF_SERVICE_PAGE_METADATA } from "@/constant";
+import { generateSEOMetadata } from "@/lib/metadata";
 import { TERMS_OF_SERVICE } from "@/constant/terms-of-service";
 
-export const metadata = TERMS_OF_SERVICE_PAGE_METADATA;
-
+export const metadata = generateSEOMetadata({
+  title: "Privacy Policy - Estatein",
+  description:
+    "Our Privacy Policy explains how Estatein collects, uses, and protects your personal information. We value your privacy and are committed to safeguarding your data.",
+  keywords: [
+    "Privacy Policy",
+    "Estatein",
+    "data protection",
+    "personal information",
+    "user privacy",
+    "information security",
+    "data collection",
+    "GDPR",
+    "CCPA",
+  ],
+});
 export default function Page() {
   return (
     <div className="container space-y-16 px-6 pt-12 sm:!container">

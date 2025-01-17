@@ -3,14 +3,21 @@ import { HeaderSection } from "@/components/ui/header-section";
 import { LinksSection } from "@/components/ui/links-section";
 import { InvestmentSection } from "@/containers/services-page/investment-section";
 import { ServicesSection } from "@/containers/services-page/services-section";
+import { generateSEOMetadata } from "@/lib/metadata";
 import {
-  SERVICES_PAGE_LINKS_DATA,
   PROPERTIES_SERVICES,
   PROPERTY_MANAGEMENT_SERVICES,
-  SERVICES_PAGE_METADATA,
+  SERVICES_PAGE_LINKS_DATA,
 } from "@/constant";
 
-export const metadata = SERVICES_PAGE_METADATA;
+export const metadata = generateSEOMetadata({
+  title:
+    "Real Estate Services | Estatein - Evaluation, Investment & Property Management",
+  description:
+    "Discover Estatein's comprehensive real estate services. Whether you're buying, selling, or renting, our expert team is here to help you navigate the property market.",
+  keywords:
+    "real estate services, properties management, properties evaluation, property management, property market",
+});
 
 export default function Page() {
   return (

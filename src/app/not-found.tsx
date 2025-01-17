@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { NOT_FOUND_PAGE_METADATA } from "@/constant";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = NOT_FOUND_PAGE_METADATA;
+export const metadata = generateNonSEOMetadata({
+  title: "404 Not Found - Estatein",
+  description:
+    "Oops! We couldn’t find the page you’re looking for. Head back to the homepage and explore more.",
+});
 
 export default function NotFound() {
   return (

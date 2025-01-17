@@ -5,9 +5,15 @@ import { HeroSection } from "@/containers/about-page/hero-section";
 import { HowItIsWorkSection } from "@/containers/about-page/how-it-is-work-section";
 import { TeamSection } from "@/containers/about-page/team-section";
 import { ValuesSection } from "@/containers/about-page/values-section";
-import { ABOUT_PAGE_METADATA } from "@/constant";
+import { generateSEOMetadata } from "@/lib/metadata";
 
-export const metadata = ABOUT_PAGE_METADATA;
+export const metadata = generateSEOMetadata({
+  title: "About Estatein | Our Story & Vision in Real Estate",
+  description:
+    "Learn more about Estatein, our mission to simplify your real estate journey, and our commitment to helping you find the perfect property. Discover who we are and what drives us.",
+  keywords:
+    "about Estatein, real estate mission, company vision, real estate services",
+});
 
 export default function Page() {
   return (

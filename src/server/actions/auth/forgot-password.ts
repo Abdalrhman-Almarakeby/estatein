@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { createElement } from "react";
 import { randomBytes } from "crypto";
 import { add, formatDistanceToNow, minutesToSeconds } from "date-fns";
-import { PasswordResetEmail } from "@/components/emails/password-reset-email";
+import { PasswordReset } from "@/components/emails";
 import { WithCaptcha } from "@/types";
 import { getBaseUrl } from "@/lib/utils";
 import { env } from "@/lib/env";
@@ -91,9 +91,9 @@ export async function forgotPassword(
 
       if (callbackUrl) params.append("callbackUrl", callbackUrl);
 
-      const template = createElement(PasswordResetEmail, {
-        username: user.name,
-        resetLink: `${getBaseUrl()}/dashboard/auth/reset-password?${params.toString()}`,
+      const template = createElement(PasswordReset, {
+        recipientName: user.name,
+        resetUrl: `${getBaseUrl()}/dashboard/auth/reset-password?${params.toString()}`,
       });
 
       await sendEmail({
