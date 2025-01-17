@@ -1,7 +1,7 @@
 import { ResetPasswordForm } from "@/containers/dashboard-auth-reset-password-page/reset-password-form";
-import { generateNoneSEOMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateNoneSEOMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Reset Password - Estatein",
   description: "Enter a new password to reset your password.",
 });

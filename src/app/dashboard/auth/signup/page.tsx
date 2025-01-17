@@ -1,7 +1,7 @@
 import { SignupForm } from "@/containers/dashboard-auth-signup-page/signup-form";
-import { generateNoneSEOMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateNoneSEOMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Sign Up - Estatein",
   description: "Create an account to access Estatein dashboard.",
 });

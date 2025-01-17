@@ -1,7 +1,7 @@
 import { LoginForm } from "@/containers/dashboard-auth-login-page/login-form";
-import { generateNoneSEOMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateNoneSEOMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Login - Estatein",
   description: "Log in to access Estatein dashboard.",
 });

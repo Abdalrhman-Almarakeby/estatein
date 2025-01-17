@@ -1,7 +1,7 @@
 import { ForgotPasswordForm } from "@/containers/dashboard-auth-forget-password-page/forget-password-form";
-import { generateNoneSEOMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateNoneSEOMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Forgot Password - Estatein",
   description:
     "Enter your email to receive instructions on resetting your password.",

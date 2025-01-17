@@ -1,6 +1,6 @@
-import { generateNoneSEOMetadata } from "@/lib/metadata";
+import { generateNonSEOMetadata } from "@/lib/metadata";
 
-export const metadata = generateNoneSEOMetadata({
+export const metadata = generateNonSEOMetadata({
   title: "Check Your Email - Estatein",
   description:
     "We've sent a reset link to your email. Check your inbox to continue.",
