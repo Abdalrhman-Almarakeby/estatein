@@ -27,7 +27,7 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: z.string().trim().min(1).url(),
     UPSTASH_REDIS_REST_TOKEN: z.string().trim().min(1),
     BLOB_READ_WRITE_TOKEN: z.string().trim().min(1),
-    NODE_ENV: z.union([z.literal("development"), z.literal("production")]),
+    NODE_ENV: z.enum(["development", "production"]),
   },
   client: {
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().trim().min(1),
