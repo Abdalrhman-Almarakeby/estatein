@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
+import { useCapsLock } from "@/hooks";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { signup } from "@/server/actions";
@@ -17,6 +18,7 @@ export function useSignupForm(callbackUrl?: string) {
     resolver: zodResolver(signupSchema.and(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
+  const capsLock = useCapsLock();
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<Signup>) => {
@@ -46,6 +48,7 @@ export function useSignupForm(callbackUrl?: string) {
     setValue,
     captchaRef,
     isLoading,
+    capsLock,
     ...rest,
   };
 }

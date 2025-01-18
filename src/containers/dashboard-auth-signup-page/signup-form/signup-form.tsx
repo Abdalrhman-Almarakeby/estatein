@@ -21,6 +21,7 @@ export function SignupForm() {
     register,
     captchaRef,
     isLoading,
+    capsLock,
   } = useSignupForm(callbackUrl ?? undefined);
 
   return (
@@ -36,6 +37,16 @@ export function SignupForm() {
             </p>
             {errors.root?.message && (
               <FieldError>{errors.root?.message}</FieldError>
+            )}
+            {capsLock && (
+              <p
+                role="alert"
+                aria-live="polite"
+                aria-atomic="true"
+                className="text-sm bold"
+              >
+                Caps Lock is ON
+              </p>
             )}
           </fieldset>
           <form onSubmit={onSubmit} className="grid gap-6">
