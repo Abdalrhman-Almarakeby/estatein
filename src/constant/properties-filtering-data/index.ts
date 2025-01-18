@@ -5,7 +5,7 @@ import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTY_SIZES } from "./property-sizes";
 
-export const FILTERING_DATA = [
+export const PROPERTIES_FILTERING_DATA = [
   {
     name: "location",
     label: "Location",
@@ -44,9 +44,9 @@ export const [
   PRICING_RANGE_OPTIONS,
   PROPERTY_SIZE_OPTIONS,
 ] = [
-  FILTERING_DATA[0].options.map((o) => o.value),
-  FILTERING_DATA[1].options.map((o) => o.value),
-  FILTERING_DATA[2].options.map((o) => o.value),
-  FILTERING_DATA[3].options.map((o) => o.value),
+  PROPERTIES_FILTERING_DATA[0].options.map((o) => o.value),
+  PROPERTIES_FILTERING_DATA[1].options.map((o) => o.value),
+  PROPERTIES_FILTERING_DATA[2].options.map((o) => o.value),
+  PROPERTIES_FILTERING_DATA[3].options.map((o) => o.value),
   // type casting to make it work as an enum with zod
 ] as [string, ...string[]][];

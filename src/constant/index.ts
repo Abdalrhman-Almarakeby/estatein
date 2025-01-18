@@ -1,2 +1,2 @@
 export * from "./auth";
-export * from "./filters-data";
+export * from "./properties-filtering-data";
