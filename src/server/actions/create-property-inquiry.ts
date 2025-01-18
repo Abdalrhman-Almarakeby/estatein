@@ -1,6 +1,7 @@
 "use server";
 
 import { WithCaptcha } from "@/types";
+import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
@@ -87,7 +88,7 @@ export async function createPropertyInquiry(
 
     await prisma.propertyInquiry.create({
       data: {
-        ...data,
+        ...omit(data, "agreeOnTerms", "captchaToken"),
         bathrooms: +data.bathrooms,
         bedrooms: +data.bedrooms,
       },
