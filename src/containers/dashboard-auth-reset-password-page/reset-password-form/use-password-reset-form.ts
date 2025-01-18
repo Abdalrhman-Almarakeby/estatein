@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
-import { useToastNotification } from "@/hooks";
+import { useCapsLock, useToastNotification } from "@/hooks";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { resetPassword } from "@/server/actions";
@@ -27,6 +27,8 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
       "Your password has been successfully reset! Please log in to continue.",
     duration: 5000,
   });
+
+  const capsLock = useCapsLock();
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<ResetPassword>) => {
@@ -62,6 +64,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
     captchaRef,
     isLoading,
     isExpired,
+    capsLock,
     ...rest,
   };
 }

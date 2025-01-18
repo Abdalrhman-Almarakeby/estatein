@@ -22,6 +22,7 @@ export function ResetPasswordForm() {
     captchaRef,
     isLoading,
     isExpired,
+    capsLock,
   } = usePasswordResetForm(token ?? undefined, callbackUrl ?? undefined);
 
   return (
@@ -43,6 +44,16 @@ export function ResetPasswordForm() {
                 Reset link expired. Please request a new one from{" "}
                 <Link href="/dashboard/auth/forgot-password">here</Link>.
               </FieldError>
+            )}
+            {capsLock && (
+              <p
+                role="alert"
+                aria-live="polite"
+                aria-atomic="true"
+                className="text-sm bold"
+              >
+                Caps Lock is ON
+              </p>
             )}
           </div>
           <form onSubmit={onSubmit} className="grid gap-6">

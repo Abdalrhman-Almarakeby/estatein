@@ -23,6 +23,7 @@ export function LoginForm() {
     isLoading,
     shouldVerifyEmail,
     handleResendEmail,
+    capsLock,
   } = useLoginForm(callbackUrl ?? undefined);
 
   return (
@@ -38,6 +39,16 @@ export function LoginForm() {
             </p>
             {errors.root?.message && (
               <FieldError>{errors.root?.message}</FieldError>
+            )}
+            {capsLock && (
+              <p
+                role="alert"
+                aria-live="polite"
+                aria-atomic="true"
+                className="text-sm bold"
+              >
+                Caps Lock is ON
+              </p>
             )}
           </div>
           <form onSubmit={onSubmit} className="grid gap-6">

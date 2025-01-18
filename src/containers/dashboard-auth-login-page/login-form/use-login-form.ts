@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
+import { useCapsLock } from "@/hooks";
 import { Login, loginSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
 import { login, resendVerificationEmail } from "@/server/actions";
@@ -19,6 +20,7 @@ export function useLoginForm(callbackUrl?: string) {
     resolver: zodResolver(loginSchema.merge(captchaSchema)),
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
+  const capsLock = useCapsLock();
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<Login>) => {
@@ -69,6 +71,7 @@ export function useLoginForm(callbackUrl?: string) {
     isLoading,
     shouldVerifyEmail,
     handleResendEmail,
+    capsLock,
     ...rest,
   };
 }
