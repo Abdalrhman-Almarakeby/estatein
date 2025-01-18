@@ -33,7 +33,6 @@ export function ImagePreview({
 
   return (
     <div className="relative bg-white border rounded-lg overflow-hidden group">
-      {/* // TODO: Make the aspect ratio dynamic */}
       <div className="aspect-[16/9] relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

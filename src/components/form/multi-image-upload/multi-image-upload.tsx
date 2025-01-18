@@ -14,7 +14,6 @@ type MultiImageUploadProps<T extends FieldValues> = {
   maxNumber?: number;
 };
 
-// TODO Move property config to its own file
 const IMAGE_ASPECT_RATIO = "16 / 9";
 const MAX_IMAGE_NUMBER = 15;
 
