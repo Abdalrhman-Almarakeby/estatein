@@ -13,11 +13,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Email, emailSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES,
-  FORGOT_PASSWORD_WINDOW_MINUTES,
-  MAX_FORGOT_PASSWORD_ATTEMPTS,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_MESSAGE =
@@ -38,8 +34,8 @@ export async function forgotPassword(
     const { ua: userAgent } = getUserAgent();
 
     const rateLimit = createRateLimiter(
-      MAX_FORGOT_PASSWORD_ATTEMPTS,
-      `${FORGOT_PASSWORD_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.forgotPassword.maxAttempts,
+      `${AUTH_CONFIG.forgotPassword.windowMinutes}m`,
     );
     const limitKey = `reset_password_${ip}_${userAgent}`;
 
@@ -76,7 +72,7 @@ export async function forgotPassword(
 
       const resetToken = randomBytes(32).toString("hex");
       const resetTokenExpiresAt = add(new Date(), {
-        minutes: FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES,
+        minutes: AUTH_CONFIG.forgotPassword.tokenExpiryMinutes,
       });
 
       await tx.user.update({
@@ -109,7 +105,7 @@ export async function forgotPassword(
     cookieStore.set({
       name: "reset-password-pending",
       value: "true",
-      maxAge: minutesToSeconds(FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES),
+      maxAge: minutesToSeconds(AUTH_CONFIG.forgotPassword.tokenExpiryMinutes),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",

@@ -10,12 +10,8 @@ import { generateNumericOTP } from "@/lib/otp";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
-  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
-  MAX_RESEND_VERIFICATION_EMAIL_ATTEMPTS,
-  RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
+import "@/constant";
 import { sendEmail } from "@/server/services";
 
 export async function resendVerificationEmail() {
@@ -33,8 +29,8 @@ export async function resendVerificationEmail() {
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      MAX_RESEND_VERIFICATION_EMAIL_ATTEMPTS,
-      `${RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.emailVerification.resend.maxAttempts,
+      `${AUTH_CONFIG.emailVerification.resend.windowMinutes}m`,
     );
 
     const limitKey = `resend_verification_${ip}_${userAgent}`;
@@ -70,7 +66,7 @@ export async function resendVerificationEmail() {
     const verificationCode = generateNumericOTP();
     const emailVerificationCodeExpiresAt = addMinutes(
       new Date(),
-      EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
+      AUTH_CONFIG.emailVerification.codeExpiryMinutes,
     );
 
     await prisma.$transaction(async (tx) => {
@@ -95,7 +91,9 @@ export async function resendVerificationEmail() {
     });
 
     const cookieOptions = {
-      maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
+      maxAge: minutesToSeconds(
+        AUTH_CONFIG.emailVerification.cookieMaxAgeMinutes,
+      ),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "strict" as const,

@@ -8,7 +8,7 @@ import { WithCaptcha } from "@/types";
 import { useToastNotification } from "@/hooks";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { captchaSchema } from "@/lib/schemas/captcha";
-import { RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES } from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 import { resendVerificationEmail, verifyEmail } from "@/server/actions";
 
 export function useVerifyEmailForm() {
@@ -88,7 +88,7 @@ export function useVerifyEmailForm() {
     setCoolDownEndTime(
       addSeconds(
         new Date(),
-        minutesToSeconds(RESEND_VERIFICATION_EMAIL_WINDOW_MINUTES),
+        minutesToSeconds(AUTH_CONFIG.emailVerification.resend.windowMinutes),
       ),
     );
     setResendLoading(false);

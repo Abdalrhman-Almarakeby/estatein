@@ -10,11 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
-  LOGIN_WINDOW_MINUTES,
-  MAX_LOGIN_ATTEMPTS,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid login credentials. Please try again.";
@@ -29,8 +25,8 @@ export async function login(data: WithCaptcha<Login>) {
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      MAX_LOGIN_ATTEMPTS,
-      `${LOGIN_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.login.maxAttempts,
+      `${AUTH_CONFIG.login.windowMinutes}m`,
     );
     const limitKey = `login_${ip}_${userAgent}`;
 
@@ -74,7 +70,9 @@ export async function login(data: WithCaptcha<Login>) {
     if (!user.isVerified) {
       const cookieStore = cookies();
       const cookieOptions = {
-        maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
+        maxAge: minutesToSeconds(
+          AUTH_CONFIG.emailVerification.cookieMaxAgeMinutes,
+        ),
         secure: env.NODE_ENV === "production",
         httpOnly: true,
         sameSite: "strict" as const,

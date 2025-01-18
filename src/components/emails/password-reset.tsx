@@ -13,7 +13,7 @@ import {
   Text,
 } from "@react-email/components";
 import { formatDuration, getYear } from "date-fns";
-import { FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES } from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 
 type PasswordResetProps = {
   recipientName: string;
@@ -23,7 +23,7 @@ type PasswordResetProps = {
 export function PasswordReset({ recipientName, resetUrl }: PasswordResetProps) {
   const currentYear = getYear(new Date());
   const expiryTime = formatDuration({
-    minutes: FORGOT_PASSWORD_TOKEN_EXPIRY_MINUTES,
+    minutes: AUTH_CONFIG.forgotPassword.tokenExpiryMinutes,
   });
 
   return (

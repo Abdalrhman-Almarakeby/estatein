@@ -19,13 +19,7 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
-  EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES,
-  PASSWORD_HASH_SALT_ROUNDS,
-  SIGNUP_MAX_ATTEMPTS,
-  SIGNUP_WINDOW_MINUTES,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 import { sendEmail, verifyCaptchaToken } from "@/server/services";
 
 export async function signup(data: WithCaptcha<Signup>) {
@@ -42,8 +36,8 @@ export async function signup(data: WithCaptcha<Signup>) {
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      SIGNUP_MAX_ATTEMPTS,
-      `${SIGNUP_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.signup.maxAttempts,
+      `${AUTH_CONFIG.signup.windowMinutes}m`,
     );
 
     const limitKey = `signup_ratelimit_${ip}_${userAgent}`;
@@ -110,7 +104,7 @@ export async function signup(data: WithCaptcha<Signup>) {
     const now = new Date();
     const emailVerificationCodeExpiresAt = addMinutes(
       now,
-      EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
+      AUTH_CONFIG.emailVerification.codeExpiryMinutes,
     );
 
     const isAdmin = isAdminEmail && !existingAdmin;
@@ -119,7 +113,7 @@ export async function signup(data: WithCaptcha<Signup>) {
     await prisma.$transaction(async (tx) => {
       const hashedPassword = await hash(
         data.password,
-        PASSWORD_HASH_SALT_ROUNDS,
+        AUTH_CONFIG.password.hashSaltRounds,
       );
 
       await tx.user.create({
@@ -147,7 +141,9 @@ export async function signup(data: WithCaptcha<Signup>) {
 
     const cookieStore = cookies();
     const cookieOptions = {
-      maxAge: minutesToSeconds(EMAIL_VERIFICATION_COOKIE_MAX_AGE_MINUTES),
+      maxAge: minutesToSeconds(
+        AUTH_CONFIG.emailVerification.cookieMaxAgeMinutes,
+      ),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "strict" as const,

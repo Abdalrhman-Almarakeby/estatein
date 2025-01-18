@@ -9,10 +9,8 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  MAX_VERIFY_EMAIL_ATTEMPTS,
-  VERIFY_EMAIL_WINDOW_MINUTES,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
+import "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid verification attempt. Please try again.";
@@ -31,8 +29,8 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
     const { ua: userAgent } = getUserAgent();
 
     const rateLimit = createRateLimiter(
-      MAX_VERIFY_EMAIL_ATTEMPTS,
-      `${VERIFY_EMAIL_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.emailVerification.maxAttempts,
+      `${AUTH_CONFIG.emailVerification.windowMinutes}m`,
     );
 
     const limitKey = `email_verification_${ip}_${userAgent}`;
