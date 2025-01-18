@@ -28,19 +28,6 @@ export function formatPricingRange(input: string) {
   return max ? `${min}$ - ${max}$` : `${min}$`;
 }
 
-export function formatTwoDigits(num: number): string {
-  return num < 10 ? `0${num}` : num.toString();
-}
-
-export function formatPrice(number: number): string {
-  return number.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
-}
-
 export function generateId(): string {
   return Math.random().toString(36).slice(2, 9);
 }

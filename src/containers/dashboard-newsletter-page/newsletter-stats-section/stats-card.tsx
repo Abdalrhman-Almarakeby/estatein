@@ -1,5 +1,5 @@
 import { UsersIcon } from "lucide-react";
-import { formatNumberWithLetter } from "@/lib/utils/numbers";
+import { formatNumberWithLetter } from "@/lib/utils";
 import { GrowthIndicator } from "./growth-indicator";
 
 type StatsCardProps = {

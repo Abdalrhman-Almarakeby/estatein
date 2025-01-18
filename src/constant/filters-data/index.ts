@@ -1,7 +1,6 @@
 import { PropertyType } from "@prisma/client";
 import { Banknote, Box, House, MapPin } from "lucide-react";
-import { normalize, upperFirst } from "@/lib/utils";
-import { createRangeOptions } from "@/lib/utils/numbers";
+import { createRangeOptions, normalize, upperFirst } from "@/lib/utils";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTY_SIZES } from "./property-sizes";

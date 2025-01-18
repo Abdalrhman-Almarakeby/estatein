@@ -1,5 +1,18 @@
 import { formatWithComma } from "./string";
 
+export function formatTwoDigits(num: number): string {
+  return num < 10 ? `0${num}` : num.toString();
+}
+
+export function formatPrice(number: number): string {
+  return number.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}
+
 export function formatNumberWithLetter(num: number): string {
   if (num >= 1_000_000_000) {
     return `${(num / 1_000_000_000).toFixed(1).replace(/\.0$/, "")}B`;
