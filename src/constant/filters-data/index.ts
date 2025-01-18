@@ -1,6 +1,7 @@
 import { PropertyType } from "@prisma/client";
 import { Banknote, Box, House, MapPin } from "lucide-react";
-import { formatWithComma, normalize, upperFirst } from "@/lib/utils";
+import { normalize, upperFirst } from "@/lib/utils";
+import { createRangeOptions } from "@/lib/utils/numbers";
 import { LOCATIONS } from "./locations";
 import { PRICE_RANGES_BOUNDARIES } from "./pricing-ranges";
 import { PROPERTY_SIZES } from "./property-sizes";
@@ -28,37 +29,25 @@ export const FILTERING_DATA = [
     name: "pricingRange",
     label: "Pricing Range",
     Icon: Banknote,
-    options: PRICE_RANGES_BOUNDARIES.map(({ min, max }) => ({
-      label: formatRangeLabel(min, max, "$"),
-      value: max ? `${min}-${max}` : `${min}`,
-    })),
+    options: createRangeOptions(PRICE_RANGES_BOUNDARIES, "$"),
   },
   {
     name: "propertySize",
     label: "Property Size",
     Icon: Box,
-    options: PROPERTY_SIZES.map(({ min, max }) => ({
-      label: formatRangeLabel(min, max, "m²"),
-      value: max ? `${min}-${max}` : `${min}`,
-    })),
+    options: createRangeOptions(PROPERTY_SIZES, "m²"),
   },
 ] as const;
 
-export const LOCATION_OPTIONS = getOptionsAsTuple("location") || [""];
-export const PROPERTY_TYPE_OPTIONS = getOptionsAsTuple("propertyType") || [""];
-export const PRICING_RANGE_OPTIONS = getOptionsAsTuple("pricingRange") || [""];
-export const PROPERTY_SIZE_OPTIONS = getOptionsAsTuple("propertySize") || [""];
-
-function getOptionsAsTuple(filterName: string): [string, ...string[]] | null {
-  const options = FILTERING_DATA.find(
-    ({ name }) => name === filterName,
-  )?.options.map(({ value }) => value);
-
-  return options && options.length ? [options[0], ...options.slice(1)] : null;
-}
-
-function formatRangeLabel(min: number, max: number | null, unit: string) {
-  return max
-    ? `${formatWithComma(min)}${unit} - ${formatWithComma(max)}${unit}`
-    : `${formatWithComma(min)}${unit}+`;
-}
+export const [
+  LOCATION_OPTIONS,
+  PROPERTY_TYPE_OPTIONS,
+  PRICING_RANGE_OPTIONS,
+  PROPERTY_SIZE_OPTIONS,
+] = [
+  FILTERING_DATA[0].options.map((o) => o.value),
+  FILTERING_DATA[1].options.map((o) => o.value),
+  FILTERING_DATA[2].options.map((o) => o.value),
+  FILTERING_DATA[3].options.map((o) => o.value),
+  // type casting to make it work as an enum with zod
+] as [string, ...string[]][];
