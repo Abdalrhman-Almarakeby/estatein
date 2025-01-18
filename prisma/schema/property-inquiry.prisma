@@ -4,7 +4,7 @@ model PropertyInquiry {
   lastName               String
   email                  String        @db.VarChar(255)
   phone                  String        @db.VarChar(20)
-  preferredLocation      String
+  preferredLocation      Locations
   propertyType           PropertyType
   bathrooms              Int
   bedrooms               Int

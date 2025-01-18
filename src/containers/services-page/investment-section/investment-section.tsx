@@ -1,7 +1,7 @@
 import { DataCard } from "@/components/ui/data-card";
 import { SectionTitle } from "@/components/ui/section";
 import { CTACard } from "@/containers/services-page/cta-card";
-import { INVESTMENT_SERVICES_DATA } from "@/constant";
+import { INVESTMENT_SERVICES_DATA } from "@/content";
 
 export function InvestmentSection() {
   return (

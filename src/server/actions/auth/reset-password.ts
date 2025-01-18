@@ -8,11 +8,8 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
-import {
-  MAX_RESET_PASSWORD_ATTEMPTS,
-  PASSWORD_HASH_SALT_ROUNDS,
-  RESET_PASSWORD_WINDOW_MINUTES,
-} from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
+import "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid request. Please try again.";
@@ -37,8 +34,8 @@ export async function resetPassword(
     const ip = getUserIpAddress();
     const { ua: userAgent } = getUserAgent();
     const rateLimit = createRateLimiter(
-      MAX_RESET_PASSWORD_ATTEMPTS,
-      `${RESET_PASSWORD_WINDOW_MINUTES}m`,
+      AUTH_CONFIG.resetPassword.maxAttempts,
+      `${AUTH_CONFIG.resetPassword.windowMinutes}m`,
     );
     const limitKey = `reset_password_${ip}_${userAgent}`;
 
@@ -81,7 +78,7 @@ export async function resetPassword(
 
       const hashedPassword = await hash(
         data.password,
-        PASSWORD_HASH_SALT_ROUNDS,
+        AUTH_CONFIG.password.hashSaltRounds,
       );
 
       await tx.user.update({

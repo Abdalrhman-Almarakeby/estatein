@@ -1,5 +1,5 @@
 import { Section, SectionTitle } from "@/components/ui/section";
-import { ACHIEVEMENTS } from "@/constant";
+import { ACHIEVEMENTS } from "@/content";
 
 export function AchievementsSection() {
   return (

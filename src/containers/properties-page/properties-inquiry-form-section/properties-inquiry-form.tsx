@@ -97,6 +97,7 @@ export function PropertiesInquiryForm() {
           key="preferredLocation"
           name="preferredLocation"
           control={control}
+          // @ts-expect-error to show the place holder after resting the form
           defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
@@ -110,7 +111,7 @@ export function PropertiesInquiryForm() {
               <SelectContent>
                 {LOCATION_OPTIONS.map((option) => (
                   <SelectItem value={option} key={option}>
-                    {option}
+                    {upperFirst(normalize(option))}
                   </SelectItem>
                 ))}
               </SelectContent>

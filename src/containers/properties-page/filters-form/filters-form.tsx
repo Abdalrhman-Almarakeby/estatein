@@ -9,14 +9,14 @@ import {
   SelectValue,
 } from "@/components/form/select";
 import { usePropertiesFilters } from "@/contexts/properties-filters";
-import { FILTERING_DATA } from "@/constant";
+import { PROPERTIES_FILTERING_DATA } from "@/constant";
 
 export function FiltersForm() {
   const { control } = usePropertiesFilters();
 
   return (
     <form className="grid gap-5 rounded-xl border bg-gray-darker p-5 sm:!-mt-[20px] sm:grid-cols-2 lg:grid-cols-4">
-      {FILTERING_DATA.map(({ Icon, name, options }) => (
+      {PROPERTIES_FILTERING_DATA.map(({ Icon, name, options }) => (
         <Controller
           key={name}
           name={name}

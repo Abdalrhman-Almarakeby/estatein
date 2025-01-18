@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Section, SectionTitle } from "@/components/ui/section";
-import { CLIENTS } from "@/constant";
+import { CLIENTS } from "@/content";
 import { ClientCard } from "./client-card";
 
 export function ClientsSection() {

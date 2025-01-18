@@ -20,7 +20,7 @@ import { Textarea } from "@/components/form/textarea";
 import { useToastNotification } from "@/hooks";
 import { normalize } from "@/lib/utils";
 import { PropertyData, propertyDataSchema } from "@/lib/schemas/property";
-import { LOCATIONS } from "@/constant/filters-data/locations";
+import { LOCATIONS } from "@/constant/properties-filtering-data/locations";
 
 type PropertyFormProps = {
   initialData?: Partial<PropertyData>;

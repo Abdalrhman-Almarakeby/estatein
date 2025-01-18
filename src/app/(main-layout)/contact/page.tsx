@@ -6,7 +6,7 @@ import { ContactFormSection } from "@/containers/contact-page/contact-form-secti
 import { GallerySection } from "@/containers/contact-page/gallery-section";
 import { OfficeLocationsSection } from "@/containers/contact-page/office-locations-sections";
 import { generateSEOMetadata } from "@/lib/metadata";
-import { CONTACT_PAGE_LINKS_DATA } from "@/constant";
+import { CONTACT_PAGE_LINKS_DATA } from "@/content";
 
 export const metadata = generateSEOMetadata({
   title: "Contact Estatein | Get in Touch for Real Estate Assistance",

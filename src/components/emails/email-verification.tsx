@@ -11,7 +11,7 @@ import {
   Text,
 } from "@react-email/components";
 import { formatDuration, getYear } from "date-fns";
-import { EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES } from "@/constant";
+import { AUTH_CONFIG } from "@/config/auth";
 
 type EmailVerificationProps = {
   recipientName: string;
@@ -24,7 +24,7 @@ export function EmailVerification({
 }: EmailVerificationProps) {
   const currentYear = getYear(new Date());
   const expiryTime = formatDuration({
-    minutes: EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES,
+    minutes: AUTH_CONFIG.emailVerification.codeExpiryMinutes,
   });
 
   return (

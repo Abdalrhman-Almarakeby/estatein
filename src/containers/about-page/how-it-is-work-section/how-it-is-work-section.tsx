@@ -1,5 +1,5 @@
 import { Section, SectionTitle } from "@/components/ui/section";
-import { HOW_IT_IS_WORK } from "@/constant";
+import { HOW_IT_IS_WORK } from "@/content";
 
 export function HowItIsWorkSection() {
   return (

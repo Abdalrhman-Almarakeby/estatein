@@ -2,7 +2,7 @@ import {
   CarouselItem,
   CarouselSection,
 } from "@/components/ui/carousel-section";
-import { TESTIMONIALS } from "@/constant";
+import { TESTIMONIALS } from "@/content";
 import { TestimonialCard } from "./testimonial-card";
 
 export function TestimonialsSection() {

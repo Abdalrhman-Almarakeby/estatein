@@ -1,5 +1,5 @@
 import { Section, SectionTitle } from "@/components/ui/section";
-import { TEAM_DATA } from "@/constant";
+import { TEAM_DATA } from "@/content";
 import { TeamMemberCard } from "./team-member-card";
 
 export function TeamSection() {

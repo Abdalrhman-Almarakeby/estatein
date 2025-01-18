@@ -2,7 +2,7 @@ import {
   CarouselItem,
   CarouselSection,
 } from "@/components/ui/carousel-section";
-import { FAQS } from "@/constant";
+import { FAQS } from "@/content";
 import { FAQCard } from "./faq-card";
 
 export function FAQsSection() {
