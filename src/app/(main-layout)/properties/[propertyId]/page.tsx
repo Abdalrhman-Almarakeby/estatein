@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import { CTA } from "@/components/ui/cta";
 import { FAQsSection } from "@/components/ui/faqs-section";
+import { ImageLoader } from "@/components/ui/image-loader";
 import { HeroSection } from "@/containers/property-page/hero-section";
 import { PricingSection } from "@/containers/property-page/pricing-section";
 import { SpecificPropertyInquiryFormSection } from "@/containers/property-page/specific-property-inquiry-form-section";
 import { generatePropertyPageMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
+import Loading from "./loading";
 
 type PageParams = {
   params: { propertyId: string };
@@ -37,15 +39,17 @@ export default async function Page({ params: { propertyId } }: PageParams) {
   }
 
   return (
-    <main className="page-spacing container flex-grow pt-15">
-      <HeroSection {...property} />
-      <PricingSection {...property} />
-      <SpecificPropertyInquiryFormSection
-        propertyId={property.id}
-        propertyTitle={property.title}
-      />
-      <FAQsSection />
-      <CTA />
-    </main>
+    <ImageLoader images={property.images} loading={<Loading />}>
+      <main className="page-spacing container flex-grow pt-15">
+        <HeroSection {...property} />
+        <PricingSection {...property} />
+        <SpecificPropertyInquiryFormSection
+          propertyId={property.id}
+          propertyTitle={property.title}
+        />
+        <FAQsSection />
+        <CTA />
+      </main>
+    </ImageLoader>
   );
 }
