@@ -97,7 +97,6 @@ export function PropertiesInquiryForm() {
           key="preferredLocation"
           name="preferredLocation"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger

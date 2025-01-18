@@ -1,7 +1,6 @@
-import { PropertyType } from "@prisma/client";
+import { Locations, PropertyType } from "@prisma/client";
 import { z } from "zod";
 import {
-  LOCATION_OPTIONS,
   PRICING_RANGE_OPTIONS,
   PROPERTY_SIZE_OPTIONS,
   PROPERTY_TYPE_OPTIONS,
@@ -63,7 +62,7 @@ export const agreeOnTermsSchema = z.literal(true, {
   }),
 });
 
-export const locationSchema = z.enum(LOCATION_OPTIONS, {
+export const locationSchema = z.nativeEnum(Locations, {
   message: "Invalid location",
   invalid_type_error: "Invalid location",
 });

@@ -1,15 +1,3 @@
-export const LOCATIONS = [
-  "arizona",
-  "california",
-  "florida",
-  "hawaii",
-  "massachusetts",
-  "michigan",
-  "nebraska",
-  "nevada",
-  "new mexico",
-  "new york",
-  "ohio",
-  "texas",
-  "washington",
-] as const;
+import { Locations } from "@prisma/client";
+
+export const LOCATIONS = Object.values(Locations);

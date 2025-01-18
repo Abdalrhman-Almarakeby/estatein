@@ -2,7 +2,7 @@ model Property {
   id                       String                    @id @default(cuid())
   title                    String                    @unique
   description              String
-  location                 String
+  location                 Locations                 @default(CALIFORNIA)
   propertyType             PropertyType
   bedrooms                 Int
   bathrooms                Int
