@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { OFFICE_LOCATIONS, OFFICE_TYPES } from "@/content";
+import { cn } from "@/lib/utils";
 import { LocationCard } from "./location-card";
 
 export function OfficeLocations() {
