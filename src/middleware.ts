@@ -125,8 +125,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     if (rateLimitResult) return rateLimitResult;
   }
 
-  // eslint-disable-next-line no-console
-  console.log("Pathname", pathname);
   switch (pathname) {
     case PROTECTED_ROUTES.BLOCKED:
       return handleBlockedPage(request);
