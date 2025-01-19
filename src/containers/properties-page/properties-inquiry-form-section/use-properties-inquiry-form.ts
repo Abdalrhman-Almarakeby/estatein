@@ -6,5 +6,8 @@ export function usePropertyInquiryForm() {
   return useFormHandler<PropertyInquiry>({
     schema: propertyInquirySchema,
     serverAction: createPropertyInquiry,
+    loadingMessage: "Sending inquiry...",
+    successMessage: "Inquiry sent successfully!",
+    errorMessage: "An error occurred. Please try again later.",
   });
 }

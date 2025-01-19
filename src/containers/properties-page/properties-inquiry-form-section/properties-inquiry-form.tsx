@@ -301,7 +301,7 @@ export function PropertiesInquiryForm() {
           </FieldError>
         )}
       </fieldset>
-      <fieldset className="space-y-2.5 md:col-span-2 lg:space-y-4 xl:col-span-1 2xl:col-span-2">
+      <fieldset className="space-y-2.5 md:col-span-2 lg:space-y-4">
         <label className="lg:text-lg 3xl:text-xl" htmlFor="budget">
           Budget
         </label>
