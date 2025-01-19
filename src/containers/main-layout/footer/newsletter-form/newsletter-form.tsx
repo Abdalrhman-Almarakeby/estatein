@@ -5,7 +5,7 @@ import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { cn } from "@/lib/utils";
-import { useNewsletter } from "./use-newsletter-form";
+import { useNewsletterForm } from "./use-newsletter-form";
 
 type NewsletterFormProps = {
   className?: string;
@@ -13,7 +13,7 @@ type NewsletterFormProps = {
 
 export function NewsletterForm({ className }: NewsletterFormProps) {
   const { onSubmit, register, isPending, errors, control, captchaRef } =
-    useNewsletter();
+    useNewsletterForm();
 
   return (
     <form
