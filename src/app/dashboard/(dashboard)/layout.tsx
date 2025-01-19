@@ -10,7 +10,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-svh flex-col overflow-x-hidden bg-gray-darkest text-white lg:flex-row">
+    <div className="flex relative min-h-svh flex-col overflow-x-hidden bg-gray-darkest text-white lg:flex-row">
       <Toaster
         toastOptions={{ className: "toast" }}
         containerClassName="fixed bottom-5 left-5 right-5 top-5"
@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       <DashboardSidebarContextProvider>
         <Header />
         <Sidebar />
-        <main className="flex-1 overflow-auto pt-24 *:container lg:pt-8">
+        <main className="flex-1 lg:ml-64 overflow-auto pt-24 *:container lg:pt-8">
           {children}
         </main>
       </DashboardSidebarContextProvider>

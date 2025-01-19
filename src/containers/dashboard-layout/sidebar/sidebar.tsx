@@ -13,7 +13,7 @@ export function Sidebar() {
     <>
       <nav
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 transform overflow-y-auto bg-gray-darker transition duration-200 ease-in-out lg:relative lg:translate-x-0",
+          "fixed top-0 left-0 h-screen z-40 w-64 transform overflow-y-auto bg-gray-darker transition duration-200 ease-in-out lg:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
