@@ -40,16 +40,18 @@ export function LoginForm() {
             {errors.root?.message && (
               <FieldError>{errors.root?.message}</FieldError>
             )}
-            {capsLock && (
-              <p
-                role="alert"
-                aria-live="polite"
-                aria-atomic="true"
-                className="text-sm bold"
-              >
-                Caps Lock is ON
-              </p>
-            )}
+            <div className="h-6">
+              {capsLock && (
+                <p
+                  role="alert"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  className="text-sm bold"
+                >
+                  CAPS LOCK is on
+                </p>
+              )}
+            </div>
           </div>
           <form onSubmit={onSubmit} className="grid gap-6">
             <fieldset className="space-y-2">
