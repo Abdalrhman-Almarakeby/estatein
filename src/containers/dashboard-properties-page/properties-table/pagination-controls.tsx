@@ -9,7 +9,7 @@ type PaginationControlsProps = { table: Table<Property> };
 export function PaginationControls({ table }: PaginationControlsProps) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
-      <span className="text-sm ">
+      <span className="text-sm">
         Page {table.getState().pagination.pageIndex + 1} of{" "}
         {table.getPageCount()}
       </span>

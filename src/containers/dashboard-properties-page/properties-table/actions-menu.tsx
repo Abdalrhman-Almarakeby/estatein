@@ -53,7 +53,7 @@ export function ActionsMenu({ propertyId, propertyName }: ActionsMenuProps) {
     <>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild>
-          <button className="h-8 w-8 p-0 hover:bg-gray-darkest grid place-items-center rounded-full">
+          <button className="grid h-8 w-8 place-items-center rounded-full p-0 hover:bg-gray-darkest">
             <span className="sr-only">Open menu</span>
             <MoreHorizontal className="h-4 w-4" />
           </button>

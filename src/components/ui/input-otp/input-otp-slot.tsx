@@ -22,7 +22,7 @@ export const InputOTPSlot = forwardRef<
       ref={ref}
       className={cn(
         "relative flex h-10 w-10 items-center justify-center border-y border-r border-white text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-        isActive && "z-10 ring-2 ring-purple-base border-purple-base",
+        isActive && "z-10 border-purple-base ring-2 ring-purple-base",
         className,
       )}
       {...props}
@@ -30,7 +30,7 @@ export const InputOTPSlot = forwardRef<
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px motion-safe:animate-caret-blink bg-white duration-500" />
+          <div className="h-4 w-px bg-white duration-500 motion-safe:animate-caret-blink" />
         </div>
       )}
     </div>

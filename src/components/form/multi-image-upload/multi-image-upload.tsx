@@ -31,18 +31,18 @@ export function MultiImageUpload<T extends FieldValues>({
     <div className="space-y-4">
       <div
         className={cn(
-          "w-full p-4 flex flex-col items-center justify-center border-2 border-white border-dashed rounded-lg text-center transition-colors cursor-pointer",
-          !isUploading && "hover:bg-gray-dark focus-within:bg-gray-dark",
+          "flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white p-4 text-center transition-colors",
+          !isUploading && "focus-within:bg-gray-dark hover:bg-gray-dark",
         )}
       >
         <label
           htmlFor={imageUploadId}
-          className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer"
+          className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center"
         >
           {isUploading ? (
-            <Loader2 className="size-8 mb-2 text-white animate-spin" />
+            <Loader2 className="mb-2 size-8 animate-spin text-white" />
           ) : (
-            <Camera className="size-8 mb-2 text-white" />
+            <Camera className="mb-2 size-8 text-white" />
           )}
           <span className="text-sm font-medium text-white">
             {isUploading ? "Uploading..." : "Click or drop images here"}
@@ -57,11 +57,11 @@ export function MultiImageUpload<T extends FieldValues>({
             onChange={(e) => handleImageChange(e.target.files)}
             disabled={isUploading}
             id={imageUploadId}
-            className="absolute inset-0 w-full h-full opacity-0 disabled:opacity-0 cursor-pointer"
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:opacity-0"
           />
         </label>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {images.map((image, index) => (
           <ImagePreview
             key={image.id}

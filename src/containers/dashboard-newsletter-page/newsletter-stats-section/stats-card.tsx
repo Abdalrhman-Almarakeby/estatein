@@ -16,16 +16,16 @@ export function StatsCard({
   comparisonText,
 }: StatsCardProps) {
   return (
-    <div className="bg-gray-darker rounded-lg shadow p-6">
-      <div className="flex items-center justify-between mb-5">
+    <div className="rounded-lg bg-gray-darker p-6 shadow">
+      <div className="mb-5 flex items-center justify-between">
         <h3 className="text-primary">{title}</h3>
         <UsersIcon className="size-5 text-purple-light" />
       </div>
-      <div className="text-3xl font-bold ps-2">
+      <div className="ps-2 text-3xl font-bold">
         {formatNumberWithLetter(value)}
       </div>
       {!!growth && comparisonText && (
-        <p className="text-sm font-normal flex gap-1 items-center mt-4 text-primary">
+        <p className="text-primary mt-4 flex items-center gap-1 text-sm font-normal">
           <GrowthIndicator value={growth} />
           <span>
             {Math.abs(growth).toFixed(0)}% {comparisonText}

@@ -8,7 +8,7 @@ export const TableRow = forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-[#4d4d4d20] data-[state=selected]:bg-gray-[#4d4d4d30]",
+      "data-[state=selected]:bg-gray-[#4d4d4d30] border-b transition-colors hover:bg-[#4d4d4d20]",
       className,
     )}
     {...props}

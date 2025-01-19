@@ -13,34 +13,34 @@ export function PropertyCreatedSuccess({
   onCreateNewProperty,
 }: PropertyCreatedSuccessProps) {
   return (
-    <div className="relative grid place-content-center size-full">
-      <div className="w-full mx-auto bg-gray-darker shadow-lg rounded-lg overflow-hidden">
+    <div className="relative grid size-full place-content-center">
+      <div className="mx-auto w-full overflow-hidden rounded-lg bg-gray-darker shadow-lg">
         <div className="p-8 pb-12">
-          <h2 className="text-center text-3xl gap-2 font-bold text-purple-medium flex items-center justify-center">
+          <h2 className="flex items-center justify-center gap-2 text-center text-3xl font-bold text-purple-medium">
             <CheckCircle />
             Property Created Successfully!
           </h2>
 
-          <p className="text-center mt-2">
+          <p className="mt-2 text-center">
             Your property "{propertyTitle}" has been added to the system.
           </p>
 
-          <div className="grid grid-cols-2 gap-2 text-center mt-10">
+          <div className="mt-10 grid grid-cols-2 gap-2 text-center">
             <Link
-              className="py-2 px-4 btn-sm btn-primary"
+              className="btn-sm btn-primary px-4 py-2"
               href={`/properties/${propertyId}`}
             >
               View Property Page
             </Link>
             <Link
-              className="py-2 px-4 btn-sm btn-tertiary"
+              className="btn-sm btn-tertiary px-4 py-2"
               href={`/dashboard/properties/${propertyId}/edit`}
             >
               Edit Property
             </Link>
           </div>
         </div>
-        <div className="px-6 py-4 bg-gray-dark flex justify-between">
+        <div className="flex justify-between bg-gray-dark px-6 py-4">
           <Link
             className="flex gap-2 !no-underline"
             href={"/dashboard/properties"}

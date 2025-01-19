@@ -39,12 +39,12 @@ export function DownloadButtons({ subscribers }: DownloadButtonsProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
       {FORMATS.map(({ format, Icon }) => (
         <button
           key={format}
           onClick={() => downloadSubscribers(format)}
-          className="flex items-center justify-center px-4 py-2 bg-primary btn-primary text-white gap-2 rounded-md"
+          className="bg-primary btn-primary flex items-center justify-center gap-2 rounded-md px-4 py-2 text-white"
         >
           <Icon className="size-4" />
           <span className="font-medium">{format.toUpperCase()}</span>

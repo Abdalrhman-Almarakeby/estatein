@@ -91,12 +91,12 @@ export default async function Page() {
   ]);
 
   return (
-    <div className="min-h-screen container py-12">
-      <h1 className="text-3xl font-bold mb-12">
+    <div className="container min-h-screen py-12">
+      <h1 className="mb-12 text-3xl font-bold">
         Newsletter Subscription Dashboard
       </h1>
 
-      <div className="border p-6 grid gap-14 overflow-hidden shadow-xl sm:rounded-lg">
+      <div className="grid gap-14 overflow-hidden border p-6 shadow-xl sm:rounded-lg">
         <NewsletterStatsSection stats={stats} />
         <NewsletterDataSection subscribers={subscribers} />
       </div>

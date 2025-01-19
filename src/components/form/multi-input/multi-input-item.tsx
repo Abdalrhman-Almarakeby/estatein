@@ -47,7 +47,7 @@ export function MultiInputItem({
     <div className="flex items-center space-x-2">
       <div
         className={cn(
-          "flex-grow p-2 border rounded-md ",
+          "flex-grow rounded-md border p-2",
           isEditing ? "bg-background" : "bg-muted",
         )}
       >
@@ -67,7 +67,7 @@ export function MultiInputItem({
       <div className="flex space-x-1">
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 btn-secondary"
+          className="btn-secondary inline-flex size-8 items-center justify-center"
           onClick={onMoveUp}
           disabled={isFirst}
           aria-label={`Move item ${index + 1} up`}
@@ -76,7 +76,7 @@ export function MultiInputItem({
         </button>
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 btn-secondary"
+          className="btn-secondary inline-flex size-8 items-center justify-center"
           onClick={onMoveDown}
           disabled={isLast}
           aria-label={`Move item ${index + 1} down`}
@@ -86,7 +86,7 @@ export function MultiInputItem({
         {isEditing ? (
           <button
             type="button"
-            className="inline-flex items-center justify-center size-8 btn-secondary"
+            className="btn-secondary inline-flex size-8 items-center justify-center"
             onClick={() => onStopEditing(inputValue)}
             aria-label={`Save edit for item ${index + 1}`}
           >
@@ -95,7 +95,7 @@ export function MultiInputItem({
         ) : (
           <button
             type="button"
-            className="inline-flex items-center justify-center size-8 btn-secondary"
+            className="btn-secondary inline-flex size-8 items-center justify-center"
             onClick={onStartEditing}
             aria-label={`Edit item ${index + 1}`}
           >
@@ -104,7 +104,7 @@ export function MultiInputItem({
         )}
         <button
           type="button"
-          className="inline-flex items-center justify-center size-8 btn bg-red-500"
+          className="btn inline-flex size-8 items-center justify-center bg-red-500"
           onClick={onRemove}
           aria-label={`Remove item ${index + 1}`}
         >

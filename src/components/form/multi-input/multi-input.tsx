@@ -45,7 +45,7 @@ export function MultiInput({
         />
         <button
           type="button"
-          className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center size-8 btn-secondary"
+          className="btn-secondary absolute right-3 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center"
           onClick={() => {
             const inputElement = inputRef.current;
             if (!inputElement) return;

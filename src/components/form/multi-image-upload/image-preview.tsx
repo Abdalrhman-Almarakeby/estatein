@@ -32,23 +32,23 @@ export function ImagePreview({
   const imageDetails = useImageDetails(image);
 
   return (
-    <div className="relative bg-white border rounded-lg overflow-hidden group">
-      <div className="aspect-[16/9] relative">
+    <div className="group relative overflow-hidden rounded-lg border bg-white">
+      <div className="relative aspect-[16/9]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.url}
           alt={`Uploaded image ${index + 1}`}
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 group-focus-within:bg-opacity-50 transition-opacity duration-200" />
+        <div className="absolute inset-0 bg-black bg-opacity-0 transition-opacity duration-200 group-focus-within:bg-opacity-50 group-hover:bg-opacity-50" />
         {image.status === "uploading" && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <Loader2 className="size-8 text-white animate-spin" />
+            <Loader2 className="size-8 animate-spin text-white" />
           </div>
         )}
         {image.status === "deleting" && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <Loader2 className="size-8 text-white animate-spin" />
+            <Loader2 className="size-8 animate-spin text-white" />
           </div>
         )}
         {image.status === "error" && (
@@ -57,18 +57,18 @@ export function ImagePreview({
           </div>
         )}
         {image.status === "success" && (
-          <div className="absolute top-2 right-2 group-hover:hidden group-focus-within:hidden">
-            <CheckCircle className="w-6 h-6 text-green-500" />
+          <div className="absolute right-2 top-2 group-focus-within:hidden group-hover:hidden">
+            <CheckCircle className="h-6 w-6 text-green-500" />
           </div>
         )}
       </div>
-      <div className="absolute top-2 left-2 right-2 flex justify-between items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200">
+      <div className="absolute left-2 right-2 top-2 flex items-center justify-between opacity-0 transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100">
         <div className="flex space-x-1">
           <button
             type="button"
             onClick={onRemove}
             disabled={image.status === "deleting"}
-            className="inline-flex items-center justify-center size-8 rounded-md btn bg-red-500"
+            className="btn inline-flex size-8 items-center justify-center rounded-md bg-red-500"
             aria-label={`Remove image ${index + 1}`}
           >
             <Trash2 className="size-4" />
@@ -79,7 +79,7 @@ export function ImagePreview({
             type="button"
             onClick={onMoveUp}
             disabled={isFirst || image.status === "deleting"}
-            className="inline-flex items-center justify-center size-8 rounded-md btn-secondary text-white"
+            className="btn-secondary inline-flex size-8 items-center justify-center rounded-md text-white"
             aria-label={`Move image ${index + 1} up`}
           >
             <ChevronUp className="size-4" />
@@ -88,17 +88,17 @@ export function ImagePreview({
             type="button"
             onClick={onMoveDown}
             disabled={isLast || image.status === "deleting"}
-            className="inline-flex items-center justify-center size-8 rounded-md btn-secondary text-white"
+            className="btn-secondary inline-flex size-8 items-center justify-center rounded-md text-white"
             aria-label={`Move image ${index + 1} down`}
           >
             <ChevronDown className="size-4" />
           </button>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 transform translate-y-full group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-200">
-        <div className="flex items-center mb-1">
+      <div className="absolute bottom-0 left-0 right-0 translate-y-full transform bg-black bg-opacity-70 p-2 text-white transition-transform duration-200 group-focus-within:translate-y-0 group-hover:translate-y-0">
+        <div className="mb-1 flex items-center">
           <FileIcon size={14} className="mr-1" />
-          <p className="text-xs font-medium truncate flex-grow">
+          <p className="flex-grow truncate text-xs font-medium">
             {image.file.name}
           </p>
         </div>

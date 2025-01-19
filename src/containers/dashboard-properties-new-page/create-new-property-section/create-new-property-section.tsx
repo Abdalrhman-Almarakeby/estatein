@@ -30,7 +30,7 @@ export function CreateNewPropertySection() {
     />
   ) : (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-8">Add New Property</h1>
+      <h1 className="mb-8 text-3xl font-bold">Add New Property</h1>
       <PropertyForm
         onSubmit={handleSubmit}
         submitButtonText="Create Property"

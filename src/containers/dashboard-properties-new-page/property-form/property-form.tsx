@@ -69,9 +69,9 @@ export function PropertyForm({
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
-      className="space-y-6 max-w-4xl mx-auto"
+      className="mx-auto max-w-4xl space-y-6"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <fieldset className="space-y-2.5 lg:space-y-4">
           <label className="lg:text-lg 3xl:text-xl" htmlFor="title">
             Title
@@ -244,7 +244,7 @@ export function PropertyForm({
         )}
       </fieldset>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <fieldset className="space-y-2.5 lg:space-y-4">
           <label className="lg:text-lg 3xl:text-xl" htmlFor="listingPrice">
             Listing Price
@@ -430,7 +430,7 @@ export function PropertyForm({
 
         <button
           type="submit"
-          className="btn-sm btn-primary py-2 md:col-span-2 text-lg"
+          className="btn-sm btn-primary py-2 text-lg md:col-span-2"
         >
           {submitButtonText}
         </button>

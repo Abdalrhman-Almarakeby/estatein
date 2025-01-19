@@ -55,7 +55,7 @@ export default async function Page({ params: { propertyId } }: PageParams) {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-8">Edit Property</h1>
+      <h1 className="mb-8 text-3xl font-bold">Edit Property</h1>
       <PropertyForm
         initialData={property}
         onSubmit={handleUpdateProperty}

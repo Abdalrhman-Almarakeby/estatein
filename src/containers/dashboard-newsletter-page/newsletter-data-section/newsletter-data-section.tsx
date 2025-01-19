@@ -12,8 +12,8 @@ export function NewsletterDataSection({
   return (
     <section className="grid gap-8">
       <h2 className="text-xl font-bold">Subscription Data</h2>
-      <div className="bg-gray-darker rounded-lg p-6 shadow-lg">
-        <div className="flex items-center mb-6">
+      <div className="rounded-lg bg-gray-darker p-6 shadow-lg">
+        <div className="mb-6 flex items-center">
           <FileDown className="text-primary mr-2 size-6" />
           <p className="text-primary text-xl font-semibold">
             Export Newsletter Subscribers

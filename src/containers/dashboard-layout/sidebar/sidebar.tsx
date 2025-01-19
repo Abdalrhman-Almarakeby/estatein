@@ -13,7 +13,7 @@ export function Sidebar() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 h-screen z-40 w-64 transform overflow-y-auto bg-gray-darker transition duration-200 ease-in-out lg:translate-x-0",
+          "fixed left-0 top-0 z-40 h-screen w-64 transform overflow-y-auto bg-gray-darker transition duration-200 ease-in-out lg:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
@@ -48,7 +48,7 @@ export function Sidebar() {
       </nav>
       <div
         className={cn(
-          "fixed inset-0 z-30  transition-all bg-opacity-50 lg:hidden",
+          "fixed inset-0 z-30 bg-opacity-50 transition-all lg:hidden",
           isSidebarOpen && "bg-black",
         )}
         onClick={() => setIsSidebarOpen(false)}
