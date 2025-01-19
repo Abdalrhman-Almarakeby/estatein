@@ -1,6 +1,7 @@
 "use server";
 
 import { WithCaptcha } from "@/types";
+import { omit } from "@/lib/utils";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
@@ -80,7 +81,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
     }
 
     await prisma.inquiry.create({
-      data,
+      data: omit(data, "captchaToken", "agreeOnTerms"),
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };
