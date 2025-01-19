@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce, useWindowWidth } from "@/hooks";
+import { MOBILE_BREAKPOINT } from "@/constant";
 
 const MIN_SCROLL_AMOUNT = 50;
-const MOBILE_BREAKPOINT = 768;
 
 export function useMenu() {
   const [isOpen, setIsOpen] = useState(false);

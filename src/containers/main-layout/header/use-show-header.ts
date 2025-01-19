@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useToastContext } from "@/contexts/toast";
 import { ScrollDirection } from "@/types";
 import { useWindowWidth } from "@/hooks";
+import { MOBILE_BREAKPOINT } from "@/constant";
 import { getScrollDirection } from "./get-scroll-direction";
 
 const MAX_TOP_POSITION = 100;
-const MOBILE_BREAKPOINT = 768;
 
 export function useShowHeader() {
   const [isOnTop, setIsOnTop] = useState(true);
