@@ -13,6 +13,7 @@ type UseFormHandlerOptions<T> = {
     data: WithCaptcha<T>,
   ) => Promise<{ success: boolean; message: string }>;
   successMessage?: string;
+  loadingMessage?: string;
   errorMessage?: string;
 };
 
@@ -20,6 +21,7 @@ export function useFormHandler<T extends Record<string, unknown>>({
   schema,
   serverAction,
   successMessage,
+  loadingMessage,
   errorMessage,
 }: UseFormHandlerOptions<T>) {
   const {
@@ -32,6 +34,7 @@ export function useFormHandler<T extends Record<string, unknown>>({
   });
   const toastNotification = useToastNotification({
     successMessage,
+    loadingMessage,
     errorMessage,
   });
   const captchaRef = useRef<ReCAPTCHA>(null);
