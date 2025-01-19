@@ -10,6 +10,8 @@ type HeaderProps = {
 export function Header({ showHeader }: HeaderProps) {
   const { isOpen, toggle, isMenuHidden } = useMenu();
 
+  const menuToggleLabel = isOpen ? "Close menu" : "Open menu";
+
   return (
     <header
       className={cn(
@@ -22,21 +24,16 @@ export function Header({ showHeader }: HeaderProps) {
         <button
           aria-expanded={isOpen}
           aria-controls="main-menu"
-          aria-label="Toggle menu"
+          aria-label={menuToggleLabel}
           onClick={toggle}
           className="z-[99999] py-5 pl-5 md:hidden"
         >
           {isOpen ? (
-            <>
-              <X className="size-8" />
-              <span className="sr-only">Close menu.</span>
-            </>
+            <X className="size-8" aria-hidden="true" />
           ) : (
-            <>
-              <Menu className="size-8" />
-              <span className="sr-only">Open menu.</span>
-            </>
+            <Menu className="size-8" aria-hidden="true" />
           )}
+          <span className="sr-only">{menuToggleLabel}</span>
         </button>
       </div>
     </header>
