@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce, useWindowWidth } from "@/hooks";
+import { MOBILE_BREAKPOINT } from "@/constant";
 
 const MIN_SCROLL_AMOUNT = 50;
 
@@ -9,7 +10,7 @@ export function useMenu() {
   const windowWidth = useWindowWidth();
 
   const isMenuHidden = useMemo(() => {
-    return windowWidth && windowWidth < 768 && !isOpen;
+    return windowWidth && windowWidth < MOBILE_BREAKPOINT && !isOpen;
   }, [isOpen, windowWidth]);
 
   const toggle = useCallback(() => {
@@ -17,15 +18,14 @@ export function useMenu() {
   }, [debouncedIsOpen]);
 
   useEffect(() => {
-    let prevScrollPosition = 0;
+    let prevScrollPosition = window.scrollY;
 
     function handleScroll() {
       const currentScrollPosition = window.scrollY;
-
       const scrollAmount = Math.abs(currentScrollPosition - prevScrollPosition);
+      const hasScrolledSignificantly = scrollAmount > MIN_SCROLL_AMOUNT;
 
-      const scrolledALot = scrollAmount > MIN_SCROLL_AMOUNT;
-      if (isOpen && scrolledALot) {
+      if (isOpen && hasScrolledSignificantly) {
         setIsOpen(false);
       }
 
@@ -33,9 +33,8 @@ export function useMenu() {
     }
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen, setIsOpen]);
+  }, [isOpen]);
 
   return {
     isMenuHidden: !!isMenuHidden,

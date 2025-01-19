@@ -21,6 +21,8 @@
     "^@/types/(.*)$",
     "^@/constants$",
     "^@/constants/(.*)$",
+    "^@/content/(.*)$",
+    "^@/content$",
     "^@/hooks$",
     "^@/hooks/(.*)$",
     "^@/lib/utils$",

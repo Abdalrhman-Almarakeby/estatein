@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Achievement } from "@/components/ui/achievement";
 import { LinksSection } from "@/components/ui/links-section";
-import heroImg from "@/assets/imgs/landing-page-hero.webp";
 import { HOME_PAGE_LINKS_DATA } from "@/content";
+import heroImg from "@/assets/imgs/landing-page-hero.webp";
 import { HeroSectionPropertiesLink } from "./hero-section-properties-link";
 
 export function HeroSection() {

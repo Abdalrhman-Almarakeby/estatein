@@ -3,12 +3,12 @@ import { HeaderSection } from "@/components/ui/header-section";
 import { LinksSection } from "@/components/ui/links-section";
 import { InvestmentSection } from "@/containers/services-page/investment-section";
 import { ServicesSection } from "@/containers/services-page/services-section";
-import { generateSEOMetadata } from "@/lib/metadata";
 import {
   PROPERTIES_SERVICES,
   PROPERTY_MANAGEMENT_SERVICES,
   SERVICES_PAGE_LINKS_DATA,
 } from "@/content";
+import { generateSEOMetadata } from "@/lib/metadata";
 
 export const metadata = generateSEOMetadata({
   title:

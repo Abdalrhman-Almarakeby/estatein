@@ -1,5 +1,4 @@
 /* eslint-disable n/no-process-env */
-
 /* eslint-disable no-console */
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z, ZodError } from "zod";

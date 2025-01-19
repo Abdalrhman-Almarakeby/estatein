@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useToastContext } from "@/contexts/toast";
 import { ScrollDirection } from "@/types";
 import { useWindowWidth } from "@/hooks";
+import { MOBILE_BREAKPOINT } from "@/constant";
 import { getScrollDirection } from "./get-scroll-direction";
 
 const MAX_TOP_POSITION = 100;
@@ -10,11 +11,12 @@ export function useShowHeader() {
   const [isOnTop, setIsOnTop] = useState(true);
   const [scrollDirection, setScrollDirection] =
     useState<ScrollDirection | null>(null);
+
   const windowWidth = useWindowWidth();
   const { isToastShown } = useToastContext();
 
   const isSmallScreen = useMemo(
-    () => !windowWidth || windowWidth < 768,
+    () => !windowWidth || windowWidth < MOBILE_BREAKPOINT,
     [windowWidth],
   );
 
@@ -37,9 +39,8 @@ export function useShowHeader() {
   }, [isSmallScreen, scrollDirection]);
 
   const showHeader = useMemo(() => {
-    return (
-      isSmallScreen && !isToastShown && (scrollDirection === "up" || isOnTop)
-    );
+    const isScrollingUp = scrollDirection === "up";
+    return isSmallScreen && !isToastShown && (isScrollingUp || isOnTop);
   }, [isSmallScreen, isToastShown, scrollDirection, isOnTop]);
 
   return showHeader;
