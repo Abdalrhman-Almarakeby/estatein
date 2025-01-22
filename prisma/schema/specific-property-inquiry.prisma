@@ -7,6 +7,7 @@ model SpecificPropertyInquiry {
   message    String
   property   Property @relation(fields: [propertyId], references: [id])
   propertyId String
+  replied    Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
