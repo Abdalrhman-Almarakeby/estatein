@@ -48,3 +48,8 @@ export function createRangeOptions(
     value: max === Number.MAX_SAFE_INTEGER ? `${min}` : `${min}-${max}`,
   }));
 }
+
+export function calculateGrowthPercent(current: number, previous: number) {
+  if (previous === 0) return current > 0 ? 100 : 0;
+  return ((current - previous) / previous) * 100;
+}
