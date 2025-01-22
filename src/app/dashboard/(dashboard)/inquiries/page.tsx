@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   Inquiry,
   PropertyInquiry,
@@ -94,9 +95,12 @@ export default async function Page() {
         }}
       />
 
-      <PropertiesTypesTabs />
-
-      <StatisticsSection data={data} />
+      <Suspense>
+        <PropertiesTypesTabs />
+      </Suspense>
+      <Suspense>
+        <StatisticsSection data={data} />
+      </Suspense>
     </div>
   );
 }
