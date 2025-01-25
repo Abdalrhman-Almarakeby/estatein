@@ -1,11 +1,9 @@
-import { Suspense } from "react";
 import {
   Inquiry,
   PropertyInquiry,
   SpecificPropertyInquiry,
 } from "@prisma/client";
-import { PropertiesTypesTabs } from "@/containers/dashboard-inquires-page/inquires-types-tabs";
-import { StatisticsSection } from "@/containers/dashboard-inquires-page/statistics-section";
+import { InquiriesData } from "@/containers/dashboard-inquires-page/inquiries-data";
 import { TotalInquiryStatsSection } from "@/containers/dashboard-inquires-page/total-inquiry-stats-section";
 import { calculateGrowthPercent } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
@@ -95,12 +93,7 @@ export default async function Page() {
         }}
       />
 
-      <Suspense>
-        <PropertiesTypesTabs />
-      </Suspense>
-      <Suspense>
-        <StatisticsSection data={data} />
-      </Suspense>
+      <InquiriesData data={data} />
     </div>
   );
 }
