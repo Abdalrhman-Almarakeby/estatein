@@ -1,15 +1,14 @@
 "use client";
 
-import { Property } from "@prisma/client";
 import { Table } from "@tanstack/react-table";
 import { scrollToTop } from "@/lib/scroll";
 
-type PaginationControlsProps = { table: Table<Property> };
+type PaginationControlsProps<T> = { table: Table<T> };
 
-export function PaginationControls({ table }: PaginationControlsProps) {
+export function PaginationControls<T>({ table }: PaginationControlsProps<T>) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
-      <span className="text-sm">
+      <span className="mr-auto text-sm">
         Page {table.getState().pagination.pageIndex + 1} of{" "}
         {table.getPageCount()}
       </span>
