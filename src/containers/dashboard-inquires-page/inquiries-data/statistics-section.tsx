@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import {
   Inquiry,
   PropertyInquiry,
@@ -8,9 +7,11 @@ import {
 } from "@prisma/client";
 import { AlertCircle, CheckCircle, MessageSquare } from "lucide-react";
 import { GrowthIndicator } from "@/containers/dashboard-newsletter-page/newsletter-stats-section/growth-indicator";
+import { InquiresType } from "@/types";
 import { cn, upperFirst } from "@/lib/utils";
 
 type StatisticsSectionProps = {
+  inquiresType: InquiresType;
   data: {
     general: Inquiry[];
     property: PropertyInquiry[];
@@ -18,62 +19,42 @@ type StatisticsSectionProps = {
   };
 };
 
-const INQUIRIES_TYPES = ["general", "property", "specific"] as const;
-
-type InquiresType = (typeof INQUIRIES_TYPES)[number];
-
-export function StatisticsSection({ data }: StatisticsSectionProps) {
-  const searchParams = useSearchParams();
-
-  const inquiresType = searchParams.get("inquiresType");
-
-  const currentInquiresType =
-    inquiresType &&
-    (INQUIRIES_TYPES as ReadonlyArray<string>).includes(inquiresType)
-      ? (inquiresType as InquiresType)
-      : ("general" as const);
-
-  const activeRepliedInquiries = data[currentInquiresType].filter(
+export function StatisticsSection({
+  data,
+  inquiresType,
+}: StatisticsSectionProps) {
+  const activeRepliedInquiries = data[inquiresType].filter(
     (i) => i.replied,
   ).length;
   const activePendingInquiries =
-    data[currentInquiresType].length - activeRepliedInquiries;
+    data[inquiresType].length - activeRepliedInquiries;
 
   const lastDay = new Date(Date.now() - 24 * 60 * 60 * 1000);
   const lastWeek = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const lastMonth = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
-  const inquiriesLastDay = countInquiriesSince(
-    data[currentInquiresType],
-    lastDay,
-  );
-  const inquiriesLastWeek = countInquiriesSince(
-    data[currentInquiresType],
-    lastWeek,
-  );
-  const inquiriesLastMonth = countInquiriesSince(
-    data[currentInquiresType],
-    lastMonth,
-  );
+  const inquiriesLastDay = countInquiriesSince(data[inquiresType], lastDay);
+  const inquiriesLastWeek = countInquiriesSince(data[inquiresType], lastWeek);
+  const inquiriesLastMonth = countInquiriesSince(data[inquiresType], lastMonth);
 
   const dayChange = percentChange(
     inquiriesLastDay,
     countInquiriesSince(
-      data[currentInquiresType],
+      data[inquiresType],
       new Date(lastDay.getTime() - 24 * 60 * 60 * 1000),
     ),
   );
   const weekChange = percentChange(
     inquiriesLastWeek,
     countInquiriesSince(
-      data[currentInquiresType],
+      data[inquiresType],
       new Date(lastWeek.getTime() - 7 * 24 * 60 * 60 * 1000),
     ),
   );
   const monthChange = percentChange(
     inquiriesLastMonth,
     countInquiriesSince(
-      data[currentInquiresType],
+      data[inquiresType],
       new Date(lastMonth.getTime() - 30 * 24 * 60 * 60 * 1000),
     ),
   );
@@ -81,24 +62,24 @@ export function StatisticsSection({ data }: StatisticsSectionProps) {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <StatCard
-        title={`${upperFirst(currentInquiresType)} Inquires Inquiries`}
-        value={data[currentInquiresType].length}
+        title={`${upperFirst(inquiresType)} Inquires Inquiries`}
+        value={data[inquiresType].length}
         icon={<MessageSquare className="size-5" />}
       />
       <StatCard
-        title={`${upperFirst(currentInquiresType)} Inquires Replied`}
+        title={`${upperFirst(inquiresType)} Inquires Replied`}
         value={activeRepliedInquiries}
         icon={<CheckCircle className="size-5 text-green-500" />}
       />
       <StatCard
-        title={`${upperFirst(currentInquiresType)} Inquires Pending`}
+        title={`${upperFirst(inquiresType)} Inquires Pending`}
         value={activePendingInquiries}
         icon={<AlertCircle className="size-5 text-yellow-500" />}
         className="md:col-span-2 lg:col-span-1"
       />
       <div className="col-span-full rounded-lg bg-gray-darker p-6 shadow">
         <h3 className="mb-4 text-lg font-medium text-white">
-          Recent {upperFirst(currentInquiresType)} Inquiries changes
+          Recent {upperFirst(inquiresType)} Inquiries changes
         </h3>
         <div className="space-y-4">
           <RecentStat

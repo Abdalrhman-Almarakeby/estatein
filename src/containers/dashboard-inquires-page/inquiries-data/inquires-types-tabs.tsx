@@ -1,34 +1,29 @@
 "use client";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Building, Home, MessageSquare } from "lucide-react";
+import { InquiresType } from "@/types";
 import { cn, upperFirst } from "@/lib/utils";
+import { INQUIRIES_TYPES } from "@/constant";
 
-const INQUIRIES_TYPES = ["general", "property", "specific"] as const;
+type PropertiesTypesTabsProps = {
+  activeTab: InquiresType;
+  setActiveTab: (tab: InquiresType) => void;
+};
 
-export function PropertiesTypesTabs() {
-  const searchParams = useSearchParams();
-
-  const inquiresType = searchParams.get("inquiresType");
-
-  const currentInquiresType =
-    inquiresType &&
-    (INQUIRIES_TYPES as ReadonlyArray<string>).includes(inquiresType)
-      ? inquiresType
-      : "general";
-
+export function PropertiesTypesTabs({
+  activeTab,
+  setActiveTab,
+}: PropertiesTypesTabsProps) {
   return (
     <div className="mb-6">
       <div className="flex border-b">
         {INQUIRIES_TYPES.map((type) => (
-          <Link
-            scroll={false}
-            href={`?inquiresType=${type}`}
+          <button
             key={type}
+            onClick={() => setActiveTab(type)}
             className={cn(
-              "no-underlinek border-b-2 px-4 py-2 font-semibold",
-              currentInquiresType === type
+              "border-b-2 px-4 py-2 font-semibold no-underline",
+              activeTab === type
                 ? "border-purple-medium text-purple-medium"
                 : "border-transparent text-gray-light",
             )}
@@ -43,7 +38,7 @@ export function PropertiesTypesTabs() {
               <Building className="mr-2 inline-block size-4" />
             )}
             {upperFirst(type)} Inquiries
-          </Link>
+          </button>
         ))}
       </div>
     </div>
