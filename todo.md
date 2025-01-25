@@ -21,3 +21,11 @@
 - There is a problem with the cache in the dashboard properties page
 
 - Add better looking outlines instead of the defaults for buttons
+
+- add active modifier in the sidebar
+
+- add archive for properties and inquires
+
+- add user page
+
+- add admin permissions

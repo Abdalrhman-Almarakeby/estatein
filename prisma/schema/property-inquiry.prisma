@@ -12,6 +12,7 @@ model PropertyInquiry {
   propertySize           String
   preferredContactMethod ContactMethod
   message                String
+  replied                Boolean       @default(false)
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
 

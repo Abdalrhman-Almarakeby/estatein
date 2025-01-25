@@ -1,3 +1,4 @@
+export * from "./inquiries-types";
 export * from "./scroll-direction";
 export * from "./search-params";
 export * from "./svg-component";
