@@ -1,5 +1,5 @@
 import { UsersIcon } from "lucide-react";
-import { formatNumberWithLetter } from "@/lib/utils";
+import { formatCompactNumber } from "@/lib/utils";
 import { GrowthIndicator } from "./growth-indicator";
 
 type StatsCardProps = {
@@ -22,7 +22,7 @@ export function StatsCard({
         <UsersIcon className="size-5 text-purple-light" />
       </div>
       <div className="ps-2 text-3xl font-bold">
-        {formatNumberWithLetter(value)}
+        {formatCompactNumber(value)}
       </div>
       {!!growth && comparisonText && (
         <p className="text-primary mt-4 flex items-center gap-1 text-sm font-normal">
