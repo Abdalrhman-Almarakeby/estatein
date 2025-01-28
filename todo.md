@@ -29,3 +29,5 @@
 - add user page
 
 - add admin permissions
+
+- update shadcn/ui components.json file
