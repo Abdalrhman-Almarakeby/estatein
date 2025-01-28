@@ -34,10 +34,7 @@ export function DateRangePickerWithPresets({
 }: HTMLAttributes<HTMLDivElement> & {
   onDateRangeChange: (range: { from: Date; to: Date }) => void;
 }) {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: startOfDay(new Date()),
-    to: endOfDay(new Date()),
-  });
+  const [date, setDate] = useState<DateRange | undefined>(undefined);
 
   useEffect(() => {
     if (date?.from && date?.to) {
@@ -80,15 +77,14 @@ export function DateRangePickerWithPresets({
           <button
             id="date"
             className={cn(
-              "border-input bg-background ring-offset-background flex items-center gap-2 rounded-md border px-3 py-2 text-sm",
-              "hover:bg-accent hover:text-accent-foreground",
-              "focus:ring-ring focus:outline-none focus:ring-2 focus:ring-offset-2",
+              "flex h-10 w-full items-center gap-2 rounded-lg border bg-gray-darker px-5 text-sm",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
               "disabled:cursor-not-allowed disabled:opacity-50",
               "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground",
+              !date && "text-gray-light",
             )}
           >
-            <CalendarIcon className="h-4 w-4" />
+            <CalendarIcon className="size-4" />
             {date?.from ? (
               date.to ? (
                 <>
@@ -103,9 +99,12 @@ export function DateRangePickerWithPresets({
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent
+          className="w-auto rounded-lg bg-gray-darkest p-0"
+          align="start"
+        >
           <Select onValueChange={handlePresetChange}>
-            <SelectTrigger>
+            <SelectTrigger className="rounded-lg bg-gray-darker px-5 text-gray-medium">
               <SelectValue placeholder="Select a preset" />
             </SelectTrigger>
             <SelectContent position="popper">
@@ -118,14 +117,15 @@ export function DateRangePickerWithPresets({
               <SelectItem value="alltime">All time</SelectItem>
             </SelectContent>
           </Select>
-          <div className="border border-t">
+          <div className="border-t border-gray-dark">
             <Calendar
               initialFocus
               mode="range"
               defaultMonth={date?.from}
               selected={date}
               onSelect={setDate}
-              numberOfMonths={2}
+              showOutsideDays={false}
+              className="rounded-lg bg-gray-darkest"
             />
           </div>
         </PopoverContent>
