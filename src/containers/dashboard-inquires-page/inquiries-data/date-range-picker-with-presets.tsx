@@ -37,7 +37,11 @@ export function DateRangePickerWithPresets({
 }: HTMLAttributes<HTMLDivElement> & {
   onDateRangeChange: (range: StrictRequired<DateRange>) => void;
 }) {
-  const [date, setDate] = useState<DateRange | undefined>(undefined);
+  const now = new Date();
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: startOfDay(subDays(now, 29)),
+    to: endOfDay(now),
+  });
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -49,7 +53,6 @@ export function DateRangePickerWithPresets({
   const handlePresetChange = (value: string) => {
     setIsOpen(false);
 
-    const now = new Date();
     switch (value) {
       case "today":
         setDate({ from: startOfDay(now), to: endOfDay(now) });
