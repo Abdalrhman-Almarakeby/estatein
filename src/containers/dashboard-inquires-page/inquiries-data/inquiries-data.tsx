@@ -70,15 +70,14 @@ export function InquiriesData({ data }: InquiriesDataProps) {
         <h2 className="text-2xl font-semibold">Inquiry List</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <fieldset className="space-y-2.5 lg:space-y-4">
-            <label className="lg:text-lg 3xl:text-xl">Date Range</label>
+            <label htmlFor="date-filter">Date Range</label>
             <DateRangePickerWithPresets
               onDateRangeChange={handleDateRangeChange}
+              id="date-filter"
             />
           </fieldset>
           <fieldset className="space-y-2.5 lg:space-y-4">
-            <label htmlFor="status-filter" className="lg:text-lg 3xl:text-xl">
-              Status
-            </label>
+            <label htmlFor="status-filter">Status</label>
             <Select
               onValueChange={(value) => setFilterStatus(value)}
               value={filterStatus}
