@@ -17,83 +17,81 @@ type InquiryDetailsProps = {
 export function InquiryDetails({ inquiry, type }: InquiryDetailsProps) {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-sm font-medium">Name</p>
-          <p className="text-sm text-gray-light">
+      <div className="grid grid-cols-2 gap-4 text-sm font-medium">
+        <div className="space-y-1.5">
+          <p>Name</p>
+          <p className="text-gray-light">
             {inquiry.firstName} {inquiry.lastName}
           </p>
         </div>
-        <div>
-          <p className="text-sm font-medium">Email</p>
-          <p className="text-sm text-gray-light">{inquiry.email}</p>
+        <div className="space-y-1.5">
+          <p>Email</p>
+          <p className="text-gray-light">{inquiry.email}</p>
         </div>
-        <div>
-          <p className="text-sm font-medium">Phone</p>
-          <p className="text-sm text-gray-light">{inquiry.phone}</p>
+        <div className="space-y-1.5">
+          <p>Phone</p>
+          <p className="text-gray-light">{inquiry.phone}</p>
         </div>
-        <div>
-          <p className="text-sm font-medium">Date</p>
-          <p className="text-sm text-gray-light">
-            {format(new Date(inquiry.createdAt), "MMMM d, yyyy 'at' h:mm a")}
+        <div className="space-y-1.5">
+          <p>Date</p>
+          <p className="text-gray-light">
+            {format(inquiry.createdAt, "MMMM d, yyyy 'at' h:mm a")}
           </p>
         </div>
         {type === "general" && (
           <>
-            <div>
-              <p className="text-sm font-medium">Inquiry Type</p>
-              <p className="text-sm text-gray-light">
-                {(inquiry as Inquiry).inquiryType}
+            <div className="space-y-1.5">
+              <p>Inquiry Type</p>
+              <p className="text-gray-light">
+                {upperFirst(normalize((inquiry as Inquiry).inquiryType))}
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium">Referral Source</p>
-              <p className="text-sm text-gray-light">
-                {(inquiry as Inquiry).referralSource}
+            <div className="space-y-1.5">
+              <p>Referral Source</p>
+              <p className="text-gray-light">
+                {upperFirst(normalize((inquiry as Inquiry).referralSource))}
               </p>
             </div>
           </>
         )}
         {type === "property" && (
           <>
-            <div>
-              <p className="text-sm font-medium">Location</p>
-              <p className="text-sm text-gray-light">
+            <div className="space-y-1.5">
+              <p>Location</p>
+              <p className="text-gray-light">
                 {upperFirst(
                   normalize((inquiry as PropertyInquiry).preferredLocation),
                 )}
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium">Property Type</p>
-              <p className="text-sm text-gray-light">
+            <div className="space-y-1.5">
+              <p>Property Type</p>
+              <p className="text-gray-light">
                 {upperFirst(
                   normalize((inquiry as PropertyInquiry).propertyType),
                 )}
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium">Budget</p>
-              <p className="text-sm text-gray-light">
+            <div className="space-y-1.5">
+              <p>Budget</p>
+              <p className="text-gray-light">
                 {formatPricingRange((inquiry as PropertyInquiry).budget)}
               </p>
             </div>
           </>
         )}
         {type === "specific" && (
-          <div>
-            <p className="text-sm font-medium">Property ID</p>
-            <p className="text-sm text-gray-light">
+          <div className="space-y-1.5">
+            <p>Property ID</p>
+            <p className="text-gray-light">
               {(inquiry as SpecificPropertyInquiry).propertyId}
             </p>
           </div>
         )}
       </div>
-      <div>
-        <p className="text-sm font-medium">Message</p>
-        <p className="whitespace-pre-wrap text-sm text-gray-light">
-          {inquiry.message}
-        </p>
+      <div className="space-y-1.5">
+        <p>Message</p>
+        <p className="whitespace-pre-wrap text-gray-light">{inquiry.message}</p>
       </div>
     </div>
   );
