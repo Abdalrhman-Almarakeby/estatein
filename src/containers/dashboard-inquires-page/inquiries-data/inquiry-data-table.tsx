@@ -57,9 +57,13 @@ type InquiryDataTableProps = {
 
 export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [detailsInquiry, setDetailsInquiry] = useState<
-    (Inquiry | PropertyInquiry | SpecificPropertyInquiry) | null
-  >(null);
+  const [model, setModel] = useState<{
+    isOpen: boolean;
+    data: (Inquiry | PropertyInquiry | SpecificPropertyInquiry) | null;
+  }>({
+    isOpen: false,
+    data: null,
+  });
 
   const columns: ColumnDef<
     Inquiry | PropertyInquiry | SpecificPropertyInquiry
@@ -106,8 +110,27 @@ export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
       ),
     },
     {
+      id: "details",
+      header: "Details",
+      cell: ({ row }) => (
+        <button
+          onClick={() =>
+            setModel({
+              isOpen: true,
+              data: row.original,
+            })
+          }
+          className="btn-primary flex items-center gap-1 px-2 py-2"
+        >
+          <Eye className="size-4" />
+          View Details
+        </button>
+      ),
+    },
+    {
       id: "actions",
       cell: ({ row }) => (
+        // TODO:
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex h-8 w-8 items-center justify-center p-0 text-gray-400 hover:text-gray-600 focus:outline-none">
@@ -120,10 +143,6 @@ export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
             <DropdownMenuItem onClick={() => handleStatusChange(row.original)}>
               <MessageCircle className="mr-2 h-4 w-4" />
               {row.original.replied ? "Mark as Pending" : "Mark as Replied"}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setDetailsInquiry(row.original)}>
-              <Eye className="mr-2 h-4 w-4" />
-              View Details
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -238,16 +257,14 @@ export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
 
       <PaginationControls table={table} />
       <Dialog
-        open={!!detailsInquiry}
-        onOpenChange={() => setDetailsInquiry(null)}
+        open={!!model.isOpen}
+        onOpenChange={() => setModel((prev) => ({ ...prev, isOpen: false }))}
       >
         <DialogContent className="space-y-4 bg-gray-darkest">
           <DialogHeader>
             <DialogTitle>Inquiry Details</DialogTitle>
           </DialogHeader>
-          {detailsInquiry && (
-            <InquiryDetails inquiry={detailsInquiry} type={type} />
-          )}
+          {model.data && <InquiryDetails inquiry={model.data} type={type} />}
         </DialogContent>
       </Dialog>
     </div>

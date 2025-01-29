@@ -3,9 +3,10 @@
 import { forwardRef, InputHTMLAttributes, useState } from "react";
 import { Eye, EyeOff, LockIcon } from "lucide-react";
 import { Input } from "@/components/form/input";
+import { StrictOmit } from "@/types";
 import { cn } from "@/lib/utils";
 
-type PasswordInputProps = Omit<
+type PasswordInputProps = StrictOmit<
   InputHTMLAttributes<HTMLInputElement>,
   "type"
 > & {
