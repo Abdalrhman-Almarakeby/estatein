@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Inquiry,
   PropertyInquiry,
   SpecificPropertyInquiry,
 } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
+import { DateRange } from "react-day-picker";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/form/select";
-import { InquiresType } from "@/types";
+import { InquiresType, StrictRequired } from "@/types";
 import { DateRangePickerWithPresets } from "./date-range-picker-with-presets";
 import { PropertiesTypesTabs } from "./inquires-types-tabs";
 import { InquiryDataTable } from "./inquiry-data-table";
@@ -30,36 +31,32 @@ type InquiriesDataProps = {
 
 export function InquiriesData({ data }: InquiriesDataProps) {
   const [activeTab, setActiveTab] = useState<InquiresType>("general");
-  // TODO:
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dateRange, setDateRange] = useState<{ start: Date; end: Date }>({
-    start: startOfDay(new Date()),
-    end: endOfDay(new Date()),
+  const [dateRange, setDateRange] = useState<StrictRequired<DateRange>>({
+    from: startOfDay(new Date()),
+    to: endOfDay(new Date()),
   });
-  const [filterStatus, setFilterStatus] = useState<string>("");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
 
   const handleDateRangeChange = useCallback(
-    (range: { from: Date; to: Date }) => {
-      setDateRange({ start: range.from, end: range.to });
+    (range: StrictRequired<DateRange>) => {
+      setDateRange(range);
     },
     [],
   );
 
-  // TODO
-  const filteredData = data;
-  // const filteredData = useMemo(
-  //   () => ({
-  //     ...data,
-  //     [activeTab]: data[activeTab].filter(
-  //       (inquiry) =>
-  //         new Date(inquiry.createdAt) >= dateRange.start &&
-  //         new Date(inquiry.createdAt) <= dateRange.end &&
-  //         (filterStatus === "all" ||
-  //           (inquiry.replied ? "replied" : "pending") === filterStatus),
-  //     ),
-  //   }),
-  //   [data, activeTab, dateRange, filterStatus],
-  // );
+  const filteredData = useMemo(
+    () => ({
+      ...data,
+      [activeTab]: data[activeTab].filter(
+        (inquiry) =>
+          new Date(inquiry.createdAt) >= dateRange.from &&
+          new Date(inquiry.createdAt) <= dateRange.to &&
+          (filterStatus === "all" ||
+            (inquiry.replied ? "replied" : "pending") === filterStatus),
+      ),
+    }),
+    [data, activeTab, dateRange, filterStatus],
+  );
 
   return (
     <>
@@ -72,19 +69,14 @@ export function InquiriesData({ data }: InquiriesDataProps) {
       <div className="mt-6 space-y-6 rounded-lg bg-gray-darker p-6 shadow">
         <h2 className="text-2xl font-semibold">Inquiry List</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="text-gr mb-1 block text-sm font-medium">
-              Date Range
-            </label>
+          <fieldset className="space-y-2.5 lg:space-y-4">
+            <label className="lg:text-lg 3xl:text-xl">Date Range</label>
             <DateRangePickerWithPresets
               onDateRangeChange={handleDateRangeChange}
             />
-          </div>
-          <div>
-            <label
-              htmlFor="status-filter"
-              className="mb-1 block text-sm font-medium"
-            >
+          </fieldset>
+          <fieldset className="space-y-2.5 lg:space-y-4">
+            <label htmlFor="status-filter" className="lg:text-lg 3xl:text-xl">
               Status
             </label>
             <Select
@@ -100,7 +92,7 @@ export function InquiriesData({ data }: InquiriesDataProps) {
                 <SelectItem value="pending">Pending</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </fieldset>
         </div>
         <InquiryDataTable
           inquiries={filteredData[activeTab]}
