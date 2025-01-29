@@ -23,7 +23,7 @@ export function IconContainer({
           "absolute right-1/2 top-1/2 size-5 -translate-y-1/2 translate-x-1/2 stroke-purple-light",
           iconProps?.className,
         )}
-        {...omit({ ...iconProps }, "className")}
+        {...omit(iconProps ?? {}, ["className"])}
       />
     </span>
   );

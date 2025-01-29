@@ -11,3 +11,5 @@ export type SVGComponent = FunctionComponent<SVGProps<SVGSVGElement>>;
 export type WithCaptcha<T> = T & Captcha;
 
 export type StrictRequired<T> = { [K in keyof T]-?: NonNullable<T[K]> };
+
+export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

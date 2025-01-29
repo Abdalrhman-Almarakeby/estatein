@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
         if (!isPasswordValid) {
           return null;
         }
-        return omit(user, "password");
+        return omit(user, ["password"]);
       },
     }),
   ],

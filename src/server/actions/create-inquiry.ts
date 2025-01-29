@@ -81,7 +81,7 @@ export async function createInquiry(data: WithCaptcha<Inquiry>) {
     }
 
     await prisma.inquiry.create({
-      data: omit(data, "captchaToken", "agreeOnTerms"),
+      data: omit(data, ["captchaToken", "agreeOnTerms"]),
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };
