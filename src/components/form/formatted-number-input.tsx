@@ -5,12 +5,13 @@ import {
   useController,
 } from "react-hook-form";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
+import { StrictOmit } from "@/types";
 import { Input } from "./input";
 
 type FormattedNumberInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<NumericFormatProps, "onChange" | "name"> & {
+> = StrictOmit<NumericFormatProps, "onChange" | "name"> & {
   control: Control<TFieldValues>;
   name: TName;
   isCurrency?: boolean;
