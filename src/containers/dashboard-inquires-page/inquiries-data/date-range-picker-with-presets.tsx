@@ -6,6 +6,8 @@ import {
   endOfMonth,
   endOfWeek,
   format,
+  isEqual,
+  isSameDay,
   startOfDay,
   startOfMonth,
   startOfWeek,
@@ -26,15 +28,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { StrictRequired } from "@/types";
 import { cn } from "@/lib/utils";
 
 export function DateRangePickerWithPresets({
   className,
   onDateRangeChange,
 }: HTMLAttributes<HTMLDivElement> & {
-  onDateRangeChange: (range: { from: Date; to: Date }) => void;
+  onDateRangeChange: (range: StrictRequired<DateRange>) => void;
 }) {
   const [date, setDate] = useState<DateRange | undefined>(undefined);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (date?.from && date?.to) {
@@ -43,36 +47,60 @@ export function DateRangePickerWithPresets({
   }, [date, onDateRangeChange]);
 
   const handlePresetChange = (value: string) => {
-    const today = new Date();
+    setIsOpen(false);
+
+    const now = new Date();
     switch (value) {
       case "today":
-        setDate({ from: startOfDay(today), to: endOfDay(today) });
+        setDate({ from: startOfDay(now), to: endOfDay(now) });
         break;
       case "yesterday":
-        const yesterday = subDays(today, 1);
+        const yesterday = subDays(now, 1);
         setDate({ from: startOfDay(yesterday), to: endOfDay(yesterday) });
         break;
       case "last7days":
-        setDate({ from: startOfDay(subDays(today, 6)), to: endOfDay(today) });
+        setDate({ from: startOfDay(subDays(now, 6)), to: endOfDay(now) });
         break;
       case "last30days":
-        setDate({ from: startOfDay(subDays(today, 29)), to: endOfDay(today) });
+        setDate({ from: startOfDay(subDays(now, 29)), to: endOfDay(now) });
         break;
       case "thisweek":
-        setDate({ from: startOfWeek(today), to: endOfWeek(today) });
+        setDate({ from: startOfWeek(now), to: endOfWeek(now) });
         break;
       case "thismonth":
-        setDate({ from: startOfMonth(today), to: endOfMonth(today) });
+        setDate({ from: startOfMonth(now), to: endOfMonth(now) });
         break;
       case "alltime":
-        setDate({ from: new Date(1970, 0, 1), to: endOfDay(today) });
+        setDate({ from: new Date(0), to: endOfDay(now) });
         break;
     }
   };
 
+  const formatDateRange = (date: DateRange | undefined) => {
+    if (!date?.from) {
+      return "Pick a date range";
+    }
+
+    if (
+      isEqual(startOfDay(date.from), startOfDay(new Date(0))) &&
+      date.to &&
+      isEqual(endOfDay(date.to), endOfDay(new Date()))
+    ) {
+      return "All time";
+    }
+
+    if (date.to && isSameDay(date.from, date.to)) {
+      return format(date.from, "LLL dd, y");
+    }
+
+    return date.to
+      ? `${format(date.from, "LLL dd, y")} - ${format(date.to, "LLL dd, y")}`
+      : format(date.from, "LLL dd, y");
+  };
+
   return (
     <div className={cn("grid gap-2", className)}>
-      <Popover>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <button
             id="date"
@@ -85,18 +113,7 @@ export function DateRangePickerWithPresets({
             )}
           >
             <CalendarIcon className="size-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date range</span>
-            )}
+            {formatDateRange(date)}
           </button>
         </PopoverTrigger>
         <PopoverContent
@@ -122,6 +139,7 @@ export function DateRangePickerWithPresets({
               initialFocus
               mode="range"
               defaultMonth={date?.from}
+              toDate={new Date()}
               selected={date}
               onSelect={setDate}
               showOutsideDays={false}
