@@ -19,35 +19,57 @@ const config: Config = {
     },
     extend: {
       spacing: {
-        4.5: "1.125rem",
-        6.5: "1.625rem",
-        7.5: "1.875rem",
-        11.5: "2.875rem",
-        12.5: "3.125rem",
-        15: "3.75rem",
-        24.5: "6.125rem",
-        30: "7.5rem",
+        "15": "3.75rem",
+        "30": "7.5rem",
+        "4.5": "1.125rem",
+        "6.5": "1.625rem",
+        "7.5": "1.875rem",
+        "11.5": "2.875rem",
+        "12.5": "3.125rem",
+        "24.5": "6.125rem",
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
         "menu-open": {
-          from: { right: "-110%" },
-          to: { right: "0" },
+          from: {
+            right: "-110%",
+          },
+          to: {
+            right: "0",
+          },
         },
         "menu-close": {
-          from: { display: "flex", right: "0" },
-          to: { display: "none", right: "-110%" },
+          from: {
+            display: "flex",
+            right: "0",
+          },
+          to: {
+            display: "none",
+            right: "-110%",
+          },
         },
         "caret-blink": {
-          "0%,70%,100%": { opacity: "1" },
-          "20%,50%": { opacity: "0" },
+          "0%,70%,100%": {
+            opacity: "1",
+          },
+          "20%,50%": {
+            opacity: "0",
+          },
         },
       },
       animation: {
