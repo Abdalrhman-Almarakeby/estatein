@@ -1,11 +1,14 @@
 /* eslint-disable n/no-process-env */
 /* eslint-disable no-console */
+import { StandardSchemaV1 } from "@t3-oss/env-core";
 import { createEnv } from "@t3-oss/env-nextjs";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 const nonEmptyString = z.string().trim().min(1);
 const emailSchema = z.string().trim().min(1).email();
 const urlSchema = z.string().trim().min(1).url();
+
+const GMAIL_APP_PASSWORD_LENGTH = 19;
 
 export const env = createEnv({
   server: {
@@ -16,7 +19,7 @@ export const env = createEnv({
     // Email Configuration
     ADMIN_EMAIL: emailSchema,
     GMAIL_EMAIL: emailSchema,
-    GMAIL_APP_PASSWORD: z.string().trim().length(19),
+    GMAIL_APP_PASSWORD: z.string().trim().length(GMAIL_APP_PASSWORD_LENGTH),
 
     // ReCAPTCHA
     RECAPTCHA_SECRET_KEY: nonEmptyString,
@@ -54,39 +57,20 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_URL: z.string().trim().optional(),
   },
 
-  onValidationError: (error: ZodError) => {
+  onValidationError: (issues: readonly StandardSchemaV1.Issue[]) => {
+    console.error("❌ Invalid environment variables:", issues);
+    process.exit(1);
+  },
+  onInvalidAccess: (variable: string) => {
     console.error(
-      "❌ Invalid environment variables:",
-      error.flatten().fieldErrors,
+      `❌ Attempted to access server-side environment variable "${variable}" on the client`,
     );
     process.exit(1);
   },
   emptyStringAsUndefined: true,
-  runtimeEnv: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    ADMIN_EMAIL: process.env.ADMIN_EMAIL,
-    GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
-    GMAIL_EMAIL: process.env.GMAIL_EMAIL,
-    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
+  experimental__runtimeEnv: {
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-    POSTGRES_URL: process.env.POSTGRES_URL,
-    POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
-    POSTGRES_URL_NO_SSL: process.env.POSTGRES_URL_NO_SSL,
-    POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
-    POSTGRES_USER: process.env.POSTGRES_USER,
-    POSTGRES_HOST: process.env.POSTGRES_HOST,
-    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
-    POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
-    KV_URL: process.env.KV_URL,
-    KV_REST_API_URL: process.env.KV_REST_API_URL,
-    KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
-    KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
-    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
-    NODE_ENV: process.env.NODE_ENV,
   },
 });
