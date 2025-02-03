@@ -3,6 +3,7 @@
     "prisma.prisma",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "tobermory.es6-string-html"
   ]
 }
