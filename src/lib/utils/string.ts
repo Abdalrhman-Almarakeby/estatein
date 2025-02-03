@@ -14,18 +14,19 @@ export function formatWithComma(number: number): string {
   return number.toLocaleString("en-US");
 }
 
-export function formatPropertySize(input: string) {
+export function formatRange(input: string, unit?: string): string {
   const [min, max] = input
     .split("-")
     .map((element) => formatWithComma(+element));
-  return max ? `${min}m² - ${max}m²` : `${min}m²`;
+  return max ? `${min}${unit} - ${max}${unit}` : `${min}${unit}`;
 }
 
-export function formatPricingRange(input: string) {
-  const [min, max] = input
-    .split("-")
-    .map((element) => formatWithComma(+element));
-  return max ? `${min}$ - ${max}$` : `${min}$`;
+export function formatPropertySize(input: string): string {
+  return formatRange(input, "m²");
+}
+
+export function formatPricingRange(input: string): string {
+  return formatRange(input, "$");
 }
 
 export function generateId(): string {
