@@ -1,4 +1,4 @@
-export function formatFileSize(bytes: number): string {
+export function formatFileSize(bytes: number) {
   if (bytes === 0) return "0 Bytes";
 
   const kilobyte = 1024;

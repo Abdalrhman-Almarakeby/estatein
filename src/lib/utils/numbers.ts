@@ -1,10 +1,10 @@
 import { formatWithComma } from "./string";
 
-export function formatTwoDigits(num: number): string {
+export function formatTwoDigits(num: number) {
   return num < 10 ? `0${num}` : num.toString();
 }
 
-export function formatPrice(amount: number): string {
+export function formatPrice(amount: number) {
   return amount.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
@@ -13,15 +13,11 @@ export function formatPrice(amount: number): string {
   });
 }
 
-export function formatCompactNumber(value: number): string {
+export function formatCompactNumber(value: number) {
   return new Intl.NumberFormat("en", { notation: "compact" }).format(value);
 }
 
-export function formatRangeLabel(
-  min: number,
-  max: number,
-  unit: string,
-): string {
+export function formatRangeLabel(min: number, max: number, unit: string) {
   const formattedMin = formatWithComma(min);
   const formattedMax =
     max === Number.MAX_SAFE_INTEGER
@@ -41,10 +37,7 @@ export function createRangeOptions(
   }));
 }
 
-export function calculateGrowthPercent(
-  current: number,
-  previous: number,
-): number {
+export function calculateGrowthPercent(current: number, previous: number) {
   if (previous === 0) return current > 0 ? 100 : 0;
   return ((current - previous) / previous) * 100;
 }
