@@ -11,6 +11,7 @@ export const emailSchema = z
     required_error: "Email is required",
     invalid_type_error: "Invalid email format",
   })
+  .trim()
   .nonempty("Email is required")
   .email("Please enter a valid email address");
 
@@ -19,6 +20,7 @@ export const passwordSchema = z
     required_error: "Password is required",
     invalid_type_error: "Invalid password",
   })
+  .trim()
   .min(12, "Password must be at least 12 characters long")
   .max(64, "Password must not exceed 64 characters")
   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
@@ -35,6 +37,7 @@ export const nameSchema = (fieldName: string) =>
       required_error: `${fieldName} is required`,
       invalid_type_error: `Invalid ${fieldName.toLowerCase()}`,
     })
+    .trim()
     .nonempty(`${fieldName} is required`)
     .max(50, `${fieldName} must be at most 50 characters long`);
 
@@ -43,16 +46,19 @@ export const phoneSchema = z
     required_error: "Phone number is required",
     invalid_type_error: "Invalid phone number",
   })
+  .trim()
   .nonempty("Phone number is required")
-  .regex(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, {
-    message: "Please enter a valid phone number",
-  });
+  .regex(
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
+    "Please enter a valid phone number",
+  );
 
 export const messageSchema = z
   .string({
     required_error: "Message is required",
     invalid_type_error: "Invalid message",
   })
+  .trim()
   .nonempty("Message is required")
   .max(5000, "Message must be at most 5000 characters long");
 
