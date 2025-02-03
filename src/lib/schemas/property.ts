@@ -49,12 +49,12 @@ export const propertyDataSchema = z.object({
     .array(z.string().url("Each image must be a valid URL"), {
       required_error: "Images are required",
     })
-    .nonempty("At least one image is required"),
+    .min(1, "At least one image is required"),
   features: z
     .array(z.string(), {
       required_error: "Features are required",
     })
-    .nonempty("At least one feature is required"),
+    .min(1, "At least one feature is required"),
   listingPrice: z
     .number({
       required_error: "Listing price is required",
