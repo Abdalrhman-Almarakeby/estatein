@@ -25,7 +25,7 @@ export const propertyInquirySchema = z.object({
       invalid_type_error: "Invalid number of bathrooms",
     })
     .refine((value) => /^[1-5]$/.test(value), {
-      message: "Number of bathrooms must be a whole number between 1 and 5",
+      message: "Bathrooms must be a whole number between 1 and 5",
     }),
   bedrooms: z
     .string({
@@ -33,12 +33,12 @@ export const propertyInquirySchema = z.object({
       invalid_type_error: "Invalid number of bedrooms",
     })
     .refine((value) => /^(?:[1-9]|10)$/.test(value), {
-      message: "Number of bedrooms must be a whole number between 1 and 10",
+      message: "Bedrooms must be a whole number between 1 and 10",
     }),
   budget: pricingRangeSchema,
   propertySize: propertySizeSchema,
   preferredContactMethod: z.nativeEnum(ContactMethod, {
-    message: "contact method is required",
+    message: "Preferred contact method is required",
     required_error: "Preferred contact method is required",
     invalid_type_error: "Invalid contact method",
   }),
