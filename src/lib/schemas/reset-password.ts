@@ -9,7 +9,7 @@ export const resetPasswordSchema = z
         required_error: "Confirm password is required",
         invalid_type_error: "Invalid confirm password",
       })
-      .min(1, "Confirm password is required"),
+      .nonempty("Confirm password is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

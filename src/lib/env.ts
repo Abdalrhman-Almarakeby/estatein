@@ -4,9 +4,9 @@ import { StandardSchemaV1 } from "@t3-oss/env-core";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-const nonEmptyString = z.string().trim().min(1);
-const emailSchema = z.string().trim().min(1).email();
-const urlSchema = z.string().trim().min(1).url();
+const nonEmptyString = z.string().trim().nonempty();
+const emailSchema = z.string().trim().nonempty().email();
+const urlSchema = z.string().trim().nonempty().url();
 
 const GMAIL_APP_PASSWORD_LENGTH = 19;
 

@@ -6,7 +6,8 @@ export const captchaSchema = z.object({
       required_error: "CAPTCHA verification is required",
       invalid_type_error: "Invalid CAPTCHA token",
     })
-    .min(1, "CAPTCHA verification is required"),
+    .trim()
+    .nonempty("CAPTCHA verification is required"),
 });
 
 export type Captcha = z.infer<typeof captchaSchema>;

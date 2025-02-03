@@ -17,7 +17,7 @@ export const specificPropertyInquirySchema = z.object({
       required_error: "Property ID is required",
       invalid_type_error: "Invalid property ID",
     })
-    .min(1, "Property ID is required")
+    .nonempty("Property ID is required")
     .cuid("Invalid property ID format"),
   message: messageSchema,
   agreeOnTerms: agreeOnTermsSchema,

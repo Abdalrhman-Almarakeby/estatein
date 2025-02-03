@@ -11,7 +11,7 @@ export const emailSchema = z
     required_error: "Email is required",
     invalid_type_error: "Invalid email format",
   })
-  .min(1, "Email is required")
+  .nonempty("Email is required")
   .email("Please enter a valid email address");
 
 export const passwordSchema = z
@@ -35,7 +35,7 @@ export const nameSchema = (fieldName: string) =>
       required_error: `${fieldName} is required`,
       invalid_type_error: `Invalid ${fieldName.toLowerCase()}`,
     })
-    .min(1, `${fieldName} is required`)
+    .nonempty(`${fieldName} is required`)
     .max(50, `${fieldName} must be at most 50 characters long`);
 
 export const phoneSchema = z
@@ -43,7 +43,7 @@ export const phoneSchema = z
     required_error: "Phone number is required",
     invalid_type_error: "Invalid phone number",
   })
-  .min(1, "Phone number is required")
+  .nonempty("Phone number is required")
   .regex(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, {
     message: "Please enter a valid phone number",
   });
@@ -53,7 +53,7 @@ export const messageSchema = z
     required_error: "Message is required",
     invalid_type_error: "Invalid message",
   })
-  .min(1, "Message is required")
+  .nonempty("Message is required")
   .max(5000, "Message must be at most 5000 characters long");
 
 export const agreeOnTermsSchema = z.literal(true, {

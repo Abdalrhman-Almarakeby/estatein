@@ -8,14 +8,14 @@ export const propertyDataSchema = z.object({
       required_error: "Title is required",
       invalid_type_error: "Invalid title",
     })
-    .min(1, "Title is required")
+    .nonempty("Title is required")
     .max(100, "Title must be at most 100 characters long"),
   description: z
     .string({
       required_error: "Description is required",
       invalid_type_error: "Invalid description",
     })
-    .min(1, "Description is required")
+    .nonempty("Description is required")
     .max(5000, "Description must be at most 5000 characters long"),
   location: locationSchema,
   propertyType: z.nativeEnum(PropertyType, {
@@ -28,7 +28,7 @@ export const propertyDataSchema = z.object({
       invalid_type_error: "Invalid number of bedrooms",
     })
     .int("Number of bedrooms must be a whole number")
-    .min(1, "Number of bedrooms must be at least 1")
+    .nonempty("Number of bedrooms must be at least 1")
     .max(10, "Number of bedrooms must be at most 10"),
   bathrooms: z
     .number({
@@ -36,7 +36,7 @@ export const propertyDataSchema = z.object({
       invalid_type_error: "Invalid number of bathrooms",
     })
     .int("Number of bathrooms must be a whole number")
-    .min(1, "Number of bathrooms must be at least 1")
+    .nonempty("Number of bathrooms must be at least 1")
     .max(10, "Number of bathrooms must be at most 10"),
   area: z
     .number({
@@ -49,12 +49,12 @@ export const propertyDataSchema = z.object({
     .array(z.string().url("Each image must be a valid URL"), {
       required_error: "Images are required",
     })
-    .min(1, "At least one image is required"),
+    .nonempty("At least one image is required"),
   features: z
     .array(z.string(), {
       required_error: "Features are required",
     })
-    .min(1, "At least one feature is required"),
+    .nonempty("At least one feature is required"),
   listingPrice: z
     .number({
       required_error: "Listing price is required",
