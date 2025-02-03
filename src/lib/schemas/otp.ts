@@ -6,7 +6,6 @@ export const otpSchema = z.object({
       required_error: "OTP is required",
       invalid_type_error: "Invalid OTP format",
     })
-    .nonempty("Please enter the OTP")
     .regex(/^\d+$/, "OTP must contain only numbers")
     .length(6, "OTP must be exactly 6 digits"),
 });
