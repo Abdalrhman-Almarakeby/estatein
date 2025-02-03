@@ -8,7 +8,6 @@ export const loginSchema = z.object({
       required_error: "Password is required",
       invalid_type_error: "Invalid password",
     })
-    .nonempty("Password is required")
     .max(64, "Password must not exceed 64 characters"),
 });
 
