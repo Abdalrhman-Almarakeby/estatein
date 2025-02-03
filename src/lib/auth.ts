@@ -24,24 +24,30 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          });
 
-        if (!user) {
+          if (!user) {
+            return null;
+          }
+
+          const isPasswordValid = await compare(
+            credentials.password,
+            user.password,
+          );
+
+          if (!isPasswordValid) {
+            return null;
+          }
+
+          return omit(user, ["password"]);
+        } catch (error) {
           return null;
         }
-        const isPasswordValid = await compare(
-          credentials.password,
-          user.password,
-        );
-
-        if (!isPasswordValid) {
-          return null;
-        }
-        return omit(user, ["password"]);
       },
     }),
   ],
