@@ -28,7 +28,7 @@ export const propertyDataSchema = z.object({
       invalid_type_error: "Invalid number of bedrooms",
     })
     .int("Number of bedrooms must be a whole number")
-    .nonempty("Number of bedrooms must be at least 1")
+    .min(1, "Number of bedrooms must be at least 1")
     .max(10, "Number of bedrooms must be at most 10"),
   bathrooms: z
     .number({
@@ -36,7 +36,7 @@ export const propertyDataSchema = z.object({
       invalid_type_error: "Invalid number of bathrooms",
     })
     .int("Number of bathrooms must be a whole number")
-    .nonempty("Number of bathrooms must be at least 1")
+    .min(1, "Number of bathrooms must be at least 1")
     .max(10, "Number of bathrooms must be at most 10"),
   area: z
     .number({
