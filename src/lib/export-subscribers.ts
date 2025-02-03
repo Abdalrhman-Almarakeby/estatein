@@ -4,30 +4,50 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import Papa from "papaparse";
+import { StrictOmit } from "@/types";
 
-export type ExportFormat = "csv" | "xlsx" | "json" | "xml" | "txt" | "pdf";
+export const ExportFileFormats = {
+  CSV: "CSV",
+  XLSX: "XLSX",
+  JSON: "JSON",
+  XML: "XML",
+  TXT: "TXT",
+  PDF: "PDF",
+} as const;
 
-export type Subscribers = Omit<NewsletterSubscriber, "id">[];
+export type ExportFileFormat = keyof typeof ExportFileFormats;
+
+export type Subscribers = (StrictOmit<
+  NewsletterSubscriber,
+  "id" | "subscribedAt"
+> & {
+  subscribedAt: string;
+})[];
 
 export async function exportSubscriberData(
-  subscribers: Subscribers,
-  format: ExportFormat,
+  subscribers: StrictOmit<NewsletterSubscriber, "id">[],
+  fileFormat: ExportFileFormat,
 ) {
-  switch (format) {
-    case "csv":
-      return exportCSV(subscribers);
-    case "xlsx":
-      return exportXLSX(subscribers);
-    case "json":
-      return exportJSON(subscribers);
-    case "xml":
-      return exportXML(subscribers);
-    case "txt":
-      return exportTXT(subscribers);
-    case "pdf":
-      return exportPDF(subscribers);
+  const formattedSubscribers = subscribers.map((sub) => ({
+    ...sub,
+    subscribedAt: format(sub.subscribedAt, "Pp"),
+  }));
+
+  switch (fileFormat) {
+    case ExportFileFormats.CSV:
+      return exportCSV(formattedSubscribers);
+    case ExportFileFormats.XLSX:
+      return exportXLSX(formattedSubscribers);
+    case ExportFileFormats.JSON:
+      return exportJSON(formattedSubscribers);
+    case ExportFileFormats.XML:
+      return exportXML(formattedSubscribers);
+    case ExportFileFormats.TXT:
+      return exportTXT(formattedSubscribers);
+    case ExportFileFormats.PDF:
+      return exportPDF(formattedSubscribers);
     default:
-      throw new Error(`Unsupported format: ${format}`);
+      throw new Error(`Unsupported format: ${fileFormat}`);
   }
 }
 
@@ -50,7 +70,7 @@ async function exportXLSX(subscribers: Subscribers) {
   subscribers.forEach((sub) => {
     worksheet.addRow({
       email: sub.email,
-      subscribedAt: format(sub.subscribedAt, "P p"),
+      subscribedAt: sub.subscribedAt,
     });
   });
 
@@ -64,7 +84,6 @@ async function exportXLSX(subscribers: Subscribers) {
 
 function exportJSON(subscribers: Subscribers) {
   const jsonString = JSON.stringify(subscribers, null, 2);
-
   const blob = new Blob([jsonString], {
     type: "application/json;charset=utf-8;",
   });
@@ -73,18 +92,18 @@ function exportJSON(subscribers: Subscribers) {
 }
 
 function exportXML(subscribers: Subscribers) {
-  const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
-<subscribers>
-  ${subscribers
+  const xmlContent = subscribers
     .map(
-      (sub) => `
+      (sub) => /*XML*/ `  
   <subscriber>
     <subscriberEmail>${sub.email}</subscriberEmail>
-    <subscriptionDate>${format(sub.subscribedAt, "Pp")}</subscriptionDate>
+    <subscriptionDate>${sub.subscribedAt}</subscriptionDate>
   </subscriber>`,
     )
-    .join("")}
-</subscribers>`;
+    .join("");
+
+  const xmlString = /*XML*/ `<?xml version="1.0" encoding="UTF-8"?>
+<subscribers>${xmlContent}</subscribers>`;
 
   const blob = new Blob([xmlString], {
     type: "application/xml;charset=utf-8;",
@@ -94,11 +113,11 @@ function exportXML(subscribers: Subscribers) {
 }
 
 function exportTXT(subscribers: Subscribers) {
-  const txtString = subscribers
-    .map((sub) => `${sub.email}, ${format(sub.subscribedAt, "Pp")}`)
+  const txtContent = subscribers
+    .map((sub) => `${sub.email}, ${sub.subscribedAt}`)
     .join("\n");
 
-  const blob = new Blob([txtString], { type: "text/plain;charset=utf-8;" });
+  const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8;" });
 
   saveAs(blob, "newsletter_subscribers.txt");
 }
@@ -109,7 +128,7 @@ function exportPDF(subscribers: Subscribers) {
 
   subscribers.forEach((sub, index) => {
     doc.text(
-      `${index + 1}. ${sub.email} - ${format(sub.subscribedAt, "Pp")}`,
+      `${index + 1}. ${sub.email} - ${sub.subscribedAt}`,
       10,
       20 + index * 10,
     );

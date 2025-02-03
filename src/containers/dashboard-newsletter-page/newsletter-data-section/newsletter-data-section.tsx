@@ -1,9 +1,10 @@
+import { NewsletterSubscriber } from "@prisma/client";
 import { FileDown } from "lucide-react";
-import { Subscribers } from "@/lib/export-subscribers";
+import { StrictOmit } from "@/types";
 import { DownloadButtons } from "./download-buttons";
 
 type NewsletterDataSectionProps = {
-  subscribers: Subscribers;
+  subscribers: StrictOmit<NewsletterSubscriber, "id">[];
 };
 
 export function NewsletterDataSection({

@@ -1,5 +1,6 @@
 "use client";
 
+import { NewsletterSubscriber } from "@prisma/client";
 import {
   Code,
   FileCode,
@@ -8,27 +9,31 @@ import {
   FileText,
   FileType,
 } from "lucide-react";
+import { StrictOmit, SVGComponent } from "@/types";
 import {
-  ExportFormat,
+  ExportFileFormat,
+  ExportFileFormats,
   exportSubscriberData,
-  Subscribers,
 } from "@/lib/export-subscribers";
 
 type DownloadButtonsProps = {
-  subscribers: Subscribers;
+  subscribers: StrictOmit<NewsletterSubscriber, "id">[];
 };
 
-const FORMATS = [
-  { format: "xlsx", Icon: FileSpreadsheet },
-  { format: "csv", Icon: FileSliders },
-  { format: "json", Icon: Code },
-  { format: "xml", Icon: FileCode },
-  { format: "pdf", Icon: FileText },
-  { format: "txt", Icon: FileType },
+const FORMATS: {
+  format: keyof typeof ExportFileFormats;
+  Icon: SVGComponent;
+}[] = [
+  { format: "XLSX", Icon: FileSpreadsheet },
+  { format: "CSV", Icon: FileSliders },
+  { format: "JSON", Icon: Code },
+  { format: "XML", Icon: FileCode },
+  { format: "PDF", Icon: FileText },
+  { format: "TXT", Icon: FileType },
 ] as const;
 
 export function DownloadButtons({ subscribers }: DownloadButtonsProps) {
-  const downloadSubscribers = async (format: ExportFormat) => {
+  const downloadSubscribers = async (format: ExportFileFormat) => {
     try {
       await exportSubscriberData(subscribers, format);
     } catch (error) {
