@@ -14,8 +14,6 @@ const inquiryTypeSchema = z.nativeEnum(InquiryType, {
   invalid_type_error: "Invalid inquiry type",
 });
 
-inquiryTypeSchema.safeParse("Other");
-
 const referralSourceSchema = z.nativeEnum(ReferralSource, {
   message: "Please select how you heard about us",
   required_error: "Please select how you heard about us",
