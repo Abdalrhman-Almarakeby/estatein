@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/form/select";
-import { InquiresType, StrictRequired } from "@/types";
+import { InquiryType, StrictRequired } from "@/types";
 import { DateRangePickerWithPresets } from "./date-range-picker-with-presets";
 import { PropertiesTypesTabs } from "./inquires-types-tabs";
 import { InquiryDataTable } from "./inquiry-data-table";
@@ -30,7 +30,7 @@ type InquiriesDataProps = {
 };
 
 export function InquiriesData({ data }: InquiriesDataProps) {
-  const [activeTab, setActiveTab] = useState<InquiresType>("general");
+  const [activeTab, setActiveTab] = useState<InquiryType>("general");
   const [dateRange, setDateRange] = useState<StrictRequired<DateRange>>({
     from: startOfDay(new Date()),
     to: endOfDay(new Date()),
@@ -62,7 +62,7 @@ export function InquiriesData({ data }: InquiriesDataProps) {
     <>
       <PropertiesTypesTabs
         activeTab={activeTab}
-        setActiveTab={(tab: InquiresType) => setActiveTab(tab)}
+        setActiveTab={(tab: InquiryType) => setActiveTab(tab)}
       />
       <StatisticsSection data={data} inquiresType={activeTab} />
 

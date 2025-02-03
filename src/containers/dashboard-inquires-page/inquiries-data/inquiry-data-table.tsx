@@ -47,12 +47,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PaginationControls } from "@/containers/dashboard-properties-page/properties-table/pagination-controls";
-import { InquiresType } from "@/types";
+import { InquiryType } from "@/types";
 import { InquiryDetails } from "./inquiry-details";
 
 type InquiryDataTableProps = {
   inquiries: (Inquiry | PropertyInquiry | SpecificPropertyInquiry)[];
-  type: InquiresType;
+  type: InquiryType;
 };
 
 export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {

@@ -1,13 +1,13 @@
 "use client";
 
 import { Building, Home, MessageSquare } from "lucide-react";
-import { InquiresType } from "@/types";
+import { InquiryType } from "@/types";
 import { cn, upperFirst } from "@/lib/utils";
 import { INQUIRIES_TYPES } from "@/constant";
 
 type PropertiesTypesTabsProps = {
-  activeTab: InquiresType;
-  setActiveTab: (tab: InquiresType) => void;
+  activeTab: InquiryType;
+  setActiveTab: (tab: InquiryType) => void;
 };
 
 export function PropertiesTypesTabs({

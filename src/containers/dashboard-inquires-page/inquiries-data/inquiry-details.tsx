@@ -6,12 +6,12 @@ import {
   SpecificPropertyInquiry,
 } from "@prisma/client";
 import { format } from "date-fns";
-import { InquiresType } from "@/types";
+import { InquiryType } from "@/types";
 import { formatPricingRange, normalize, upperFirst } from "@/lib/utils";
 
 type InquiryDetailsProps = {
   inquiry: Inquiry | PropertyInquiry | SpecificPropertyInquiry;
-  type: InquiresType;
+  type: InquiryType;
 };
 
 export function InquiryDetails({ inquiry, type }: InquiryDetailsProps) {

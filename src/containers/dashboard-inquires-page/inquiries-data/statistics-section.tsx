@@ -7,11 +7,11 @@ import {
 } from "@prisma/client";
 import { AlertCircle, CheckCircle, MessageSquare } from "lucide-react";
 import { GrowthIndicator } from "@/containers/dashboard-newsletter-page/newsletter-stats-section/growth-indicator";
-import { InquiresType } from "@/types";
+import { InquiryType } from "@/types";
 import { cn, upperFirst } from "@/lib/utils";
 
 type StatisticsSectionProps = {
-  inquiresType: InquiresType;
+  inquiresType: InquiryType;
   data: {
     general: Inquiry[];
     property: PropertyInquiry[];
