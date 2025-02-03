@@ -17,7 +17,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier src/ --write",
+    "format": "prettier --write .",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio"
