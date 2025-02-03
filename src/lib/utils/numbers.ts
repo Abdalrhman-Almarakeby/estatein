@@ -4,8 +4,8 @@ export function formatTwoDigits(num: number): string {
   return num < 10 ? `0${num}` : num.toString();
 }
 
-export function formatPrice(number: number): string {
-  return number.toLocaleString("en-US", {
+export function formatPrice(amount: number): string {
+  return amount.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 0,
@@ -13,10 +13,8 @@ export function formatPrice(number: number): string {
   });
 }
 
-export function formatCompactNumber(number: number): string {
-  return Intl.NumberFormat("en", {
-    notation: "compact",
-  }).format(number);
+export function formatCompactNumber(value: number): string {
+  return new Intl.NumberFormat("en", { notation: "compact" }).format(value);
 }
 
 export function formatRangeLabel(
@@ -24,9 +22,13 @@ export function formatRangeLabel(
   max: number,
   unit: string,
 ): string {
-  return max === Number.MAX_SAFE_INTEGER
-    ? `${formatWithComma(min)}${unit}+`
-    : `${formatWithComma(min)}${unit} - ${formatWithComma(max)}${unit}`;
+  const formattedMin = formatWithComma(min);
+  const formattedMax =
+    max === Number.MAX_SAFE_INTEGER
+      ? `${formattedMin}${unit}+`
+      : `${formattedMin}${unit} - ${formatWithComma(max)}${unit}`;
+
+  return formattedMax;
 }
 
 export function createRangeOptions(
@@ -39,7 +41,10 @@ export function createRangeOptions(
   }));
 }
 
-export function calculateGrowthPercent(current: number, previous: number) {
+export function calculateGrowthPercent(
+  current: number,
+  previous: number,
+): number {
   if (previous === 0) return current > 0 ? 100 : 0;
   return ((current - previous) / previous) * 100;
 }
