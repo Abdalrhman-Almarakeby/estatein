@@ -3,7 +3,7 @@ import { fileURLToPath } from "url";
 
 const jiti = createJiti(fileURLToPath(import.meta.url));
 
-jiti("./src/lib/env");
+await jiti.import("./src/lib/env");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
