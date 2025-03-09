@@ -9,6 +9,9 @@ jiti("./src/lib/env");
 const nextConfig = {
   experimental: {
     typedRoutes: true,
+    webpackBuildWorker: true,
+    parallelServerBuildTraces: true,
+    parallelServerCompiles: true,
   },
   logging: {
     fetches: {
