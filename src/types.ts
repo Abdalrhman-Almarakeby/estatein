@@ -8,8 +8,13 @@ export type ScrollDirection = "up" | "down";
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGSVGElement>>;
 
-export type WithCaptcha<T> = T & Captcha;
+export type WithCaptcha<T extends object> = T & Captcha;
 
-export type StrictRequired<T> = { [K in keyof T]-?: NonNullable<T[K]> };
+export type StrictRequired<T extends object> = {
+  [K in keyof T]-?: NonNullable<T[K]>;
+};
 
-export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type StrictOmit<T extends object, K extends keyof T> = Pick<
+  T,
+  Exclude<keyof T, K>
+>;

@@ -7,7 +7,7 @@ import { WithCaptcha } from "@/types";
 import { Captcha, captchaSchema } from "@/lib/schemas/captcha";
 import { useToastNotification } from "./use-toast-notification";
 
-type UseFormHandlerOptions<T> = {
+type UseFormHandlerOptions<T extends object> = {
   schema: ZodObject<ZodRawShape>;
   serverAction: (
     data: WithCaptcha<T>,
