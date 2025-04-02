@@ -3,7 +3,7 @@ model User {
   email                          String    @unique @db.VarChar(255)
   password                       String
   salt                           String
-  name                           String    @unique @db.VarChar(255)
+  username                       String    @unique @db.VarChar(255)
   role                           Role      @default(MODERATOR)
   authorizedEmailAddresses       String[]  @default([])
   isVerified                     Boolean   @default(false)

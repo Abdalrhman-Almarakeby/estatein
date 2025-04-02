@@ -62,7 +62,7 @@ export async function forgotPassword(
         select: {
           id: true,
           email: true,
-          name: true,
+          username: true,
           passwordResetToken: true,
           passwordResetTokenExpiresAt: true,
         },
@@ -88,7 +88,7 @@ export async function forgotPassword(
       if (callbackUrl) params.append("callbackUrl", callbackUrl);
 
       const template = createElement(PasswordReset, {
-        recipientName: user.name,
+        recipientName: user.username,
         resetUrl: `${getBaseUrl()}/dashboard/auth/reset-password?${params.toString()}`,
       });
 

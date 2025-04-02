@@ -48,7 +48,7 @@ export async function resendVerificationEmail() {
       where: { email },
       select: {
         id: true,
-        name: true,
+        username: true,
         isVerified: true,
         emailVerificationCode: true,
         emailVerificationCodeExpiresAt: true,
@@ -79,7 +79,7 @@ export async function resendVerificationEmail() {
       });
 
       const verificationEmailTemplate = createElement(EmailVerification, {
-        recipientName: user.name,
+        recipientName: user.username,
         verificationCode,
       });
 

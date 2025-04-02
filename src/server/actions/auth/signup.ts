@@ -65,11 +65,11 @@ export async function signup(data: WithCaptcha<Signup>) {
 
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [{ email: data.email }, { name: data.username }],
+        OR: [{ email: data.email }, { username: data.username }],
       },
       select: {
         email: true,
-        name: true,
+        username: true,
       },
     });
 
@@ -119,7 +119,7 @@ export async function signup(data: WithCaptcha<Signup>) {
           email: data.email,
           password: hashedPassword,
           salt,
-          name: data.username,
+          username: data.username,
           emailVerificationCode: verificationCode,
           emailVerificationCodeExpiresAt,
           role,
