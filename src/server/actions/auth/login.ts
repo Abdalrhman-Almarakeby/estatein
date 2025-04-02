@@ -2,8 +2,8 @@
 
 import { cookies } from "next/headers";
 import { formatDistanceToNow, minutesToSeconds } from "date-fns";
-import { env } from "process";
 import { WithCaptcha } from "@/types";
+import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
 import { comparePasswords } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
