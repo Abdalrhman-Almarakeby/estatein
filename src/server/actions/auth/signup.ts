@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { createElement } from "react";
 import { Role } from "@prisma/client";
-import { hash } from "bcryptjs";
 import {
   addMinutes,
   formatDuration,
@@ -15,6 +14,7 @@ import { WithCaptcha } from "@/types";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
 import { generateNumericOTP } from "@/lib/otp";
+import { generateSalt, hashPassword } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
@@ -111,15 +111,14 @@ export async function signup(data: WithCaptcha<Signup>) {
     const role = isAdmin ? Role.ADMIN : Role.MODERATOR;
 
     await prisma.$transaction(async (tx) => {
-      const hashedPassword = await hash(
-        data.password,
-        AUTH_CONFIG.password.hashSaltRounds,
-      );
+      const salt = generateSalt();
+      const hashedPassword = await hashPassword(data.password, salt);
 
       await tx.user.create({
         data: {
           email: data.email,
           password: hashedPassword,
+          salt,
           name: data.username,
           emailVerificationCode: verificationCode,
           emailVerificationCodeExpiresAt,

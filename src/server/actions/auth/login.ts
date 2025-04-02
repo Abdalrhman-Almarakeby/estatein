@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { compare } from "bcryptjs";
 import { formatDistanceToNow, minutesToSeconds } from "date-fns";
 import { env } from "process";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
+import { comparePasswords } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
@@ -56,6 +56,7 @@ export async function login(data: WithCaptcha<Login>) {
         id: true,
         password: true,
         isVerified: true,
+        salt: true,
       },
     });
 
@@ -97,7 +98,12 @@ export async function login(data: WithCaptcha<Login>) {
       };
     }
 
-    const isValidPassword = await compare(data.password, user.password);
+    const isValidPassword = await comparePasswords({
+      password: data.password,
+      salt: user.salt,
+      hashedPassword: user.password,
+    });
+
     if (!isValidPassword) {
       const message =
         remaining < 3
