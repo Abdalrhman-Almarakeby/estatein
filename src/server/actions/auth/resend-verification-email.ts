@@ -11,7 +11,6 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
-import "@/constant";
 import { sendEmail } from "@/server/services";
 
 export async function resendVerificationEmail() {
