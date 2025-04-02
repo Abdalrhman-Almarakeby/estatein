@@ -30,9 +30,8 @@ export function useSignupForm(callbackUrl?: string) {
 
       if (success) {
         const params = callbackUrl && new URLSearchParams({ callbackUrl });
-
-        const url =
-          `/dashboard/auth/verify-email${params ? (`?${params.toString()}` as const) : ""}` as const;
+        const queryString = params ? (`?${params.toString()}` as const) : "";
+        const url = `/dashboard/auth/verify-email${queryString}` as const;
 
         router.push(url);
       } else {
