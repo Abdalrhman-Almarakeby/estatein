@@ -92,9 +92,7 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
       const storedOtpBuffer = new Uint8Array(
         Buffer.from(user.emailVerificationCode),
       );
-      const isValidOtp =
-        otpBuffer.length === storedOtpBuffer.length &&
-        timingSafeEqual(otpBuffer, storedOtpBuffer);
+      const isValidOtp = timingSafeEqual(otpBuffer, storedOtpBuffer);
 
       if (!isValidOtp) {
         const attemptsLeft = remaining - 1;
