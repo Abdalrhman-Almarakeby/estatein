@@ -69,7 +69,7 @@ export function useVerifyEmailForm() {
       if (success) {
         const params = callbackUrl && new URLSearchParams({ callbackUrl });
         const queryString = params ? (`?${params.toString()}` as const) : "";
-        const url = `/dashboard/auth/verify-email${queryString}` as const;
+        const url = `/dashboard/auth/login${queryString}` as const;
 
         toast.showSuccess();
         router.push(url);
