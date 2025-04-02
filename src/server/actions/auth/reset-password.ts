@@ -81,6 +81,7 @@ export async function resetPassword(
         where: { id: user.id },
         data: {
           password: hashedPassword,
+          salt,
           passwordResetToken: null,
           passwordResetTokenExpiresAt: null,
         },
