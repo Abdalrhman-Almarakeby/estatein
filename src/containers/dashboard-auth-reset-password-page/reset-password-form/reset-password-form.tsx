@@ -67,6 +67,7 @@ export function ResetPasswordForm() {
                 id="password"
                 className="pl-10"
                 placeholder="New Password"
+                autoComplete="new-password"
                 {...register("password")}
               />
               {errors.password?.message && (
@@ -86,6 +87,7 @@ export function ResetPasswordForm() {
                   id="confirmPassword"
                   className="pl-10"
                   placeholder="Confirm New Password"
+                  autoComplete="new-password"
                   {...register("confirmPassword")}
                 />
               </div>

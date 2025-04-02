@@ -65,6 +65,7 @@ export function SignupForm() {
                   id="username"
                   className="pl-10"
                   placeholder="Username"
+                  autoComplete="username"
                   {...register("username")}
                 />
               </div>
@@ -85,6 +86,7 @@ export function SignupForm() {
                   id="email"
                   className="pl-10"
                   placeholder="Email"
+                  autoComplete="email"
                   {...register("email")}
                 />
               </div>
@@ -100,6 +102,7 @@ export function SignupForm() {
                 id="password"
                 className="pl-10"
                 placeholder="Password"
+                autoComplete="new-password"
                 {...register("password")}
               />
               {errors.password?.message && (
@@ -114,6 +117,7 @@ export function SignupForm() {
                 id="confirmPassword"
                 className="pl-10"
                 placeholder="Confirm Password"
+                autoComplete="new-password"
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword?.message && (

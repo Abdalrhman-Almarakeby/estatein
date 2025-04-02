@@ -51,6 +51,7 @@ export function ForgotPasswordForm() {
                   id="email"
                   className="pl-10"
                   placeholder="Email"
+                  autoComplete="email"
                   {...register("email")}
                 />
               </div>

@@ -67,6 +67,7 @@ export function LoginForm() {
                   id="email"
                   className="pl-10"
                   placeholder="Email"
+                  autoComplete="email"
                   {...register("email")}
                 />
               </div>
@@ -82,6 +83,7 @@ export function LoginForm() {
                 id="password"
                 className="pl-10"
                 placeholder="Password"
+                autoComplete="current-password"
                 {...register("password")}
               />
               {errors.password?.message && (

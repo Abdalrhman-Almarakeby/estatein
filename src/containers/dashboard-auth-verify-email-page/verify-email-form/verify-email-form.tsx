@@ -54,6 +54,7 @@ export function VerifyEmailForm() {
                     onChange={(newValue: string) =>
                       onChange({ target: { value: newValue } })
                     }
+                    autoComplete="one-time-code"
                     onBlur={onBlur}
                   >
                     <InputOTPGroup>
