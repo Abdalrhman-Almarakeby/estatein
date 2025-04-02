@@ -1,4 +1,3 @@
-import "next/navigation";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,13 +38,14 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
       const { success, message, isExpired } = await resetPassword(data, token);
 
       if (success) {
-        const searchParams = new URLSearchParams();
+        const params = new URLSearchParams();
 
         if (callbackUrl) {
-          searchParams.set("callbackUrl", callbackUrl);
+          params.set("callbackUrl", callbackUrl);
         }
+
         toast.showSuccess();
-        router.push(`/dashboard/auth/login?${searchParams.toString()}`);
+        router.push(`/dashboard/auth/login?${params.toString()}`);
       } else {
         if (isExpired) {
           setIsExpired(true);

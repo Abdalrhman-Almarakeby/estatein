@@ -44,7 +44,7 @@ export function SignupForm() {
                   role="alert"
                   aria-live="polite"
                   aria-atomic="true"
-                  className="bold text-sm"
+                  className="text-sm font-medium"
                 >
                   CAPS LOCK is on
                 </p>

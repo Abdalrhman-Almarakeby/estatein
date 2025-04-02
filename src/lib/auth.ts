@@ -1,8 +1,8 @@
-import { compare } from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { omit } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
+import { comparePasswords } from "./password-hasher";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -35,10 +35,11 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          const isPasswordValid = await compare(
-            credentials.password,
-            user.password,
-          );
+          const isPasswordValid = await comparePasswords({
+            password: credentials.password,
+            salt: user.salt,
+            hashedPassword: user.password,
+          });
 
           if (!isPasswordValid) {
             return null;

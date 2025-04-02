@@ -21,6 +21,7 @@ export const passwordSchema = z
     invalid_type_error: "Invalid password",
   })
   .trim()
+  .nonempty("Password is required")
   .min(12, "Password must be at least 12 characters long")
   .max(64, "Password must not exceed 64 characters")
   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")

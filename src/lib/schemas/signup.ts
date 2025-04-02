@@ -8,6 +8,7 @@ export const signupSchema = z
         required_error: "Username is required",
         invalid_type_error: "Invalid username",
       })
+      .nonempty("Username is required")
       .min(3, "Username must be at least 3 characters long")
       .max(50, "Username cannot be more than 50 characters long")
       .regex(/^[a-zA-Z][a-zA-Z0-9_]*$/, {

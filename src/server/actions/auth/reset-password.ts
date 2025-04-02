@@ -1,15 +1,14 @@
 "use server";
 
-import { hash } from "bcryptjs";
 import { formatDistanceToNow } from "date-fns";
 import { WithCaptcha } from "@/types";
 import { getUserIpAddress } from "@/lib/ip";
+import { generateSalt, hashPassword } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
-import "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid request. Please try again.";
@@ -75,11 +74,8 @@ export async function resetPassword(
           message: "Reset link expired. Please request a new one.",
         };
       }
-
-      const hashedPassword = await hash(
-        data.password,
-        AUTH_CONFIG.password.hashSaltRounds,
-      );
+      const salt = generateSalt();
+      const hashedPassword = await hashPassword(data.password, salt);
 
       await tx.user.update({
         where: { id: user.id },

@@ -11,7 +11,6 @@ import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
-import "@/constant";
 import { sendEmail } from "@/server/services";
 
 export async function resendVerificationEmail() {
@@ -48,7 +47,7 @@ export async function resendVerificationEmail() {
       where: { email },
       select: {
         id: true,
-        name: true,
+        username: true,
         isVerified: true,
         emailVerificationCode: true,
         emailVerificationCodeExpiresAt: true,
@@ -79,7 +78,7 @@ export async function resendVerificationEmail() {
       });
 
       const verificationEmailTemplate = createElement(EmailVerification, {
-        recipientName: user.name,
+        recipientName: user.username,
         verificationCode,
       });
 

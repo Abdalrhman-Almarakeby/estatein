@@ -10,7 +10,6 @@ import { createRateLimiter } from "@/lib/rate-limiter";
 import { Otp, otpSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
-import "@/constant";
 import { verifyCaptchaToken } from "@/server/services";
 
 const GENERIC_ERROR = "Invalid verification attempt. Please try again.";
@@ -92,9 +91,7 @@ export async function verifyEmail(data: WithCaptcha<Otp>) {
       const storedOtpBuffer = new Uint8Array(
         Buffer.from(user.emailVerificationCode),
       );
-      const isValidOtp =
-        otpBuffer.length === storedOtpBuffer.length &&
-        timingSafeEqual(otpBuffer, storedOtpBuffer);
+      const isValidOtp = timingSafeEqual(otpBuffer, storedOtpBuffer);
 
       if (!isValidOtp) {
         const attemptsLeft = remaining - 1;

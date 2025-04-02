@@ -1,6 +1,8 @@
 export const AUTH_CONFIG = {
   password: {
-    hashSaltRounds: 12,
+    hashLength: 64,
+    encoding: "hex",
+    saltLength: 16,
   },
 
   signup: {
