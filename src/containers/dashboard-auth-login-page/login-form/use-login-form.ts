@@ -1,7 +1,7 @@
+import { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
@@ -31,11 +31,9 @@ export function useLoginForm(callbackUrl?: string) {
       const { success, message, shouldVerifyEmail } = await login(data);
 
       if (success) {
-        await signIn("credentials", {
-          ...data,
-          redirect: true,
-          callbackUrl: callbackUrl || "/dashboard",
-        });
+        const url = callbackUrl || "/dashboard";
+
+        router.push(url as Route);
       } else {
         setError("root", { message });
         setIsLoading(false);

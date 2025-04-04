@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { logOut } from "@/server/actions";
 
 export function LogoutButton() {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export function LogoutButton() {
             Cancel
           </button>
           <button
-            onClick={() => signOut()}
+            onClick={async () => await logOut()}
             className="btn-sm rounded bg-red-500 py-2 text-white"
           >
             Logout
