@@ -7,5 +7,6 @@ export * from "./properties-filters";
 export * from "./property";
 export * from "./property-inquiry";
 export * from "./reset-password";
+export * from "./session";
 export * from "./signup";
 export * from "./specific-property-inquiry";

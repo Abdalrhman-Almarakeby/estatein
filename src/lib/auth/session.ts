@@ -1,35 +1,18 @@
-import { Role } from "@prisma/client";
 import crypto from "crypto";
-import { z } from "zod";
+import { hoursToSeconds } from "date-fns";
+import { Cookies } from "@/types";
 import { redisClient } from "@/lib/redis";
+import { sessionSchema, UserSession } from "@/lib/schemas";
+import { AUTH_CONFIG } from "@/config/auth";
 
-// Seven days in seconds
-const SESSION_EXPIRATION_SECONDS = 60 * 60 * 24 * 7;
-const COOKIE_SESSION_KEY = "session-id";
-
-const sessionSchema = z.object({
-  id: z.string(),
-  role: z.nativeEnum(Role),
-});
-
-type UserSession = z.infer<typeof sessionSchema>;
-export type Cookies = {
-  set: (
-    key: string,
-    value: string,
-    options: {
-      secure?: boolean;
-      httpOnly?: boolean;
-      sameSite?: "strict" | "lax";
-      expires?: number;
-    },
-  ) => void;
-  get: (key: string) => { name: string; value: string } | undefined;
-  delete: (key: string) => void;
-};
-
+const cookieSessionKey = AUTH_CONFIG.session.cookieSessionKey;
+const sessionIdLength = AUTH_CONFIG.session.sessionIdLength;
+const sessionExpirationSeconds = hoursToSeconds(
+  AUTH_CONFIG.session.sessionExpirationDays * 24,
+);
+const sessionKeyPrefix = AUTH_CONFIG.session.sessionKeyPrefix;
 export function getUserFromSession(cookies: Pick<Cookies, "get">) {
-  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+  const sessionId = cookies.get(cookieSessionKey)?.value;
   if (sessionId == null) return null;
 
   return getUserSessionById(sessionId);
@@ -39,11 +22,11 @@ export async function updateUserSessionData(
   user: UserSession,
   cookies: Pick<Cookies, "get">,
 ) {
-  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+  const sessionId = cookies.get(cookieSessionKey)?.value;
   if (sessionId == null) return null;
 
   await redisClient.set(`session:${sessionId}`, sessionSchema.parse(user), {
-    ex: SESSION_EXPIRATION_SECONDS,
+    ex: sessionExpirationSeconds,
   });
 }
 
@@ -51,9 +34,9 @@ export async function createUserSession(
   user: UserSession,
   cookies: Pick<Cookies, "set">,
 ) {
-  const sessionId = crypto.randomBytes(512).toString("hex").normalize();
+  const sessionId = crypto.randomBytes(sessionIdLength).toString("hex");
   await redisClient.set(`session:${sessionId}`, sessionSchema.parse(user), {
-    ex: SESSION_EXPIRATION_SECONDS,
+    ex: sessionExpirationSeconds,
   });
 
   setCookie(sessionId, cookies);
@@ -62,41 +45,39 @@ export async function createUserSession(
 export async function updateUserSessionExpiration(
   cookies: Pick<Cookies, "get" | "set">,
 ) {
-  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+  const sessionId = cookies.get(cookieSessionKey)?.value;
   if (sessionId == null) return null;
 
   const user = await getUserSessionById(sessionId);
   if (user == null) return;
 
-  await redisClient.set(`session:${sessionId}`, user, {
-    ex: SESSION_EXPIRATION_SECONDS,
+  await redisClient.set(`${sessionKeyPrefix}${sessionId}`, user, {
+    ex: sessionExpirationSeconds,
   });
   setCookie(sessionId, cookies);
 }
 
-export async function removeUserFromSession(
+export async function deleteUserSession(
   cookies: Pick<Cookies, "get" | "delete">,
 ) {
-  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
-  if (sessionId == null) return null;
+  const sessionId = cookies.get(cookieSessionKey)?.value;
+  if (sessionId == null) return;
 
-  await redisClient.del(`session:${sessionId}`);
-  cookies.delete(COOKIE_SESSION_KEY);
+  await redisClient.del(`${sessionKeyPrefix}${sessionId}`);
+  cookies.delete(cookieSessionKey);
 }
 
 function setCookie(sessionId: string, cookies: Pick<Cookies, "set">) {
-  cookies.set(COOKIE_SESSION_KEY, sessionId, {
+  cookies.set(cookieSessionKey, sessionId, {
     secure: true,
     httpOnly: true,
     sameSite: "strict",
-    expires: Date.now() + SESSION_EXPIRATION_SECONDS * 1000,
+    expires: Date.now() + sessionExpirationSeconds * 1000,
   });
 }
 
 async function getUserSessionById(sessionId: string) {
-  const rawUser = await redisClient.get(`session:${sessionId}`);
-
+  const rawUser = await redisClient.get(`${sessionKeyPrefix}${sessionId}`);
   const { success, data: user } = sessionSchema.safeParse(rawUser);
-
   return success ? user : null;
 }

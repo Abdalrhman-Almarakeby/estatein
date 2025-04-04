@@ -1,4 +1,11 @@
 export const AUTH_CONFIG = {
+  session: {
+    sessionExpirationDays: 7,
+    cookieSessionKey: "session-id",
+    sessionKeyPrefix: "session:",
+    sessionIdLength: 512,
+  },
+
   password: {
     hashLength: 64,
     encoding: "hex",
