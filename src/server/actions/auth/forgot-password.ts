@@ -102,13 +102,17 @@ export async function forgotPassword(
     });
 
     const cookieStore = cookies();
-    cookieStore.set({
-      name: "reset-password-pending",
-      value: "true",
+    const cookieOptions = {
       maxAge: minutesToSeconds(AUTH_CONFIG.forgotPassword.tokenExpiryMinutes),
       secure: env.NODE_ENV === "production",
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "strict" as const,
+    };
+
+    cookieStore.set({
+      name: "reset-password-pending",
+      value: "true",
+      ...cookieOptions,
     });
 
     return result;
