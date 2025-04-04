@@ -3,6 +3,9 @@
 import { put } from "@vercel/blob";
 import { getCurrentUser } from "@/lib/get-current-user";
 
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MAX_SIZE = 5 * 1024 * 1024; // 5MB In Bytes
+
 export async function uploadImage(formData: FormData) {
   const user = await getCurrentUser();
 
@@ -16,16 +19,12 @@ export async function uploadImage(formData: FormData) {
     return { success: false, message: "No file provided" };
   }
 
-  const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-
-  if (!allowedTypes.has(file.type)) {
+  if (!ALLOWED_TYPES.has(file.type)) {
     return {
       success: false,
       message: "Invalid file type. Only JPEG, PNG, and WebP are allowed.",
     };
   }
-
-  const MAX_SIZE = 5 * 1024 * 1024; // 5MB In Bytes
 
   if (file.size > MAX_SIZE) {
     return {
