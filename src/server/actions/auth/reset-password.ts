@@ -2,10 +2,10 @@
 
 import { formatDistanceToNow } from "date-fns";
 import { WithCaptcha } from "@/types";
+import { generateSalt, hashPassword } from "@/lib/auth/password-hasher";
+import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { getUserIpAddress } from "@/lib/ip";
-import { generateSalt, hashPassword } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
-import { createRateLimiter } from "@/lib/rate-limiter";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";

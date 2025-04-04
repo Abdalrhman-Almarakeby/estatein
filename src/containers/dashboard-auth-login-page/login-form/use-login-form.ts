@@ -42,7 +42,7 @@ export function useLoginForm(callbackUrl?: string) {
         }
       }
     },
-    [callbackUrl, setValue, setError],
+    [callbackUrl, setValue, setError, router],
   );
 
   const handleResendEmail = async () => {

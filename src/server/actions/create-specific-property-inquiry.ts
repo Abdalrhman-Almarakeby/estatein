@@ -1,9 +1,9 @@
 "use server";
 
 import { WithCaptcha } from "@/types";
+import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
-import { createRateLimiter } from "@/lib/rate-limiter";
 import {
   SpecificPropertyInquiry,
   specificPropertyInquirySchema,

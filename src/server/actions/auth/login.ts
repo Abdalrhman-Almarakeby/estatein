@@ -3,13 +3,13 @@
 import { cookies } from "next/headers";
 import { formatDistanceToNow, minutesToSeconds } from "date-fns";
 import { WithCaptcha } from "@/types";
+import { createUserSession } from "@/lib/auth";
+import { comparePasswords } from "@/lib/auth/password-hasher";
+import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
-import { comparePasswords } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
-import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
-import { createUserSession } from "@/lib/session";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
 import { verifyCaptchaToken } from "@/server/services";

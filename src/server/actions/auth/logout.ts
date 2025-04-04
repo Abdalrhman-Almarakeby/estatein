@@ -2,9 +2,9 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { removeUserFromSession } from "@/lib/session";
+import { deleteUserSession } from "@/lib/auth";
 
 export async function logOut() {
-  await removeUserFromSession(cookies());
+  await deleteUserSession(cookies());
   redirect("/dashboard");
 }

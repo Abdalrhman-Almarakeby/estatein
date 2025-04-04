@@ -18,3 +18,18 @@ export type StrictOmit<T extends object, K extends keyof T> = Pick<
   T,
   Exclude<keyof T, K>
 >;
+
+export type Cookies = {
+  set: (
+    key: string,
+    value: string,
+    options: {
+      secure?: boolean;
+      httpOnly?: boolean;
+      sameSite?: "strict" | "lax";
+      expires?: number;
+    },
+  ) => void;
+  get: (key: string) => { name: string; value: string } | undefined;
+  delete: (key: string) => void;
+};
