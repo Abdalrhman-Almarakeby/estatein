@@ -10,9 +10,7 @@ export function useCapsLock() {
 
     window.addEventListener("keydown", handleKeyEvent);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyEvent);
-    };
+    return () => window.removeEventListener("keydown", handleKeyEvent);
   }, []);
 
   return capsLockEnabled;

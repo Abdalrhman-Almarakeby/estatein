@@ -33,6 +33,7 @@ export function useMenu() {
     }
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isOpen]);
 

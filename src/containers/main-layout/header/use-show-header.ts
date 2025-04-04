@@ -35,6 +35,7 @@ export function useShowHeader() {
     }
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isSmallScreen, scrollDirection]);
 
