@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { createRateLimiter } from "@/lib/rate-limiter";
+import { getUserFromSession, updateUserSessionExpiration } from "@/lib/auth";
+import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { getUserIpAddress } from "./lib/ip";
-import { getUserFromSession, updateUserSessionExpiration } from "./lib/session";
 import { getUserAgent } from "./lib/user-agent";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 100;

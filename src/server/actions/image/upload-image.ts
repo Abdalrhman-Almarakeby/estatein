@@ -1,7 +1,7 @@
 "use server";
 
 import { put } from "@vercel/blob";
-import { getCurrentUser } from "@/lib/get-current-user";
+import { getCurrentUser } from "@/lib/auth/get-current-user";
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB In Bytes

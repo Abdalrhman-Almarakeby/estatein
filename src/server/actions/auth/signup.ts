@@ -11,12 +11,12 @@ import {
 } from "date-fns";
 import { EmailVerification } from "@/components/emails";
 import { WithCaptcha } from "@/types";
+import { generateNumericOTP } from "@/lib/auth/otp";
+import { generateSalt, hashPassword } from "@/lib/auth/password-hasher";
+import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { env } from "@/lib/env";
 import { getUserIpAddress } from "@/lib/ip";
-import { generateNumericOTP } from "@/lib/otp";
-import { generateSalt, hashPassword } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
-import { createRateLimiter } from "@/lib/rate-limiter";
 import { Signup, signupSchema } from "@/lib/schemas";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";

@@ -1,7 +1,7 @@
 "use server";
 
 import { del } from "@vercel/blob";
-import { getCurrentUser } from "@/lib/get-current-user";
+import { getCurrentUser } from "@/lib/auth/get-current-user";
 
 export async function deleteImage(url: string) {
   const user = await getCurrentUser();
