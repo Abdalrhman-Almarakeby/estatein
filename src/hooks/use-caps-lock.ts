@@ -1,28 +1,19 @@
 import { useEffect, useState } from "react";
 
 export function useCapsLock() {
-  const [capsLock, setCapsLock] = useState<boolean | null>(null);
+  const [capsLockEnabled, setCapsLockEnabled] = useState(false);
 
   useEffect(() => {
-    if ("getModifierState" in KeyboardEvent.prototype) {
-      const initialState = new KeyboardEvent("").getModifierState("CapsLock");
-      setCapsLock(initialState);
+    function handleKeyEvent(event: KeyboardEvent) {
+      setCapsLockEnabled(event.getModifierState("CapsLock"));
     }
 
-    function handleKeyPress(event: KeyboardEvent) {
-      if ("getModifierState" in event) {
-        setCapsLock(event.getModifierState("CapsLock"));
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyPress);
-    window.addEventListener("keyup", handleKeyPress);
+    window.addEventListener("keydown", handleKeyEvent);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-      window.removeEventListener("keyup", handleKeyPress);
+      window.removeEventListener("keydown", handleKeyEvent);
     };
   }, []);
 
-  return capsLock;
+  return capsLockEnabled;
 }
