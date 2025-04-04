@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserIpAddress } from "./lib/ip";
+import { getUserFromSession, updateUserSessionExpiration } from "./lib/session";
 import { getUserAgent } from "./lib/user-agent";
 
 const RATE_LIMIT_MAX_ATTEMPTS = 100;
@@ -70,26 +70,36 @@ async function handleDashboardAuth(
   if (pathname.startsWith(PROTECTED_ROUTES.AUTH)) {
     return handleUnauthenticatedRoutes(request);
   }
+  const user = await getUserFromSession(request.cookies);
 
-  const token = await getToken({ req: request });
-  if (!token) {
+  if (!user) {
     const url = new URL(`${PROTECTED_ROUTES.AUTH}/login`, request.url);
     url.searchParams.set("callbackUrl", request.url);
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  await updateUserSessionExpiration({
+    set: (key, value, options) => {
+      response.cookies.set({ ...options, name: key, value });
+    },
+    get: (key) => request.cookies.get(key),
+  });
+
+  return response;
 }
 
 async function handleUnauthenticatedRoutes(
   request: NextRequest,
 ): Promise<NextResponse> {
-  const token = await getToken({ req: request });
-  if (token) {
+  const user = await getUserFromSession(request.cookies);
+  if (user) {
     return NextResponse.redirect(
       new URL(PROTECTED_ROUTES.DASHBOARD, request.url),
     );
   }
+
   return NextResponse.next();
 }
 

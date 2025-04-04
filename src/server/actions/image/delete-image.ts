@@ -1,13 +1,12 @@
 "use server";
 
 import { del } from "@vercel/blob";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/get-current-user";
 
 export async function deleteImage(url: string) {
-  const session = await getServerSession(authOptions);
+  const user = await getCurrentUser();
 
-  if (!session || !session.user) {
+  if (!user) {
     return { success: false, message: "Unauthorized" };
   }
 

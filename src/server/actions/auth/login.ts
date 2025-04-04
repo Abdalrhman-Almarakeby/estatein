@@ -9,6 +9,7 @@ import { comparePasswords } from "@/lib/password-hasher";
 import { prisma } from "@/lib/prisma";
 import { createRateLimiter } from "@/lib/rate-limiter";
 import { Login, loginSchema } from "@/lib/schemas";
+import { createUserSession } from "@/lib/session";
 import { getUserAgent } from "@/lib/user-agent";
 import { AUTH_CONFIG } from "@/config/auth";
 import { verifyCaptchaToken } from "@/server/services";
@@ -57,6 +58,7 @@ export async function login(data: WithCaptcha<Login>) {
         password: true,
         isVerified: true,
         salt: true,
+        role: true,
       },
     });
 
@@ -113,6 +115,8 @@ export async function login(data: WithCaptcha<Login>) {
     }
 
     await rateLimit.resetUsedTokens(limitKey);
+
+    await createUserSession(user, cookies());
 
     return {
       success: true,
