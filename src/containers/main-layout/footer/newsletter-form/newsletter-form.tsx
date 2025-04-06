@@ -33,7 +33,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
         <button
           disabled={isPending}
           type="submit"
-          className="absolute right-5 top-1/2 -translate-y-1/2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="absolute right-1 top-1/2 grid size-10 -translate-y-1/2 place-items-center disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Send aria-hidden="true" />
           <span className="sr-only">Subscribe To Our News Letter</span>
