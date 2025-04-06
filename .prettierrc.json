@@ -33,5 +33,6 @@
     "^[./]"
   ],
   "importOrderSeparation": false,
-  "importOrderSortSpecifiers": false
+  "importOrderSortSpecifiers": false,
+  "quoteProps": "consistent"
 }
