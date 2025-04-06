@@ -1,6 +1,7 @@
 "use server";
 
 import { WithCaptcha } from "@/types";
+import { omit } from "@/lib/utils";
 import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import { getUserIpAddress } from "@/lib/ip";
 import { prisma } from "@/lib/prisma";
@@ -99,7 +100,7 @@ export async function createSpecificPropertyInquiry(
     }
 
     await prisma.specificPropertyInquiry.create({
-      data,
+      data: omit(data, ["captchaToken", "agreeOnTerms"]),
     });
 
     return { message: "Your inquiry was sent successfully.", success: true };
