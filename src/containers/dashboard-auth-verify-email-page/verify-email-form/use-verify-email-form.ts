@@ -58,7 +58,7 @@ export function useVerifyEmailForm() {
     async (data: WithCaptcha<Otp>) => {
       setIsLoading(true);
 
-      data.captchaToken = await getCaptchaToken("verify-email");
+      data.captchaToken = await getCaptchaToken("verifyEmail");
 
       const { success, message } = await verifyEmail(data);
 

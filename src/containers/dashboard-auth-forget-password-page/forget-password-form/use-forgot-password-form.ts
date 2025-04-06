@@ -18,7 +18,7 @@ export function useForgotPasswordForm(callbackUrl?: string) {
     async (data: WithCaptcha<Email>) => {
       setIsLoading(true);
 
-      data.captchaToken = await getCaptchaToken("forgot-password");
+      data.captchaToken = await getCaptchaToken("forgotPassword");
 
       const { success, message } = await forgotPassword(data, callbackUrl);
 

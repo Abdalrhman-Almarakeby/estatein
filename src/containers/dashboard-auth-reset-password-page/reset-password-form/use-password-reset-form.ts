@@ -31,7 +31,7 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
     async (data: WithCaptcha<ResetPassword>) => {
       setIsLoading(true);
 
-      data.captchaToken = await getCaptchaToken("password-reset");
+      data.captchaToken = await getCaptchaToken("passwordReset");
 
       const { success, message, isExpired } = await resetPassword(data, token);
 
