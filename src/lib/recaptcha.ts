@@ -9,7 +9,7 @@ export type RecaptchaData =
       action: string;
     }
   | {
-      success: false;
+      "success": false;
       "error-codes": string[];
     };
 

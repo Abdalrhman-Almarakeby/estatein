@@ -7,12 +7,12 @@ const config: Config = {
     container: {
       center: true,
       padding: {
-        DEFAULT: "1rem",
-        xs: "1rem",
-        sm: "2rem",
-        md: "2rem",
-        lg: "4rem",
-        xl: "5rem",
+        "DEFAULT": "1rem",
+        "xs": "1rem",
+        "sm": "2rem",
+        "md": "2rem",
+        "lg": "4rem",
+        "xl": "5rem",
         "2xl": "6rem",
         "3xl": "7rem",
       },
@@ -94,7 +94,7 @@ const config: Config = {
         },
       },
       screens: {
-        xs: "400px",
+        "xs": "400px",
         "3xl": "1600px",
       },
       borderColor: {
