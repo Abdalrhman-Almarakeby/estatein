@@ -3,7 +3,6 @@
 import { InquiryType, ReferralSource } from "@prisma/client";
 import { Controller } from "react-hook-form";
 import { AgreeOnTerms } from "@/components/form/agree-on-terms";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import {
@@ -18,8 +17,7 @@ import { normalize, upperFirst } from "@/lib/utils";
 import { useContactForm } from "./use-contact-form";
 
 export function ContactForm() {
-  const { register, errors, onSubmit, control, captchaRef, isPending } =
-    useContactForm();
+  const { register, errors, onSubmit, control, isPending } = useContactForm();
 
   return (
     <form
@@ -184,12 +182,6 @@ export function ContactForm() {
           </FieldError>
         )}
       </fieldset>
-      <Captcha
-        className="md:col-span-2 xl:col-span-3"
-        captchaRef={captchaRef}
-        control={control}
-        error={errors.captchaToken?.message}
-      />
       <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:items-center lg:justify-between xl:col-span-3">
         <AgreeOnTerms
           {...register("agreeOnTerms")}

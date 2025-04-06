@@ -1,23 +1,21 @@
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { useCapsLock, useToastNotification } from "@/hooks";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { ResetPassword, resetPasswordSchema } from "@/lib/schemas";
-import { captchaSchema } from "@/lib/schemas/captcha";
 import { resetPassword } from "@/server/actions";
 
 export function usePasswordResetForm(token?: string, callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
-  const { handleSubmit, setError, setValue, ...rest } = useForm<
+  const { handleSubmit, setError, ...rest } = useForm<
     WithCaptcha<ResetPassword>
   >({
-    resolver: zodResolver(resetPasswordSchema.and(captchaSchema)),
+    resolver: zodResolver(resetPasswordSchema),
   });
-  const captchaRef = useRef<ReCAPTCHA>(null);
 
   const router = useRouter();
 
@@ -32,8 +30,8 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
   const onSubmit = useCallback(
     async (data: WithCaptcha<ResetPassword>) => {
       setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+
+      data.captchaToken = await getCaptchaToken("passwordReset");
 
       const { success, message, isExpired } = await resetPassword(data, token);
 
@@ -55,13 +53,11 @@ export function usePasswordResetForm(token?: string, callbackUrl?: string) {
         setIsLoading(false);
       }
     },
-    [setValue, token, callbackUrl, toast, router, setError],
+    [token, callbackUrl, toast, router, setError],
   );
 
   return {
     onSubmit: handleSubmit(onSubmit),
-    setValue,
-    captchaRef,
     isLoading,
     isExpired,
     capsLock,

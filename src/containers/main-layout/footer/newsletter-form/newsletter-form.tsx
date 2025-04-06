@@ -1,7 +1,6 @@
 "use client";
 
 import { Mail, Send } from "lucide-react";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { cn } from "@/lib/utils";
@@ -12,8 +11,7 @@ type NewsletterFormProps = {
 };
 
 export function NewsletterForm({ className }: NewsletterFormProps) {
-  const { onSubmit, register, isPending, errors, control, captchaRef } =
-    useNewsletterForm();
+  const { onSubmit, register, isPending, errors } = useNewsletterForm();
 
   return (
     <form
@@ -42,12 +40,6 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
         </button>
       </div>
       {errors.email && <FieldError>{errors.email.message}</FieldError>}
-      <Captcha
-        className="place-content-center text-center lg:text-start"
-        captchaRef={captchaRef}
-        control={control}
-        error={errors.captchaToken?.message}
-      />
     </form>
   );
 }

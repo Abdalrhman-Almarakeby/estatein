@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { UserIcon } from "lucide-react";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
@@ -16,9 +15,7 @@ export function ForgotPasswordForm() {
   const {
     onSubmit,
     register,
-    control,
     formState: { errors },
-    captchaRef,
     isLoading,
   } = useForgotPasswordForm(callbackUrl ?? undefined);
 
@@ -59,12 +56,6 @@ export function ForgotPasswordForm() {
                 <FieldError>{errors.email?.message}</FieldError>
               )}
             </fieldset>
-            <Captcha
-              control={control}
-              captchaRef={captchaRef}
-              error={errors.captchaToken?.message}
-              size="normal"
-            />
             <button
               type="submit"
               className="btn-sm btn-primary py-2 text-lg"

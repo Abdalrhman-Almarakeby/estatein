@@ -1,7 +1,6 @@
 "use client";
 
 import { Controller } from "react-hook-form";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import {
   InputOTP,
@@ -17,7 +16,6 @@ export function VerifyEmailForm() {
     onSubmit,
     control,
     formState: { errors },
-    captchaRef,
     isLoading,
     resendLoading,
     coolDownTime,
@@ -75,12 +73,6 @@ export function VerifyEmailForm() {
                 <FieldError className="mt-2">{errors.otp?.message}</FieldError>
               )}
             </fieldset>
-            <Captcha
-              control={control}
-              captchaRef={captchaRef}
-              error={errors.captchaToken?.message}
-              size="normal"
-            />
             <p className="mt-3 text-sm italic text-gray-light">
               Please enter the 6-digit code sent to your email.
             </p>

@@ -1,7 +1,6 @@
 "use client";
 
 import { AgreeOnTerms } from "@/components/form/agree-on-terms";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { Textarea } from "@/components/form/textarea";
@@ -14,7 +13,7 @@ type SpecificPropertyInquiryFormProps = {
 export function SpecificPropertyInquiryForm({
   propertyId,
 }: SpecificPropertyInquiryFormProps) {
-  const { register, errors, onSubmit, control, captchaRef, isPending } =
+  const { register, errors, onSubmit, isPending } =
     useSpecificPropertyInquiryForm();
 
   return (
@@ -108,12 +107,6 @@ export function SpecificPropertyInquiryForm({
           </FieldError>
         )}
       </fieldset>
-      <Captcha
-        className="md:col-span-2 xl:col-span-3 2xl:col-span-4"
-        captchaRef={captchaRef}
-        control={control}
-        error={errors.captchaToken?.message}
-      />
       <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:items-center lg:justify-between xl:col-span-3 2xl:col-span-4">
         <AgreeOnTerms
           {...register("agreeOnTerms")}

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { LockIcon } from "lucide-react";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { PasswordInput } from "@/components/form/password-input";
 import { DashboardAuthLoading } from "@/containers/dashboard-auth-layout/dashboard-auth-loading";
@@ -17,9 +16,7 @@ export function ResetPasswordForm() {
   const {
     onSubmit,
     register,
-    control,
     formState: { errors },
-    captchaRef,
     isLoading,
     isExpired,
     capsLock,
@@ -95,13 +92,6 @@ export function ResetPasswordForm() {
                 <FieldError>{errors.confirmPassword?.message}</FieldError>
               )}
             </fieldset>
-            <Captcha
-              control={control}
-              captchaRef={captchaRef}
-              error={errors.captchaToken?.message}
-              size="normal"
-            />
-
             <button
               type="submit"
               className="btn-sm btn-primary py-2 text-lg"

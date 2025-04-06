@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { UserIcon } from "lucide-react";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { PasswordInput } from "@/components/form/password-input";
@@ -17,9 +16,7 @@ export function LoginForm() {
   const {
     onSubmit,
     register,
-    control,
     formState: { errors },
-    captchaRef,
     isLoading,
     shouldVerifyEmail,
     handleResendEmail,
@@ -99,13 +96,6 @@ export function LoginForm() {
                 Forgot your password?
               </Link>
             </fieldset>
-            <Captcha
-              control={control}
-              captchaRef={captchaRef}
-              error={errors.captchaToken?.message}
-              size="normal"
-            />
-
             {shouldVerifyEmail ? (
               <div className="space-y-2">
                 <FieldError>To Verify your email please click here:</FieldError>

@@ -1,28 +1,24 @@
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { Email, emailSchema } from "@/lib/schemas";
-import { captchaSchema } from "@/lib/schemas/captcha";
 import { forgotPassword } from "@/server/actions";
 
 export function useForgotPasswordForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Email>
-  >({
-    resolver: zodResolver(emailSchema.merge(captchaSchema)),
+  const { handleSubmit, setError, ...rest } = useForm<WithCaptcha<Email>>({
+    resolver: zodResolver(emailSchema),
   });
-  const captchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<Email>) => {
       setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+
+      data.captchaToken = await getCaptchaToken("forgotPassword");
 
       const { success, message } = await forgotPassword(data, callbackUrl);
 
@@ -33,13 +29,11 @@ export function useForgotPasswordForm(callbackUrl?: string) {
         setIsLoading(false);
       }
     },
-    [setValue, callbackUrl, router, setError],
+    [callbackUrl, router, setError],
   );
 
   return {
     onSubmit: handleSubmit(onSubmit),
-    setValue,
-    captchaRef,
     isLoading,
     ...rest,
   };
