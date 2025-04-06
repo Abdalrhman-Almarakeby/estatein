@@ -1,30 +1,26 @@
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { useCapsLock } from "@/hooks";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { Signup, signupSchema } from "@/lib/schemas";
-import { captchaSchema } from "@/lib/schemas/captcha";
 import { signup } from "@/server/actions";
 
 export function useSignupForm(callbackUrl?: string) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Signup>
-  >({
-    resolver: zodResolver(signupSchema.and(captchaSchema)),
+  const { handleSubmit, setError, ...rest } = useForm<WithCaptcha<Signup>>({
+    resolver: zodResolver(signupSchema),
   });
-  const captchaRef = useRef<ReCAPTCHA>(null);
   const capsLock = useCapsLock();
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<Signup>) => {
       setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+
+      data.captchaToken = await getCaptchaToken("signup");
 
       const { success, message } = await signup(data);
 
@@ -39,13 +35,11 @@ export function useSignupForm(callbackUrl?: string) {
         setIsLoading(false);
       }
     },
-    [callbackUrl, setValue, setError, router],
+    [callbackUrl, setError, router],
   );
 
   return {
     onSubmit: handleSubmit(onSubmit),
-    setValue,
-    captchaRef,
     isLoading,
     capsLock,
     ...rest,

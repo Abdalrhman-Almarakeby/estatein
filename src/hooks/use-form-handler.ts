@@ -1,14 +1,14 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { ZodObject, ZodRawShape } from "zod";
 import { WithCaptcha } from "@/types";
-import { Captcha, captchaSchema } from "@/lib/schemas/captcha";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { useToastNotification } from "./use-toast-notification";
 
 type UseFormHandlerOptions<T extends object> = {
   schema: ZodObject<ZodRawShape>;
+  action: string;
   serverAction: (
     data: WithCaptcha<T>,
   ) => Promise<{ success: boolean; message: string }>;
@@ -19,6 +19,7 @@ type UseFormHandlerOptions<T extends object> = {
 
 export function useFormHandler<T extends Record<string, unknown>>({
   schema,
+  action,
   serverAction,
   successMessage,
   loadingMessage,
@@ -29,25 +30,29 @@ export function useFormHandler<T extends Record<string, unknown>>({
     formState: { errors, ...formStateRest },
     reset,
     ...rest
-  } = useForm<T & Captcha>({
-    resolver: zodResolver(schema.merge(captchaSchema)),
+  } = useForm<T>({
+    resolver: zodResolver(schema),
   });
   const toastNotification = useToastNotification({
     successMessage,
     loadingMessage,
     errorMessage,
   });
-  const captchaRef = useRef<ReCAPTCHA>(null);
   const [isPending, setIsPending] = useState(false);
 
   const onSubmit = useCallback(
-    async (data: WithCaptcha<T>) => {
+    async (data: T) => {
       if (isPending) return;
 
       setIsPending(true);
       toastNotification.showLoading();
 
-      const { success, message } = await serverAction(data);
+      const captchaToken = await getCaptchaToken(action);
+
+      const { success, message } = await serverAction({
+        ...data,
+        captchaToken,
+      });
 
       if (success) {
         toastNotification.showSuccess(message);
@@ -56,17 +61,15 @@ export function useFormHandler<T extends Record<string, unknown>>({
         toastNotification.showError(message);
       }
 
-      captchaRef.current?.reset();
       setIsPending(false);
     },
-    [isPending, serverAction, reset, toastNotification],
+    [isPending, toastNotification, action, serverAction, reset],
   );
 
   return {
     onSubmit: handleSubmit(onSubmit),
     errors,
     isPending,
-    captchaRef,
     ...rest,
     ...formStateRest,
   };

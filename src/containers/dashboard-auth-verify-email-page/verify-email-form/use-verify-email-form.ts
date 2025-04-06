@@ -1,13 +1,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addSeconds, differenceInSeconds, minutesToSeconds } from "date-fns";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { useToastNotification } from "@/hooks";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { Otp, otpSchema } from "@/lib/schemas";
-import { captchaSchema } from "@/lib/schemas/captcha";
 import { AUTH_CONFIG } from "@/config/auth";
 import { resendVerificationEmail, verifyEmail } from "@/server/actions";
 
@@ -19,13 +18,10 @@ export function useVerifyEmailForm() {
   const [coolDownEndTime, setCoolDownEndTime] = useState<Date | null>(null);
   const [coolDownTime, setCoolDownTime] = useState(0);
 
-  const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Otp>
-  >({
-    resolver: zodResolver(otpSchema.merge(captchaSchema)),
+  const { handleSubmit, setError, ...rest } = useForm<WithCaptcha<Otp>>({
+    resolver: zodResolver(otpSchema),
   });
 
-  const captchaRef = useRef<ReCAPTCHA>(null);
   const router = useRouter();
 
   const toast = useToastNotification({
@@ -61,8 +57,8 @@ export function useVerifyEmailForm() {
   const onSubmit = useCallback(
     async (data: WithCaptcha<Otp>) => {
       setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+
+      data.captchaToken = await getCaptchaToken("verify-email");
 
       const { success, message } = await verifyEmail(data);
 
@@ -78,7 +74,7 @@ export function useVerifyEmailForm() {
         setIsLoading(false);
       }
     },
-    [setValue, callbackUrl, toast, router, setError],
+    [callbackUrl, toast, router, setError],
   );
 
   const handleResendEmail = async () => {
@@ -99,8 +95,6 @@ export function useVerifyEmailForm() {
 
   return {
     onSubmit: handleSubmit(onSubmit),
-    setValue,
-    captchaRef,
     isLoading,
     resendLoading,
     coolDownTime,

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { UserIcon } from "lucide-react";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import { PasswordInput } from "@/components/form/password-input";
@@ -17,9 +16,7 @@ export function SignupForm() {
   const {
     onSubmit,
     formState: { errors },
-    control,
     register,
-    captchaRef,
     isLoading,
     capsLock,
   } = useSignupForm(callbackUrl ?? undefined);
@@ -124,12 +121,6 @@ export function SignupForm() {
                 <FieldError>{errors.confirmPassword?.message}</FieldError>
               )}
             </fieldset>
-            <Captcha
-              control={control}
-              captchaRef={captchaRef}
-              error={errors.captchaToken?.message}
-              size="normal"
-            />
             <button type="submit" className="btn-sm btn-primary py-2 text-lg">
               Signup
             </button>

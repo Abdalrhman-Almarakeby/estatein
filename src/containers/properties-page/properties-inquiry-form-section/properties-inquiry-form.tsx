@@ -3,7 +3,6 @@
 import { ContactMethod } from "@prisma/client";
 import { Controller } from "react-hook-form";
 import { AgreeOnTerms } from "@/components/form/agree-on-terms";
-import { Captcha } from "@/components/form/captcha";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
 import {
@@ -29,7 +28,7 @@ import {
 import { usePropertyInquiryForm } from "./use-properties-inquiry-form";
 
 export function PropertiesInquiryForm() {
-  const { register, errors, onSubmit, control, captchaRef, isPending } =
+  const { register, errors, onSubmit, control, isPending } =
     usePropertyInquiryForm();
 
   return (
@@ -351,12 +350,6 @@ export function PropertiesInquiryForm() {
           </FieldError>
         )}
       </fieldset>
-      <Captcha
-        className="md:col-span-2 xl:col-span-3 2xl:col-span-4"
-        captchaRef={captchaRef}
-        control={control}
-        error={errors.captchaToken?.message}
-      />
       <div className="mt-2.5 flex flex-col gap-5 md:col-span-2 lg:flex-row lg:items-center lg:justify-between xl:col-span-3 2xl:col-span-4">
         <AgreeOnTerms
           {...register("agreeOnTerms")}

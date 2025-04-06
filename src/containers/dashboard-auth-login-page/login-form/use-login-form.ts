@@ -1,32 +1,28 @@
 import { Route } from "next";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { WithCaptcha } from "@/types";
 import { useCapsLock } from "@/hooks";
+import { getCaptchaToken } from "@/lib/recaptcha";
 import { Login, loginSchema } from "@/lib/schemas";
-import { captchaSchema } from "@/lib/schemas/captcha";
 import { login, resendVerificationEmail } from "@/server/actions";
 
 export function useLoginForm(callbackUrl?: string) {
   const [isLoading, setIsLoading] = useState(false);
   const [shouldVerifyEmail, setShouldVerifyEmail] = useState(false);
   const router = useRouter();
-  const { handleSubmit, setError, setValue, ...rest } = useForm<
-    WithCaptcha<Login>
-  >({
-    resolver: zodResolver(loginSchema.merge(captchaSchema)),
+  const { handleSubmit, setError, ...rest } = useForm<WithCaptcha<Login>>({
+    resolver: zodResolver(loginSchema),
   });
-  const captchaRef = useRef<ReCAPTCHA>(null);
   const capsLock = useCapsLock();
 
   const onSubmit = useCallback(
     async (data: WithCaptcha<Login>) => {
       setIsLoading(true);
-      captchaRef.current?.reset();
-      setValue("captchaToken", "", { shouldDirty: true });
+
+      data.captchaToken = await getCaptchaToken("login");
 
       const { success, message, shouldVerifyEmail } = await login(data);
 
@@ -42,7 +38,7 @@ export function useLoginForm(callbackUrl?: string) {
         }
       }
     },
-    [callbackUrl, setValue, setError, router],
+    [callbackUrl, setError, router],
   );
 
   const handleResendEmail = async () => {
@@ -63,8 +59,6 @@ export function useLoginForm(callbackUrl?: string) {
 
   return {
     onSubmit: handleSubmit(onSubmit),
-    setValue,
-    captchaRef,
     isLoading,
     shouldVerifyEmail,
     handleResendEmail,
