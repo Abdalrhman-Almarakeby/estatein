@@ -1,4 +1,5 @@
 import { env } from "@/lib/env";
+import { RecaptchaData } from "@/lib/recaptcha";
 
 export async function verifyCaptchaToken(captchaToken: string) {
   const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${env.RECAPTCHA_SECRET_KEY}&response=${captchaToken}`;
@@ -8,7 +9,7 @@ export async function verifyCaptchaToken(captchaToken: string) {
       method: "POST",
     });
 
-    const captchaData = await response.json();
+    const captchaData: RecaptchaData = await response.json();
 
     if (!captchaData.success) {
       return {
