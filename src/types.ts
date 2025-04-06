@@ -1,5 +1,4 @@
 import { FunctionComponent, SVGProps } from "react";
-import { Captcha } from "@/lib/schemas/captcha";
 import { INQUIRIES_TYPES } from "@/constant";
 
 export type InquiryType = (typeof INQUIRIES_TYPES)[number];
@@ -7,6 +6,10 @@ export type InquiryType = (typeof INQUIRIES_TYPES)[number];
 export type ScrollDirection = "up" | "down";
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGSVGElement>>;
+
+export type Captcha = {
+  captchaToken: string;
+};
 
 export type WithCaptcha<T extends object> = T & Captcha;
 
