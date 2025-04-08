@@ -60,7 +60,7 @@
     "react-number-format": "^5.4.3",
     "sharp": "^0.33.5",
     "tailwind-container-break-out": "^2.0.9",
-    "tailwind-merge": "^3.0.2",
+    "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2"
   },
