@@ -1,6 +1,5 @@
 /* eslint-disable n/no-process-env */
 /* eslint-disable no-console */
-import { StandardSchemaV1 } from "@t3-oss/env-core";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
@@ -57,11 +56,11 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_URL: z.string().trim().optional(),
   },
 
-  onValidationError: (issues: readonly StandardSchemaV1.Issue[]) => {
+  onValidationError: (issues) => {
     console.error("❌ Invalid environment variables:", issues);
     process.exit(1);
   },
-  onInvalidAccess: (variable: string) => {
+  onInvalidAccess: (variable) => {
     console.error(
       `❌ Attempted to access server-side environment variable "${variable}" on the client`,
     );
