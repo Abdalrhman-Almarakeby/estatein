@@ -20,6 +20,7 @@ export function NavBar({ isOpen, isMenuHidden, toggle }: NavBarProps) {
         alt="Logo of Estatein, consisting of a purple abstract geometric shape that suggests a dynamic, folded form, set against a black background."
         className="w-[100px] md:sr-only"
         aria-hidden="true"
+        priority
       />
       <nav
         id="main-menu"
@@ -41,6 +42,7 @@ export function NavBar({ isOpen, isMenuHidden, toggle }: NavBarProps) {
           <Image
             src={logo}
             alt="Logo of Estatein, consisting of a purple abstract geometric shape that suggests a dynamic, folded form, set against a black background."
+            priority
           />
         </Link>
         <Link
