@@ -13,6 +13,7 @@ export function HeroSection() {
         src={heroImg}
         alt="Hand holding a miniature model of a modern two-story house with a dark roof, large windows, and a contemporary design, against a dark background."
         className="aspect-[358/310] w-full md:order-2 xl:row-span-2"
+        priority
       />
       <SectionTitle
         title="Our Journey"
