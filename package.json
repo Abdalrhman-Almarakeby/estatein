@@ -33,7 +33,7 @@
     "@react-email/components": "^0.0.37",
     "@react-email/render": "^1.0.6",
     "@svgr/webpack": "^8.1.0",
-    "@t3-oss/env-nextjs": "^0.13.0",
+    "@t3-oss/env-nextjs": "^0.13.4",
     "@tanstack/react-table": "^8.20.6",
     "@types/grecaptcha": "^3.0.9",
     "@upstash/ratelimit": "^2.0.5",
