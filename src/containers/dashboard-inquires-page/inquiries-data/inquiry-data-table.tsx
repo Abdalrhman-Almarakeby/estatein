@@ -201,6 +201,7 @@ export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
   const handleStatusChange = (
     inquiry: Inquiry | PropertyInquiry | SpecificPropertyInquiry,
   ) => {
+    // TODO:
     inquiry.replied = !inquiry.replied;
   };
 
