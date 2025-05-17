@@ -3,4 +3,5 @@ export * from "./create-inquiry";
 export * from "./create-property-inquiry";
 export * from "./create-specific-property-inquiry";
 export * from "./image";
+export * from "./properties";
 export * from "./subscribe-to-newsletter";

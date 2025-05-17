@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToastNotification } from "@/hooks";
 import { getBaseUrl } from "@/lib/utils";
-import { deleteProperty } from "@/server/actions/delete-property";
+import { deleteProperty } from "@/server/actions";
 
 type ActionsMenuProps = {
   propertyId: string;

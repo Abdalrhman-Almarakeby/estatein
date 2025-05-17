@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PropertyCreatedSuccess } from "@/containers/dashboard-properties-new-page/property-form";
 import { PropertyForm } from "@/containers/dashboard-properties-new-page/property-form/property-form";
 import { PropertyData } from "@/lib/schemas";
-import { createProperty } from "@/server/actions/create-property";
+import { createProperty } from "@/server/actions";
 
 export function CreateNewPropertySection() {
   const [createdProperty, setCreatedProperty] = useState<{

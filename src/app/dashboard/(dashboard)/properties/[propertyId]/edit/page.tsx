@@ -3,7 +3,7 @@ import { PropertyForm } from "@/containers/dashboard-properties-new-page/propert
 import { generateNonSEOMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
 import { PropertyData } from "@/lib/schemas";
-import { updateProperty } from "@/server/actions/update-property";
+import { updateProperty } from "@/server/actions";
 
 type PageParams = {
   params: { propertyId: string };
