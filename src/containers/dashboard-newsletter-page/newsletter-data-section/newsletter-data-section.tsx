@@ -12,7 +12,7 @@ export function NewsletterDataSection({
 }: NewsletterDataSectionProps) {
   return (
     <section className="grid gap-8">
-      <h2 className="text-xl font-bold">Subscription Data</h2>
+      <h2 className="text-xl font-bold">Subscriptions Data</h2>
       <div className="rounded-lg bg-gray-darker p-6 shadow-lg">
         <div className="mb-6 flex items-center">
           <FileDown className="text-primary mr-2 size-6" />
