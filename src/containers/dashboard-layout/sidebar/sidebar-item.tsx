@@ -1,7 +1,9 @@
 import { Route } from "next";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { useDashboardSidebar } from "@/contexts/dashboard-sidebar";
+import { cn } from "@/lib/utils";
 
 type SidebarItemProps = {
   href: Route;
@@ -11,13 +13,18 @@ type SidebarItemProps = {
 
 export function SidebarItem({ href, icon, label }: SidebarItemProps) {
   const { isSidebarOpen, setIsSidebarOpen } = useDashboardSidebar();
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <Link
       tabIndex={isSidebarOpen ? 0 : -1}
       href={href}
       onClick={() => setIsSidebarOpen(false)}
-      className="flex items-center gap-3 rounded-md p-2 text-gray-light !no-underline transition-colors"
+      className={cn(
+        "flex items-center gap-3 rounded-md border-l-2 border-transparent p-2 text-gray-light !no-underline transition-colors",
+        isActive && "border-purple-base bg-gray-dark text-purple-light",
+      )}
     >
       {icon}
       {label}
