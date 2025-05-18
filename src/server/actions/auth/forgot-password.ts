@@ -37,7 +37,7 @@ export async function forgotPassword(
       AUTH_CONFIG.forgotPassword.maxAttempts,
       `${AUTH_CONFIG.forgotPassword.windowMinutes}m`,
     );
-    const limitKey = `reset_password_${ip}_${userAgent}`;
+    const limitKey = `forgot_password_${ip}_${userAgent}`;
 
     const { success: rateLimitSuccess, reset } =
       await rateLimit.limit(limitKey);
