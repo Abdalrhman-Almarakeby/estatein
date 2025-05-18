@@ -1,9 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { createRateLimiter } from "@/lib/auth/rate-limiter";
 import {
   getUserFromSession,
   updateUserSessionExpiration,
 } from "@/lib/auth/session";
+import { createRateLimiter } from "@/lib/rate-limiter";
 import { getUserIpAddress } from "./lib/ip";
 import { getUserAgent } from "./lib/user-agent";
 
