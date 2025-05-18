@@ -1,9 +1,7 @@
-import { notFound, redirect } from "next/navigation";
-import { PropertyForm } from "@/containers/dashboard-properties-new-page/property-form/property-form";
+import { notFound } from "next/navigation";
+import { EditPropertySection } from "@/containers/dashboard-properties-new-page/edit-property-section";
 import { generateNonSEOMetadata } from "@/lib/metadata";
 import { prisma } from "@/lib/prisma";
-import { PropertyData } from "@/lib/schemas";
-import { updateProperty } from "@/server/actions";
 
 type PageParams = {
   params: { propertyId: string };
@@ -37,30 +35,7 @@ export default async function Page({ params: { propertyId } }: PageParams) {
     notFound();
   }
 
-  async function handleUpdateProperty(data: PropertyData) {
-    "use server";
-
-    const {
-      success,
-      data: updatedProperty,
-      message,
-    } = await updateProperty(propertyId, data);
-
-    if (!success || !updatedProperty) {
-      throw new Error(message || "Failed to update property");
-    }
-
-    redirect("/dashboard/properties");
-  }
-
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="mb-8 text-3xl font-bold">Edit Property</h1>
-      <PropertyForm
-        initialData={property}
-        onSubmit={handleUpdateProperty}
-        submitButtonText="Update Property"
-      />
-    </div>
+    <EditPropertySection propertyId={propertyId} propertyData={property} />
   );
 }
