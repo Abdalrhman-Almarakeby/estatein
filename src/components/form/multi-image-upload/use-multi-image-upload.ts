@@ -42,16 +42,16 @@ export function useMultiImageUpload<T extends FieldValues>({
   );
   const [isUploading, setIsUploading] = useState(false);
 
-  const updateFormValue = useCallback(() => {
+  useEffect(() => {
     const successImages = images
       .filter((img) => img.status === "success")
       .map((img) => img.url);
-    onChange(successImages);
-  }, [images, onChange]);
 
-  useEffect(() => {
-    updateFormValue();
-  }, [images, updateFormValue]);
+    // Only trigger onChange if the values are actually different
+    if (JSON.stringify(successImages) !== JSON.stringify(value)) {
+      onChange(successImages);
+    }
+  }, [images, onChange, value]);
 
   const uploadSingleImage = async (image: ImageItem): Promise<ImageItem> => {
     const formData = new FormData();
