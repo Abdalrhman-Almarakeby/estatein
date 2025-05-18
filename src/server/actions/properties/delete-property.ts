@@ -1,10 +1,17 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export async function deleteProperty(id: string) {
   try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return { success: false, message: "Unauthorized" };
+    }
+
     const property = await prisma.property.findUnique({
       where: { id },
       select: { id: true },
