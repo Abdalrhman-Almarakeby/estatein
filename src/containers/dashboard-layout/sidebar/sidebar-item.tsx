@@ -23,7 +23,7 @@ export function SidebarItem({ href, icon, label }: SidebarItemProps) {
       onClick={() => setIsSidebarOpen(false)}
       className={cn(
         "flex items-center gap-3 rounded-md border-l-2 border-transparent p-2 text-gray-light !no-underline transition-colors",
-        isActive && "border-purple-base bg-gray-dark text-purple-light",
+        isActive && "border-purple-base bg-gray-dark text-purple-base",
       )}
     >
       {icon}
