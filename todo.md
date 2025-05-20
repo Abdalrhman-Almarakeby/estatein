@@ -33,3 +33,5 @@
 - update shadcn/ui components.json file
 
 - Downloading the data on the client is a problem, all the data and the data manipulation packages for deffrent data types are all loaded in the client.
+
+- use hidden input with name="username" in auth forms
