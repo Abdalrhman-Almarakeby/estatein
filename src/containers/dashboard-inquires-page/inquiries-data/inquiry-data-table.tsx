@@ -58,6 +58,11 @@ import {
 } from "@/components/ui/table";
 import { PaginationControls } from "@/containers/dashboard-properties-page/properties-table/pagination-controls";
 import { InquiryType } from "@/types";
+import {
+  updateInquiry,
+  updatePropertyInquiry,
+  updateSpecificPropertyInquiry,
+} from "@/server/actions";
 import { InquiryDetails } from "./inquiry-details";
 
 type InquiryDataTableProps = {
@@ -237,11 +242,26 @@ export function InquiryDataTable({ inquiries, type }: InquiryDataTableProps) {
     },
   });
 
-  const handleStatusChange = (
+  const handleStatusChange = async (
     inquiry: Inquiry | PropertyInquiry | SpecificPropertyInquiry,
   ) => {
-    // TODO:
-    inquiry.replied = !inquiry.replied;
+    switch (type) {
+      case "general":
+        await updateInquiry(inquiry.id, {
+          replied: !inquiry.replied,
+        });
+        break;
+      case "property":
+        await updatePropertyInquiry(inquiry.id, {
+          replied: !inquiry.replied,
+        });
+        break;
+      case "specific":
+        await updateSpecificPropertyInquiry(inquiry.id, {
+          replied: !inquiry.replied,
+        });
+        break;
+    }
   };
 
   return (
