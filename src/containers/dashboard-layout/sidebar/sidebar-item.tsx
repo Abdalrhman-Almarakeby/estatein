@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { useDashboardSidebar } from "@/contexts/dashboard-sidebar";
+import { useWindowWidth } from "@/hooks";
 import { cn } from "@/lib/utils";
 
 type SidebarItemProps = {
@@ -14,6 +15,7 @@ type SidebarItemProps = {
 export function SidebarItem({ href, icon, label }: SidebarItemProps) {
   const { isSidebarOpen, setIsSidebarOpen } = useDashboardSidebar();
   const pathname = usePathname();
+  const width = useWindowWidth();
   const isActive =
     pathname === "/dashboard"
       ? pathname === href
@@ -21,7 +23,7 @@ export function SidebarItem({ href, icon, label }: SidebarItemProps) {
 
   return (
     <Link
-      tabIndex={isSidebarOpen ? 0 : -1}
+      tabIndex={isSidebarOpen && width && width < 1024 ? -1 : 1}
       href={href}
       onClick={() => setIsSidebarOpen(false)}
       className={cn(

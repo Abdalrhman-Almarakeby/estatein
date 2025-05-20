@@ -11,15 +11,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useDashboardSidebar } from "@/contexts/dashboard-sidebar";
+import { useWindowWidth } from "@/hooks";
 import { logOut } from "@/server/actions";
 
 export function LogoutButton() {
   const [open, setOpen] = useState(false);
+  const { isSidebarOpen } = useDashboardSidebar();
+  const width = useWindowWidth();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="mt-auto flex items-center gap-3 rounded-md p-2 text-gray-light">
+        <button
+          tabIndex={isSidebarOpen && width && width < 1024 ? -1 : 1}
+          className="mt-auto flex items-center gap-3 rounded-md p-2 text-gray-light"
+        >
           <LogOut className="size-5" />
           Logout
         </button>
