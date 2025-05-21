@@ -97,7 +97,15 @@ async function handleUnauthenticatedRoutes(
   request: NextRequest,
 ): Promise<NextResponse> {
   const user = await getUserFromSession(request.cookies);
+
   if (user) {
+    const searchParams = new URL(request.url).searchParams;
+    const callbackUrl = searchParams.get("callbackUrl");
+
+    if (callbackUrl) {
+      return NextResponse.redirect(new URL(callbackUrl));
+    }
+
     return NextResponse.redirect(
       new URL(PROTECTED_ROUTES.DASHBOARD, request.url),
     );
