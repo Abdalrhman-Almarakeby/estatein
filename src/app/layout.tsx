@@ -12,7 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <body className="relative overflow-x-clip bg-gray-darkest text-white [&_.grecaptcha-badge]:invisible [&_.grecaptcha-badge]:opacity-0">
         <Script
           src={`https://www.google.com/recaptcha/api.js?render=${env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         ></Script>
         <GlobalProviders>{children}</GlobalProviders>
       </body>
