@@ -23,7 +23,7 @@ export function SidebarItem({ href, icon, label }: SidebarItemProps) {
 
   return (
     <Link
-      tabIndex={isSidebarOpen && width && width < 1024 ? -1 : 1}
+      tabIndex={!isSidebarOpen && width && width < 1024 ? -1 : 1}
       href={href}
       onClick={() => setIsSidebarOpen(false)}
       className={cn(
