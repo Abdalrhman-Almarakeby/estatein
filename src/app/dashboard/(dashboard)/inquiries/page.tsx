@@ -77,7 +77,7 @@ export default async function Page() {
 
   return (
     <div className="container min-h-screen py-12">
-      <h1 className="mb-12 text-3xl font-bold">Inquiries Dashboard</h1>
+      <h1 className="mb-12 text-3xl font-bold">Inquiries</h1>
 
       <TotalInquiryStatsSection
         stats={{
