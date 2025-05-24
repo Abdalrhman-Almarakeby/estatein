@@ -43,7 +43,14 @@ export function Sidebar() {
               label="Newsletters"
             />
           </nav>
-          <LogoutButton />
+          <div className="mt-auto grid gap-4">
+            <SidebarItem
+              href="/dashboard/account"
+              icon={<Users className="size-5" />}
+              label="Account"
+            />
+            <LogoutButton />
+          </div>
         </div>
       </nav>
       <div
