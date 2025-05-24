@@ -25,7 +25,7 @@ export function LogoutButton() {
       <DialogTrigger asChild>
         <button
           tabIndex={!isSidebarOpen && width && width < 1024 ? -1 : 0}
-          className="mt-auto flex items-center gap-3 rounded-md p-2 text-gray-light"
+          className="btn-sm btn-primary flex items-center gap-3 rounded-md p-2 text-base"
         >
           <LogOut className="size-5" />
           Logout
