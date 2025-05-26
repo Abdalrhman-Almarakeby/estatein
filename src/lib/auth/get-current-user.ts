@@ -56,6 +56,5 @@ export const getCurrentUser = cache(_getCurrentUser);
 function getUserFromDb(id: string) {
   return prisma.user.findFirst({
     where: { id },
-    select: { id: true, email: true, role: true, username: true },
   });
 }
