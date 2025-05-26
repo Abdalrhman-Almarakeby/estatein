@@ -5,3 +5,4 @@ export * from "./properties";
 export * from "./properties-inquiries";
 export * from "./specific-property-inquiries";
 export * from "./subscribe-to-newsletter";
+export * from "./user";
