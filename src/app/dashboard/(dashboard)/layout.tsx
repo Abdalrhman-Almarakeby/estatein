@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       <DashboardSidebarContextProvider>
         <Header />
         <Sidebar />
-        <main className="flex-1 overflow-auto pt-24 *:container lg:ml-64 lg:pt-8">
+        <main className="flex-1 overflow-auto pt-24 *:container lg:ml-64 lg:pt-0">
           {children}
         </main>
       </DashboardSidebarContextProvider>
