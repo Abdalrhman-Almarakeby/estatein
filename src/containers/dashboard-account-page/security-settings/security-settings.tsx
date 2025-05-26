@@ -94,13 +94,13 @@ export function SecuritySettings(userData: SecuritySettingsProps) {
 
                 <div className="flex gap-2 pt-4">
                   <button
-                    className="flex-1 bg-purple-base hover:bg-purple-medium"
+                    className="btn-sm btn-primary flex-1 py-2"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Changing..." : "Change Password"}
                   </button>
                   <button
-                    className="border-gray-medium text-gray-light hover:bg-gray-dark hover:text-white"
+                    className="btn-sm btn-secondary py-2"
                     onClick={() => {
                       setShowPasswordDialog(false);
                       reset();
