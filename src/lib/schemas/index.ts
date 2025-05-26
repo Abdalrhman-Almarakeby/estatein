@@ -1,3 +1,4 @@
+export * from "./change-password";
 export * from "./email";
 export * from "./inquiry";
 export * from "./login";
@@ -9,3 +10,4 @@ export * from "./reset-password";
 export * from "./session";
 export * from "./signup";
 export * from "./specific-property-inquiry";
+export * from "./user";
