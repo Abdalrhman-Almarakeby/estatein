@@ -25,7 +25,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         />
         <Input
           type={showPassword ? "text" : "password"}
-          className={cn(showToggle && "pr-10", className)}
+          className={cn(showToggle && "px-10", className)}
           ref={ref}
           {...props}
         />

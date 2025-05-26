@@ -78,7 +78,6 @@ export function LoginForm() {
               </label>
               <PasswordInput
                 id="password"
-                className="pl-10"
                 placeholder="Password"
                 autoComplete="current-password"
                 {...register("password")}

@@ -97,7 +97,6 @@ export function SignupForm() {
               </label>
               <PasswordInput
                 id="password"
-                className="pl-10"
                 placeholder="Password"
                 autoComplete="new-password"
                 {...register("password")}
@@ -112,7 +111,6 @@ export function SignupForm() {
               </label>
               <PasswordInput
                 id="confirmPassword"
-                className="pl-10"
                 placeholder="Confirm Password"
                 autoComplete="new-password"
                 {...register("confirmPassword")}

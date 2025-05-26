@@ -62,7 +62,6 @@ export function ResetPasswordForm() {
               </label>
               <PasswordInput
                 id="password"
-                className="pl-10"
                 placeholder="New Password"
                 autoComplete="new-password"
                 {...register("password")}
