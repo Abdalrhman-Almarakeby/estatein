@@ -29,7 +29,14 @@ export async function addVerifiedEmail(data: Email) {
       },
     });
 
-    if (existingEmail) {
+    const isAdminEmail = await prisma.user.findFirst({
+      where: {
+        role: "ADMIN",
+        email: data.email,
+      },
+    });
+
+    if (existingEmail || isAdminEmail) {
       return { success: false, message: "Email already exists." };
     }
 
