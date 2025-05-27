@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Plus, Shield, Trash2, User } from "lucide-react";
+import { Lock, Mail, Plus, Shield, Trash2, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { FieldError } from "@/components/form/field-error";
 import { Input } from "@/components/form/input";
@@ -189,12 +189,21 @@ export function VerifiedEmails({ emails }: VerifiedEmailsProps) {
                 onOpenChange={setShowDeleteDialog}
               >
                 <DialogTrigger asChild>
-                  <button
-                    disabled={email.isUsed}
-                    className="rounded p-2 text-red-400 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <Trash2 className="size-4" />
-                  </button>
+                  {email.isUsed ? (
+                    <div className="flex items-center gap-2 rounded-lg px-3 py-2">
+                      <Lock className="size-4 text-gray-light" />
+                      <span className="text-sm text-gray-light">
+                        Cannot delete used email
+                      </span>
+                    </div>
+                  ) : (
+                    <button
+                      disabled={email.isUsed}
+                      className="rounded p-2 text-red-400 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <Trash2 className="size-4" />
+                    </button>
+                  )}
                 </DialogTrigger>
                 <DialogContent className="space-y-3 border-gray-dark bg-gray-darker sm:max-w-md">
                   <DialogHeader>
