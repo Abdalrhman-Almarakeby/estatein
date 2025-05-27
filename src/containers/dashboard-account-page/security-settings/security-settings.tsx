@@ -57,8 +57,8 @@ export function SecuritySettings(userData: SecuritySettingsProps) {
                 Change Password
               </button>
             </DialogTrigger>
-            <DialogContent className="space-y-10 border-gray-dark bg-gray-darker sm:max-w-md">
-              <DialogHeader className="space-y-3">
+            <DialogContent className="border-gray-dark bg-gray-darker sm:max-w-md">
+              <DialogHeader className="mb-10 space-y-3">
                 <DialogTitle className="text-2xl">Change Password</DialogTitle>
                 <DialogDescription className="text-gray-light">
                   Enter your current password and choose a new secure password.
