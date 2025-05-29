@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="50px"src="./images/logo.png" alt="Where In The World logo that is an image of globe " />
+  <img width="50px"src="./images/logo.png" alt="Estatein logo" />
   <p>Estatein</p>
 </div>
 
@@ -7,7 +7,7 @@
 
 A website for the real estate company Estatein. Featuring information about it like there journey, achievements, clients and more and there properties.
 
-![Screen shot of the Where In The World app on desktop screen size](./images//1.jpeg)
+![Screen shot of Estatein website on desktop screen size](./images//1.jpeg)
 
 [Design on figma](https://www.figma.com/community/file/1314076616839640516) by [Produce-ui](https:///produce-ui.com)
 
