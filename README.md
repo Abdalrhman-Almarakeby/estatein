@@ -5,7 +5,8 @@
 
 # Estatein
 
-A website for the real estate company Estatein. Featuring information about it like there journey, achievements, clients and more and there properties.
+A website for the real estate company Estatein, featuring information about the company such as its journey, achievements, clients, and properties.
+It also includes a dashboard for employees to manage properties, client inquiries, and view statistics related to these, as well as newsletter subscriptions.
 
 ![Screen shot of Estatein website on desktop screen size](./images//1.jpeg)
 
@@ -13,47 +14,32 @@ A website for the real estate company Estatein. Featuring information about it l
 
 ## Built With
 
-- [React](https://reactjs.org/)
+- [Next.js](https://https://nextjs.org)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
-- [React Router](https://reactrouter.com/)
+- [Prisma](https://https://www.prisma.io/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Tanstack Query (React Query)](https://tanstack.com/query/latest)
-- [Axios](https://axios-http.com/docs/intro)
+- [Shadcn ui](https://ui.shadcn.com/)
 - [React Hook Form](https://react-hook-form.com/)
 - [Zod](https://zod.dev/)
-- [Shadcn ui](https://ui.shadcn.com/)
-
-## API
-
-This project uses [Estatein Backend API](https://github.com/Abdalrhman-Almarakeby/estatein-backend) for:
-
-- Getting properties data.
-- Subscribing to the news letter.
-- Sending inquires.
-
-For more information check out [Estatein Backend API](https://github.com/Abdalrhman-Almarakeby/estatein-backend)
 
 ## Live Demo
 
 You can view a live demo hosted on [Vercel](https://vercel.com/):
 
-https://estatein--app.vercel.app
-
-**Note**: The backend API is hosted on [Render](https://render.com/) on the free instance, The service is great but unfortunately it spin down with inactivity, which can delay the first request. Sorry for that 😔.
+https://estatein.abdalrhman.me
 
 ## Running Locally
 
 1.  Clone the repository:
 
 ```
-git clone https://github.com/Abdalrhman-Almarakeby/estatein-frontend.git
+git clone https://github.com/Abdalrhman-Almarakeby/estatein.git
 ```
 
 2.  Navigate to the project directory:
 
 ```
-cd estatein-frontend
+cd estatein
 ```
 
 3.  Install dependencies:
