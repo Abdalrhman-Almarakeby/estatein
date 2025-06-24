@@ -8,7 +8,7 @@
 
 - Fix actions security. (use auth in it)
 
-- USE SEARCH PARAM
+- USE SEARCH PARAM for the tables state
 
 - Use optimistic updates for deleting a property
 
