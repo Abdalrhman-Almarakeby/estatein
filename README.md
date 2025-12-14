@@ -62,4 +62,4 @@ Github: [Abdalrhman Almarakeby](https://github.com/Abdalrhman-Almarakeby)
 
 Linkedin :[Abdalrhman Almarakeby](https://www.linkedin.com/in/abdalrhman-almarakeby/)
 
-Email: almarakeby.work@gmail.com
+Email: contact@abdalrhman.me
